@@ -9,7 +9,7 @@ public class MainClass {
 	}
 	
 	public int getOne() {
-		return 1;
+		return 2;
 	}
 	
 }
