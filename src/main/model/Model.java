@@ -1,4 +1,4 @@
-package model;
+package main.model;
 
 /**
  * The Model in the booking-system.
