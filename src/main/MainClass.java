@@ -9,4 +9,9 @@ public class MainClass {
 		System.out.println("Hello world!");
 	}
 	
+	public void iLikeYou()
+	{
+		System.out.println("I nogle dejlige drenge!");
+	}
+	
 }
