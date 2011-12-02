@@ -15,7 +15,15 @@ public class MainClass {
 		if(1+2==3)
 			{
 				System.out.println("The system works!");
-			}
+			}		
 	}
 	
+	public int multiplication()
+	{
+		int x;
+		
+		1 + 2 = x;
+		
+		return x;
+	}
 }
