@@ -11,8 +11,11 @@ public class MainClass {
 	
 	public void iLikeYou()
 	{
+		boolean hotGirlsPresent;
+		hotGirlsPresent = true;
+		
 		System.out.println("I nogle dejlige drenge!");
-		if(1+2==3)
+		if(!hotGirlsPresent)
 			{
 				System.out.println("The system works!");
 			}		
@@ -22,8 +25,13 @@ public class MainClass {
 	{
 		int x;
 		
-		1 + 2 = x;
+		x = 1 + 2;
 		
 		return x;
+	}
+	
+	public int getOne()
+	{
+		return 1;
 	}
 }
