@@ -9,10 +9,5 @@ import org.junit.Test;
 
 public class MainClassTest {
 
-	@Test
-	public void test() {
-		MainClass mainClass = new MainClass();
-		assert(mainClass.getOne() == 1);
-	}
 
 }
