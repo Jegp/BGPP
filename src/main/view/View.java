@@ -12,10 +12,10 @@ public class View extends JFrame
 
 	public View() 
 	{
-		pack();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(900, 900);
-		setVisible(true);
+		
 		
 		// create the menu
 		JMenu menu = new JMenu();
@@ -68,6 +68,9 @@ public class View extends JFrame
         
         // Bottom panel
         sPanel.add(backToMenu_Button);
+        
+        pack();
+        setVisible(true);
 	}
 	
 	public void actionlistener()
