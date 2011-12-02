@@ -19,13 +19,4 @@ public class MainClass {
 				System.out.println("The system works!");
 			}		
 	}
-	
-	public int multiplication()
-	{
-		int x;
-		
-		1 + 2 = x;
-		
-		return x;
-	}
 }
