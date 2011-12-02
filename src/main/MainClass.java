@@ -12,6 +12,10 @@ public class MainClass {
 	public void iLikeYou()
 	{
 		System.out.println("I nogle dejlige drenge!");
+		if(1+2==3)
+			{
+				System.out.println("The system works!");
+			}
 	}
 	
 }
