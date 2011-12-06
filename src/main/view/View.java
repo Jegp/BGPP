@@ -1,6 +1,7 @@
 package main.view;
 
 import javax.swing.*;
+import main.model.*;
 import java.awt.*;
 
 /**
@@ -10,7 +11,7 @@ import java.awt.*;
 public class View extends JFrame 
 {
 
-	public View() 
+	public View(Model model) 
 	{
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
