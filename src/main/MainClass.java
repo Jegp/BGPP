@@ -1,6 +1,6 @@
 package main;
 
-import java.util.Date;
+import java.util.HashMap;
 
 import main.controller.*;
 import main.view.*;
@@ -15,6 +15,9 @@ public class MainClass {
 	 * Initializes the application by instantiating the Model-View-Controller (MVC).
 	 */
 	public static void main(String[] args) {
+		VehicleClass v = VehicleClass.save(new VehicleClass("Nissan på din mor!"));
+		System.out.println(v.getFields());
+		
 		// Initialize model.
 		Model model = MySQLModel.getInstance();
 		// Initialize view.
