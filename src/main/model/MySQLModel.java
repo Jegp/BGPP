@@ -1,5 +1,7 @@
 package main.model;
 
+import main.util.Log;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -19,12 +21,15 @@ public class MySQLModel extends Model {
 	 */
 	private MySQLModel() {
 		try {
+			// Retrieve the database driver
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			// Initialize connection
 			conn = DriverManager.getConnection("jdbc:mysql://mysql.itu.dk", "jegp_bgpp", "ldo8tf6o");
+			// Retrieve statement
 			statement = conn.createStatement();
-			System.out.println("Connection established!");
 		} catch (Exception e) {
-			System.err.println("Cannot connect to database: " + e);
+			// Print the error in case no driver could be found
+			Log.error("Cannot connect to database: " + e);
 		}
 	}
 	
