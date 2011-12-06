@@ -1,8 +1,9 @@
 package main;
 
-import java.util.HashMap;
+import java.util.prefs.*;
 
 import main.controller.*;
+import main.util.Log;
 import main.view.*;
 import main.model.*;
 
@@ -15,9 +16,10 @@ public class MainClass {
 	 * Initializes the application by instantiating the Model-View-Controller (MVC).
 	 */
 	public static void main(String[] args) {
-		VehicleClass v = VehicleClass.save(new VehicleClass("Nissan på din mor!"));
-		System.out.println(v.getFields());
+		// Initialize the log with a file handler.
+		Log.initFileHandler("log.txt");
 		
+		// Model-View-Controller pattern
 		// Initialize model.
 		Model model = MySQLModel.getInstance();
 		// Initialize view.

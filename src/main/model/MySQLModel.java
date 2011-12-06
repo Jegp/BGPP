@@ -27,6 +27,7 @@ public class MySQLModel extends Model {
 			conn = DriverManager.getConnection("jdbc:mysql://mysql.itu.dk", "jegp_bgpp", "ldo8tf6o");
 			// Retrieve statement
 			statement = conn.createStatement();
+			Log.info("Successfully connected to MySQL database at itu.dk");
 		} catch (Exception e) {
 			// Print the error in case no driver could be found
 			Log.error("Cannot connect to database: " + e);
