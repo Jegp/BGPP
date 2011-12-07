@@ -17,7 +17,8 @@ public class MainClass {
 	 */
 	public static void main(String[] args) {
 		// Initialize the log with a file handler.
-		Log.initFileHandler("log.txt");
+		// TODO: Uncomment
+		//Log.initFileHandler("log.txt");
 		
 		// Model-View-Controller pattern
 		// Initialize model.
@@ -26,6 +27,8 @@ public class MainClass {
 		View view = new View(model);
 		// Initialize controller.
 		Controller controller = new Controller(model, view);
+		
+		VehicleClass v = new VehicleClass("Gammel lortebil");
 	}
 
 }
