@@ -32,7 +32,7 @@ public abstract class ModelEntry<T extends ModelEntry> extends EntryFactory<T> {
 	 */
 	public static <E extends ModelEntry> E save(E entry) {
 		String query = "insert into " + entry.getSQLTable;
-		int newId = 10;
+		int newId = 10; //Insert SQL command : Fetch server size to determin the new ID
 		// read all the fields from entry.getFields();
 		// "insert into " + table + " values (id = 1, description = "I'm with stupid");
 		return (E) entry.create(newId, entry);
