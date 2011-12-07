@@ -3,22 +3,38 @@ package main.model;
 import java.util.Date;
 import java.util.HashMap;
 
+/**
+ * An immutable reservation.
+ */
 public class Reservation extends ModelEntity<Reservation> {
-
-	public final int id;
-	public final User user;
-	public final Date start;
-	public final Date end;
-	public final Vehicle vehicle;
 	
+	// The fields of a reservation table in the database.
 	private HashMap<String, String> fields;
+
+	/**
+	 * The is of the reservation.
+	 */
+	public final int id;
 	
 	/**
-	 * Creates a Reservation with a given id.
+	 * A reference to the user owning the reservation.
 	 */
-	protected Reservation create(int id, Reservation entry) {
-		return new Reservation(id, entry.user, entry.start, entry.end, entry.vehicle);
-	}
+	public final User user;
+	
+	/**
+	 * The starting date of the reservation.
+	 */
+	public final Date start;
+	
+	/**
+	 * The ending date of the reservation.
+	 */
+	public final Date end;
+	
+	/**
+	 * The vehicle to reserve.
+	 */
+	public final Vehicle vehicle;
 	
 	/**
 	 * Instantiates a reservation with a given id.
@@ -57,6 +73,13 @@ public class Reservation extends ModelEntity<Reservation> {
 		fields.put("start", start.toString());
 		fields.put("end", end.toString());
 		fields.put("vehicle", vehicle.id + "");
+	}
+	
+	/**
+	 * Creates a Reservation with a given id.
+	 */
+	protected Reservation create(int id, Reservation entry) {
+		return new Reservation(id, entry.user, entry.start, entry.end, entry.vehicle);
 	}
 	
 }
