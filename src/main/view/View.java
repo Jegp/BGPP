@@ -1,8 +1,10 @@
 package main.view;
 
 import javax.swing.*;
-import main.model.*;
 import java.awt.*;
+import java.awt.event.*;
+
+import main.model.*;
 
 /**
  * The View of the booking-system.
@@ -10,6 +12,8 @@ import java.awt.*;
  */
 public class View extends JFrame 
 {
+	
+	JButton newWindowBtn;
 
 	public View(Model model) 
 	{
@@ -57,7 +61,7 @@ public class View extends JFrame
         add(sPanel, "South");
         
         // create buttons
-        JButton a_Button = new JButton("A Button");
+        newWindowBtn = new JButton("New Window");
         JButton search_Button = new JButton("Search");
         JButton bookAcar_Button = new JButton("Make a reservation");
         JButton backToMenu_Button = new JButton("Back to main menu");
@@ -65,7 +69,7 @@ public class View extends JFrame
         // Top panel
         nPanel.add(search_Button);
         nPanel.add(bookAcar_Button);
-        nPanel.add(a_Button);
+        nPanel.add(newWindowBtn);
         
         // Bottom panel
         sPanel.add(backToMenu_Button);
@@ -74,8 +78,17 @@ public class View extends JFrame
         setVisible(true);
 	}
 	
-	public void actionlistener()
+	public void AddNewWindowListener(ActionListener nwl)
 	{
-		System.out.println("trololol");
+		newWindowBtn.addActionListener(nwl);
+	}
+	
+	public void buildNewWindow() {
+		//Build a new test window
+		JFrame newWindow = new JFrame("oh hai, I'm a new window");
+		newWindow.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		newWindow.setSize(200, 200);
+		newWindow.pack();
+		newWindow.setVisible(true);
 	}
 }
