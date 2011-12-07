@@ -2,7 +2,7 @@ package main.model;
 
 import java.util.HashMap;
 
-public class User extends ModelEntry<User> {
+public class User extends ModelEntity<User> {
 
 	public final int id;
 	public final String firstName;

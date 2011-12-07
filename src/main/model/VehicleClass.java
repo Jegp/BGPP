@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * A representation of a certain type of vehicles e. g. VW or bicycle.
  */
-public class VehicleClass extends ModelEntry<VehicleClass> {
+public class VehicleClass extends ModelEntity<VehicleClass> {
 	
 	public final int id;
 	public final String description;

@@ -3,7 +3,7 @@ package main.model;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Reservation extends ModelEntry<Reservation> {
+public class Reservation extends ModelEntity<Reservation> {
 
 	public final int id;
 	public final User user;

@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * A vehicle in the booking-system.
  */
-public class Vehicle extends ModelEntry<Vehicle> {
+public class Vehicle extends ModelEntity<Vehicle> {
 
 	public final int id;
 	public final String description;

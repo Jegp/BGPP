@@ -7,7 +7,7 @@ import java.util.HashMap;
  *
  * @param <T>  The type of the entry.
  */
-public abstract class ModelEntry<T extends ModelEntry> extends EntryFactory<T> {
+public abstract class ModelEntity<T extends ModelEntity> extends EntryFactory<T> {
 
 	/**
 	 * The id of the entry.
@@ -30,7 +30,7 @@ public abstract class ModelEntry<T extends ModelEntry> extends EntryFactory<T> {
 	 * @param <T>  The type of the entry.
 	 * @return  The stored entry with an id.
 	 */
-	public static <E extends ModelEntry> E save(E entry) {
+	public static <E extends ModelEntity> E save(E entry) {
 		String query = "insert into " + entry.getSQLTable;
 		int newId = 10;
 		// read all the fields from entry.getFields();

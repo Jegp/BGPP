@@ -3,7 +3,7 @@ package main.model;
 /**
  * Factory for entries in the database.
  */
-public abstract class EntryFactory<T extends ModelEntry> {
+public abstract class EntryFactory<T extends ModelEntity> {
 	
 	/**
 	 * Creates a new instance of an entry with an associated id.
