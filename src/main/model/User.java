@@ -4,11 +4,34 @@ import java.util.HashMap;
 
 public class User extends ModelEntity<User> {
 
+	/**
+	 * a users ID in the database.
+	 */
 	public final int id;
-	public final String firstName;
+	
+	/**
+	 * a users first name.
+	 */
+	public final String firstName; 
+	
+	/**
+	 * a users last name.
+	 */
 	public final String lastName;
+	
+	/**
+	 * a users e-mail adress.
+	 */
 	public final String email;
+	
+	/**
+	 * a users phone number.
+	 */
 	public final String phone;
+	
+	/**
+	 * a users address.
+	 */
 	public final String adress;
 	
 	private HashMap<String, String> fields;

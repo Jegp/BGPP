@@ -5,10 +5,29 @@ import java.util.HashMap;
 
 public class Reservation extends ModelEntity<Reservation> {
 
+	/**
+	 * the reservations ID. 
+	 */
 	public final int id;
+	
+	/**
+	 * the reservations user.
+	 */
 	public final User user;
+	
+	/**
+	 * the date where the reservation started
+	 */
 	public final Date start;
+	
+	/**
+	 * the date where the reservation ended.
+	 */
 	public final Date end;
+	
+	/**
+	 * the vehicle that is reservated.
+	 */
 	public final Vehicle vehicle;
 	
 	private HashMap<String, String> fields;
