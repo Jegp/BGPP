@@ -13,10 +13,6 @@ public class View extends JFrame
 
 	public View(Model model) 
 	{
-<<<<<<< HEAD
-=======
-		
->>>>>>> branch 'master' of git@github.com:Jegp/BGPP.git
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(900, 900);
 		
@@ -74,10 +70,7 @@ public class View extends JFrame
         sPanel.add(backToMenu_Button);
         
         pack();
-<<<<<<< HEAD
-=======
         setVisible(true);
->>>>>>> branch 'master' of git@github.com:Jegp/BGPP.git
 	}
 	
 	public void actionlistener()
