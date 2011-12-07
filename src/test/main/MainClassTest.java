@@ -1,13 +1,11 @@
 package test.main;
 
-import static org.junit.Assert.*;
+import org.junit.*;
 
 import main.MainClass;
 
-import org.junit.Test;
-
-
 public class MainClassTest {
 
+	
 
 }

@@ -1,6 +1,7 @@
 package main.view;
 
 import javax.swing.*;
+import main.model.*;
 import java.awt.*;
 
 /**
@@ -10,11 +11,15 @@ import java.awt.*;
 public class View extends JFrame 
 {
 
-	public View() 
+	public View(Model model) 
 	{
+<<<<<<< HEAD
+=======
+		
+>>>>>>> branch 'master' of git@github.com:Jegp/BGPP.git
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(900, 900);
-		setVisible(true);
+		
 		
 		// create the menu
 		JMenu menu = new JMenu();
@@ -69,6 +74,10 @@ public class View extends JFrame
         sPanel.add(backToMenu_Button);
         
         pack();
+<<<<<<< HEAD
+=======
+        setVisible(true);
+>>>>>>> branch 'master' of git@github.com:Jegp/BGPP.git
 	}
 	
 	public void actionlistener()
