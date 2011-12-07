@@ -83,12 +83,7 @@ public class View extends JFrame
 		newWindowBtn.addActionListener(nwl);
 	}
 	
-	public void buildNewWindow() {
-		//Build a new test window
-		JFrame newWindow = new JFrame("oh hai, I'm a new window");
-		newWindow.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		newWindow.setSize(200, 200);
-		newWindow.pack();
-		newWindow.setVisible(true);
+	public void buildTestWindow() {
+		new TestWindow();
 	}
 }

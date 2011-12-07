@@ -32,7 +32,7 @@ public class Controller {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			c_view.buildNewWindow();			
+			c_view.buildTestWindow();			
 		}
 		
 	}
