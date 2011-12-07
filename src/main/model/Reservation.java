@@ -3,11 +3,7 @@ package main.model;
 import java.util.Date;
 import java.util.HashMap;
 
-/**
- * An immutable reservation.
- */
 public class Reservation extends ModelEntity<Reservation> {
-<<<<<<< HEAD
 
 	/**
 	 * the reservations ID. 
@@ -33,36 +29,15 @@ public class Reservation extends ModelEntity<Reservation> {
 	 * the vehicle that is reservated.
 	 */
 	public final Vehicle vehicle;
-=======
->>>>>>> branch 'master' of git@github.com:Jegp/BGPP.git
 	
-	// The fields of a reservation table in the database.
 	private HashMap<String, String> fields;
-
-	/**
-	 * The is of the reservation.
-	 */
-	public final int id;
 	
 	/**
-	 * A reference to the user owning the reservation.
+	 * Creates a Reservation with a given id.
 	 */
-	public final User user;
-	
-	/**
-	 * The starting date of the reservation.
-	 */
-	public final Date start;
-	
-	/**
-	 * The ending date of the reservation.
-	 */
-	public final Date end;
-	
-	/**
-	 * The vehicle to reserve.
-	 */
-	public final Vehicle vehicle;
+	protected Reservation create(int id, Reservation entry) {
+		return new Reservation(id, entry.user, entry.start, entry.end, entry.vehicle);
+	}
 	
 	/**
 	 * Instantiates a reservation with a given id.
@@ -101,13 +76,6 @@ public class Reservation extends ModelEntity<Reservation> {
 		fields.put("start", start.toString());
 		fields.put("end", end.toString());
 		fields.put("vehicle", vehicle.id + "");
-	}
-	
-	/**
-	 * Creates a Reservation with a given id.
-	 */
-	protected Reservation create(int id, Reservation entry) {
-		return new Reservation(id, entry.user, entry.start, entry.end, entry.vehicle);
 	}
 	
 }
