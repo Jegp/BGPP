@@ -13,7 +13,6 @@ public class View extends JFrame
 
 	public View(Model model) 
 	{
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(900, 900);
 		

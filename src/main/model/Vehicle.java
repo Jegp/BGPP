@@ -5,12 +5,31 @@ import java.util.HashMap;
 /**
  * A vehicle in the booking-system.
  */
-public class Vehicle extends ModelEntry<Vehicle> {
+public class Vehicle extends ModelEntity<Vehicle> {
 
+	/**
+	 * the specific vehicles id in the database
+	 */
 	public final int id;
+	
+	/**
+	 * the specific vehicles description. 
+	 */
 	public final String description;
+	
+	/**
+	 * the specific vehicles manufacturer.
+	 */
 	public final String manufacturer;
+	
+	/**
+	 * the specific vehicles model.
+	 */
 	public final String model;
+	
+	/**
+	 * the vehicles vehicle class.
+	 */
 	public final VehicleClass vehicleClass;
 	
 	private final HashMap<String, String> fields;

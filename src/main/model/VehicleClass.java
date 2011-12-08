@@ -3,33 +3,22 @@ package main.model;
 import java.util.HashMap;
 
 /**
- * A representation of a certain type of vehicles e. g. VW or bicycle.
+ * An immutable representation of a certain type of vehicles e. g. VW or bicycle.
  */
-public class VehicleClass extends ModelEntry<VehicleClass> {
-	
-	public final int id;
-	public final String description;
+public class VehicleClass extends ModelEntity<VehicleClass> {
 	
 	// The hashmap with the field info.
 	private final HashMap<String, String> fields;
 	
-	protected VehicleClass create(int id, VehicleClass entry) {
-		return new VehicleClass(id, entry.description);
-	}
+	/**
+	 * The id of the VehicleClass. 
+	 */
+	public final int id;
 	
 	/**
-	 * @return The name of the vehicle class SQL table.
+	 * The description of the VehicleClass.
 	 */
-	public String getSQLTable() { 
-		return "vehicle_class"; 
-	}
-	
-	/**
-	 * @return  The fields of the entry and their associated values.
-	 */
-	public HashMap<String, String> getFields() {
-		return fields;
-	}
+	public final String description;
 	
 	/**
 	 * Creates a new class of vehicles with the given id.
@@ -55,6 +44,27 @@ public class VehicleClass extends ModelEntry<VehicleClass> {
 		// Invoke fields
 		fields = new HashMap<String, String>();
 		fields.put("description", description);
+	}
+	
+	/**
+	 * Creates a VehicleClass with an associated id.	
+	 */
+	protected VehicleClass create(int id, VehicleClass entity) {
+		return new VehicleClass(id, entity.description);
+	}
+	
+	/**
+	 * @return  The fields of the entry and their associated values.
+	 */
+	public HashMap<String, String> getFields() {
+		return fields;
+	}
+	
+	/**
+	 * @return The name of the vehicle class SQL table.
+	 */
+	public String getSQLTable() { 
+		return "vehicle_class"; 
 	}
 	
 }
