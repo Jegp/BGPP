@@ -63,8 +63,8 @@ public class VehicleClass extends ModelEntity<VehicleClass> {
 	/**
 	 * @return The name of the vehicle class SQL table.
 	 */
-	public String getSQLTable() { 
-		return "vehicle_class"; 
+	public String getTable() { 
+		return "vehicleClass"; 
 	}
 	
 }

@@ -1,6 +1,6 @@
 package main.model;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The interface for a data entities.
@@ -8,21 +8,21 @@ import java.util.HashMap;
  * @param <T>  The type of the entity.
  */
 public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityFactory<T> {
-
+	
 	/**
-	 * The id of the entity.
+	 * The ModelEntity's access to the model.
 	 */
-	public int id;
+	protected static Model model = Model.getInstance();
 	
 	/**
 	 * @return The database fields associated with the given model entity.
 	 */
-	public HashMap<String, String> getFields;
+	abstract public Map<String, String> getFields();
 	
 	/**
 	 * @return The name of the SQL table associated with the model entity.
 	 */
-	public String getSQLTable;
+	abstract public String getTable();
 	
 	/**
 	 * Saves a generic entity in the database.
@@ -31,10 +31,7 @@ public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityFactor
 	 * @return  The stored entity with an id.
 	 */
 	public static <E extends ModelEntity<E>> E save(E entity) {
-		String query = "insert into " + entity.getSQLTable;
-		int newId = 10;
-		// read all the fields from entry.getFields();
-		// "insert into " + table + " values (id = 1, description = "I'm with stupid");
+		int newId = model.save(entity.getTable(), entity.getFields());
 		return (E) entity.create(newId, entity);
 	}
 	

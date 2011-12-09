@@ -13,7 +13,7 @@ public class Reservation extends ModelEntity<Reservation> {
 	/**
 	 * the reservations user.
 	 */
-	public final User user;
+	public final Customer user;
 	
 	/**
 	 * the date where the reservation started
@@ -26,23 +26,19 @@ public class Reservation extends ModelEntity<Reservation> {
 	public final Date end;
 	
 	/**
-	 * the vehicle that is reservated.
+	 * The vehicle that is reserved.
 	 */
 	public final Vehicle vehicle;
 	
-	private HashMap<String, String> fields;
-	
 	/**
-	 * Creates a Reservation with a given id.
+	 * The fields of the reservation.
 	 */
-	protected Reservation create(int id, Reservation entry) {
-		return new Reservation(id, entry.user, entry.start, entry.end, entry.vehicle);
-	}
+	private HashMap<String, String> fields;
 	
 	/**
 	 * Instantiates a reservation with a given id.
 	 */
-	private Reservation(int id, User user, Date start, Date end, Vehicle vehicle) {
+	private Reservation(int id, Customer user, Date start, Date end, Vehicle vehicle) {
 		this.id 	 = id;
 		this.user	 = user;
 		this.start	 = start;
@@ -64,7 +60,7 @@ public class Reservation extends ModelEntity<Reservation> {
 	 * @param end  The end date of the reservation.
 	 * @param vehicle  The vehicle to be reserved.
 	 */
-	public Reservation(User user, Date start, Date end, Vehicle vehicle) {
+	public Reservation(Customer user, Date start, Date end, Vehicle vehicle) {
 		this.id 	 = 0;
 		this.user	 = user;
 		this.start	 = start;
@@ -76,6 +72,27 @@ public class Reservation extends ModelEntity<Reservation> {
 		fields.put("start", start.toString());
 		fields.put("end", end.toString());
 		fields.put("vehicle", vehicle.id + "");
+	}
+	
+	/**
+	 * Creates a Reservation with a given id.
+	 */
+	protected Reservation create(int id, Reservation entry) {
+		return new Reservation(id, entry.user, entry.start, entry.end, entry.vehicle);
+	}
+	
+	/**
+	 * Gets the fields of the current reservation.
+	 */
+	public HashMap<String, String> getFields() {
+		return fields;
+	}
+	
+	/**
+	 * Returns the name of the table for the reservations. 
+	 */
+	public String getTable() {
+		return "reservation";
 	}
 	
 }

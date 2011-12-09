@@ -32,27 +32,16 @@ public class Vehicle extends ModelEntity<Vehicle> {
 	 */
 	public final VehicleClass vehicleClass;
 	
-	private final HashMap<String, String> fields;
-	
 	/**
-	 * Creates a new Vehicle with id.
+	 * The fields of the current vehicle.
 	 */
-	protected Vehicle create(int id, Vehicle entry) {
-		return new Vehicle(id, entry.description, entry.manufacturer, entry.model, entry.vehicleClass);
-	}
+	private final HashMap<String, String> fields;
 	
 	/**
 	 * @return  The fields of the vehicle instance.
 	 */
 	public HashMap<String, String> getFields() {
 		return fields;
-	}
-	
-	/**
-	 * @return  The name of the SQL table associated with vehicles.
-	 */
-	public String getSQLTable() {
-		return "vehicle";
 	}
 	
 	/**
@@ -88,6 +77,20 @@ public class Vehicle extends ModelEntity<Vehicle> {
 		fields.put("manufacturer", manufacturer);
 		fields.put("model", model);
 		fields.put("vehicleClass", vehicleClass.id + "");
+	}
+	
+	/**
+	 * Creates a new Vehicle with id.
+	 */
+	protected Vehicle create(int id, Vehicle entry) {
+		return new Vehicle(id, entry.description, entry.manufacturer, entry.model, entry.vehicleClass);
+	}
+	
+	/**
+	 * @return  The name of the SQL table associated with vehicles.
+	 */
+	public String getTable() {
+		return "vehicle";
 	}
 	
 }

@@ -29,6 +29,8 @@ public class MainClass {
 		Controller controller = new Controller(model, view);
 		
 		VehicleClass v = new VehicleClass("Gammel lortebil");
+		v = VehicleClass.save(v);
+		System.out.println(v.id);
 	}
 
 }

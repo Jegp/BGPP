@@ -2,7 +2,7 @@ package main.model;
 
 import java.util.HashMap;
 
-public class User extends ModelEntity<User> {
+public class Customer extends ModelEntity<Customer> {
 
 	/**
 	 * a users ID in the database.
@@ -34,14 +34,10 @@ public class User extends ModelEntity<User> {
 	 */
 	public final String adress;
 	
-	private HashMap<String, String> fields;
-	
 	/**
-     * Creates a new user with a given id.
-     */
-     protected User create(int id, User entry) {
-     	return new User(id, entry.firstName, entry.lastName, entry.email, entry.phone, entry.adress);
-     }
+	 * The fields of the current user.
+	 */
+	private HashMap<String, String> fields;
 	
 	/**
 	 * Creates a public User that hasn't been stored in the database yet.
@@ -52,7 +48,7 @@ public class User extends ModelEntity<User> {
 	 * @param phone The phone of the user.
 	 * @param adress The adress of the user.
 	 */
-	public User(String firstName, String lastName, String email, String phone, String adress) {
+	public Customer(String firstName, String lastName, String email, String phone, String adress) {
 		this.id			= 0;
 		this.firstName  = firstName;
 		this.lastName   = lastName;
@@ -71,7 +67,7 @@ public class User extends ModelEntity<User> {
 	/**
 	 * Creates a user with a given id.
 	 */
-	private User(int id, String firstName, String lastName, String email, String phone, String adress) {
+	private Customer(int id, String firstName, String lastName, String email, String phone, String adress) {
 		this.id         = id;
 		this.firstName  = firstName;
 		this.lastName   = lastName;
@@ -87,5 +83,26 @@ public class User extends ModelEntity<User> {
 		fields.put("phone", phone);
 		fields.put("adress", adress);
 	}
+	
+	/**
+     * Creates a new user with a given id.
+     */
+    protected Customer create(int id, Customer entry) {
+     	return new Customer(id, entry.firstName, entry.lastName, entry.email, entry.phone, entry.adress);
+    }
+    
+    /**
+     * Returns the fields of the current customer.
+     */
+    public HashMap<String, String> getFields() {
+    	return fields;
+    }
+     
+    /** 
+     * Returns the name of the table for the User entity.
+     */
+    public String getTable() {
+    	return "customer";
+    }
 	
 }
