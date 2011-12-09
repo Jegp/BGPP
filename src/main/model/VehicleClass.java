@@ -53,16 +53,14 @@ public class VehicleClass extends ModelEntity<VehicleClass> {
 		return new VehicleClass(id, entity.description);
 	}
 	
-	/**
-	 * @return  The fields of the entry and their associated values.
-	 */
 	public HashMap<String, String> getFields() {
 		return fields;
 	}
 	
-	/**
-	 * @return The name of the vehicle class SQL table.
-	 */
+	public int getId() {
+		return id;
+	}
+	
 	public String getTable() { 
 		return "vehicleClass"; 
 	}

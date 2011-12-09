@@ -28,9 +28,12 @@ public class MainClass {
 		// Initialize controller.
 		Controller controller = new Controller(model, view);
 		
-		VehicleClass v = new VehicleClass("Gammel lortebil");
-		v = VehicleClass.save(v);
-		System.out.println(v.id);
+		
+		// Tests
+		Customer c1 = new Customer("Daniel", "Varab", "forestdotcom@hotmail.com", "112", "VejAlléen 10, 2200 Kbh C");
+		Customer c2 = new Customer("Sune", "Debel", "sdeb@itu.dk", "114", "VejAlléen 12, 2200 Kbh C");
+		//c1 = Customer.save(c1);
+		//c2 = Customer.save(c2);
 	}
 
 }

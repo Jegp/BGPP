@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * The interface of the Model. Implemented as a singleton available through the 
- * <code>getInstance()</code> method.
+ * <code>getInstance()</code> method. The model implements a SQL interface.
  */
 public abstract class Model {	
 	
@@ -20,6 +20,18 @@ public abstract class Model {
 	 * The SQL statement accessible to the model interface.
 	 */
 	protected Statement statement;
+	
+	/**
+	 * Deletes a single entity by it's id from a given table.
+	 * @return  A boolean signaling success of failure.
+	 */
+	abstract public boolean delete(String table, int id);
+	
+	/**
+	 * Retrieves a number of fields with the given fields from a given table.
+	 * @return  The ResultSet of the query.
+	 */
+	abstract public ResultSet get(String table, Map<String, String> fields);
 	
 	/**
 	 * Retrieves a single field with the given id from a given table.

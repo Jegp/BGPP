@@ -87,6 +87,10 @@ public class Reservation extends ModelEntity<Reservation> {
 	public HashMap<String, String> getFields() {
 		return fields;
 	}
+
+	public int getId() {
+		return id;
+	}
 	
 	/**
 	 * Returns the name of the table for the reservations. 

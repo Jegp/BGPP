@@ -1,13 +1,16 @@
 package main.model;
 
+import java.sql.ResultSet;
 import java.util.Map;
+
+import main.util.Log;
 
 /**
  * The interface for a data entities.
  *
  * @param <T>  The type of the entity.
  */
-public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityFactory<T> {
+public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityInterface<T> {
 	
 	/**
 	 * The ModelEntity's access to the model.
@@ -18,6 +21,11 @@ public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityFactor
 	 * @return The database fields associated with the given model entity.
 	 */
 	abstract public Map<String, String> getFields();
+	
+	/**
+	 * Returns the id of the entity.
+	 */
+	abstract public int getId();
 	
 	/**
 	 * @return The name of the SQL table associated with the model entity.
@@ -32,7 +40,7 @@ public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityFactor
 	 */
 	public static <E extends ModelEntity<E>> E save(E entity) {
 		int newId = model.save(entity.getTable(), entity.getFields());
-		return (E) entity.create(newId, entity);
+		return (E) entity.factory(newId, entity);
 	}
 	
 }

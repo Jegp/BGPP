@@ -1,6 +1,11 @@
 package main.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
+
+import main.util.Log;
 
 public class Customer extends ModelEntity<Customer> {
 
@@ -40,7 +45,7 @@ public class Customer extends ModelEntity<Customer> {
 	private HashMap<String, String> fields;
 	
 	/**
-	 * Creates a public User that hasn't been stored in the database yet.
+	 * Creates a public customer that hasn't been stored in the database yet.
 	 * @param id  The id of the user.
 	 * @param firstName  The first name of the user.
 	 * @param lastName  The last name of the user.
@@ -61,7 +66,7 @@ public class Customer extends ModelEntity<Customer> {
 		fields.put("lastName", lastName);
 		fields.put("email", email);
 		fields.put("phone", phone);
-		fields.put("adress", adress);
+		fields.put("address", adress);
 	}
 	
 	/**
@@ -87,9 +92,13 @@ public class Customer extends ModelEntity<Customer> {
 	/**
      * Creates a new user with a given id.
      */
-    protected Customer create(int id, Customer entry) {
+    protected Customer factory(int id, Customer entry) {
      	return new Customer(id, entry.firstName, entry.lastName, entry.email, entry.phone, entry.adress);
     }
+    
+	public int getId() {
+		return id;
+	}
     
     /**
      * Returns the fields of the current customer.
