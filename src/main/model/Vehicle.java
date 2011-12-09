@@ -75,7 +75,7 @@ public class Vehicle extends ModelEntity<Vehicle> {
 	/**
 	 * Creates a new Vehicle with id.
 	 */
-	protected Vehicle create(int id, Vehicle entry) {
+	protected Vehicle factory(int id, Vehicle entry) {
 		return new Vehicle(id, entry.description, entry.manufacturer, entry.model, entry.vehicleClass);
 	}
 	

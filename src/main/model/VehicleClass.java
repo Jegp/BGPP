@@ -49,7 +49,7 @@ public class VehicleClass extends ModelEntity<VehicleClass> {
 	/**
 	 * Creates a VehicleClass with an associated id.	
 	 */
-	protected VehicleClass create(int id, VehicleClass entity) {
+	protected VehicleClass factory(int id, VehicleClass entity) {
 		return new VehicleClass(id, entity.description);
 	}
 	

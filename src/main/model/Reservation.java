@@ -77,7 +77,7 @@ public class Reservation extends ModelEntity<Reservation> {
 	/**
 	 * Creates a Reservation with a given id.
 	 */
-	protected Reservation create(int id, Reservation entry) {
+	protected Reservation factory(int id, Reservation entry) {
 		return new Reservation(id, entry.user, entry.start, entry.end, entry.vehicle);
 	}
 	
