@@ -13,8 +13,12 @@ public class MySQLModel extends Model {
 	
 	/**
 	 * The concrete instance of the MySQLModel.
+	 * Implemented as initialization on demand Bill Pugh suggested, 
+	 * mentioned on <a href="en.wikipedia.org/wiki/Singleton_pattern">wikipedia</a>.
 	 */
-	private static MySQLModel model;
+	private static class MySQLModelHolder {
+		public static final MySQLModel instance = new MySQLModel();
+	}
 	
 	/**
 	 * Constructs a model and connects to a database.
@@ -111,18 +115,11 @@ public class MySQLModel extends Model {
 	}
 	
 	/**
-	 * Gets an instance of the model. If the model hasn't been used before we  
-	 * instantiates a new, otherwise we reuse the old.
+	 * Gets an instance of the model.
 	 * @return An instance of the Model.
 	 */
 	public static MySQLModel getInstance() {
-		// Create a new model if none exists
-		if (model == null) {
-			model = new MySQLModel();
-		}
-		
-		// Return
-		return model;
+		return MySQLModelHolder.instance;
 	}
 
 	public int save(String table, Map<String, String> fields) {
