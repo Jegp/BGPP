@@ -45,9 +45,9 @@ public class MySQLModel extends Model {
 	/**
 	 * Builds a select query from a map.
 	 */
-	private String buildSelectQuery(String table, Map<String, String> fields) {
+	private String buildSelectQuery(String table, Map<String, String> fields, String selector) {
 		// Build the query
-		String sql = "SELECT id from " + table + " WHERE ";
+		String sql = "SELECT " + selector + " from " + table + " WHERE ";
 		
 		// Iterate through the fields to add the condition to the statement.
 		int n = 1;
@@ -80,7 +80,7 @@ public class MySQLModel extends Model {
 
 	public ResultSet get(String table, Map<String, String> fields) {
 		// Build the query
-		String sql = buildSelectQuery(table, fields);
+		String sql = buildSelectQuery(table, fields, "*");
 		
 		try {
 			statement.execute(sql);
@@ -124,7 +124,7 @@ public class MySQLModel extends Model {
 
 	public int save(String table, Map<String, String> fields) {
 		// Check that the entity exists.
-		String sql = buildSelectQuery(table, fields);
+		String sql = buildSelectQuery(table, fields, "id");
 		
 		// Execute the query and examine the result.
 		try {

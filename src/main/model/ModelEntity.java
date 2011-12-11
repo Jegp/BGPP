@@ -1,6 +1,7 @@
 package main.model;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +28,20 @@ public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityInterf
 	 * Returns the id of the entity.
 	 */
 	abstract public int getId();
+	
+	/**
+	 * A helper function to examine whether a given result set contains any
+	 * rows. Also moves the cursor to the first line of the result set.
+	 * @return A boolean value signaling either success or failure.
+	 */
+	protected static boolean getFirstRowInResultSet(ResultSet res) {
+		try {
+			return (res != null && res.next());
+		} catch (SQLException e) {
+			Log.error("Error in retrieving result: " + e);
+			return false;
+		}
+	}
 	
 	/**
 	 * @return The name of the SQL table associated with the model entity.

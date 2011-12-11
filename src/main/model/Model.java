@@ -46,7 +46,7 @@ public abstract class Model {
 	abstract public ResultSet get(String table, int[] ids);
 	
 	/**
-	 * Returns the model as the current implementation of the model.
+	 * Returns the current implementation of the model.
 	 * @return An instance of the model.
 	 */
 	public static Model getInstance() {

@@ -1,6 +1,11 @@
 package main.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
+
+import main.util.Log;
 
 /**
  * An immutable representation of a certain type of vehicles e. g. VW or bicycle.
@@ -37,8 +42,7 @@ public class VehicleClass extends ModelEntity<VehicleClass> {
 	 * Creates a new class of vehicles that hasn't been stored in the database yet.
 	 */
 	public VehicleClass(String description) {
-		// Store the description
-		this.id 		 = 0;
+		this.id 		 = 0; // Set the id to 0, since the entity hasn't been stored
 		this.description = description;
 		
 		// Invoke fields
@@ -63,6 +67,65 @@ public class VehicleClass extends ModelEntity<VehicleClass> {
 	
 	public String getTable() { 
 		return "vehicleClass"; 
+	}
+	
+	/**
+	 * Fetches an entry from the database, if it exists.
+	 * @param entryId  The id of the VehicleClass to fetch.
+	 * @return  The entry from the database if it exists, otherwise null.
+	 */
+	public static VehicleClass getWhereId(int entryId) {
+		ResultSet result = model.get("vehicleClass", entryId);
+		// Examine if the result has any data
+		if (getFirstRowInResultSet(result)) {
+			try {
+				int id 			   = result.getInt(1);
+				String description = result.getString(2);
+				// Return
+				return new VehicleClass(id, description);
+			} catch (SQLException e) {
+				Log.error("Unable to retrieve data from result: " + e);
+			}
+		} else {
+			Log.info("Query for VehicleClass returned empty.");
+		}
+
+		// If nothing is found return null.
+		return null;
+	}
+	
+	/**
+	 * Fetches a number of VehicleClasses from the database, which fulfills the 
+	 * @param  fields  The fields (keys) with their expected values.
+	 * @return  The entry from the database if it exists, otherwise null.
+	 */
+	public static VehicleClass[] getWhere(Map<String, String> fields) {
+		ResultSet result = model.get("vehicleClass", fields);
+		// Examine if the result has any content
+		if (getFirstRowInResultSet(result)) { 
+			// Retrieve the results
+			try {
+				result.last();
+				VehicleClass[] arr = new VehicleClass[result.getRow()];
+				result.beforeFirst();
+				
+				while (result.next()) {
+					int id 			   = result.getInt(1);
+					String description = result.getString(2);
+					arr[result.getRow() - 1] = new VehicleClass(id, description);
+				}
+				
+				// Return
+				return arr;
+			} catch (SQLException e) {
+				Log.error("Unable to retrieve data from result: " + e);
+			}
+		} else {
+			Log.info("Query for VehicleClasses returned empty.");
+		}
+		
+		// Return failure
+		return null;
 	}
 	
 }
