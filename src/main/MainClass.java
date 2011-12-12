@@ -1,6 +1,6 @@
 package main;
 
-import java.util.prefs.*;
+import java.util.Date;
 
 import main.controller.*;
 import main.util.Log;
@@ -28,12 +28,13 @@ public class MainClass {
 		// Initialize controller.
 		Controller controller = new Controller(model, view);
 		
-		
 		// Tests
-		Customer c1 = new Customer("Daniel", "Varab", "forestdotcom@hotmail.com", "112", "VejAlléen 10, 2200 Kbh C");
-		Customer c2 = new Customer("Sune", "Debel", "sdeb@itu.dk", "114", "VejAlléen 12, 2200 Kbh C");
+		//Customer c1 = new Customer("Daniel", "Varab", "forestdotcom@hotmail.com", "112", "VejAlléen 10, 2200 Kbh C");
+		//Customer c2 = new Customer("Sune", "Debel", "sdeb@itu.dk", "114", "VejAlléen 12, 2200 Kbh C");
 		//c1 = Customer.save(c1);
 		//c2 = Customer.save(c2);
+		Period p = new Period(new Date(0), new Date(2000));
+		Reservation[] arr = Reservation.getFromPeriod(p);
 	}
 
 }

@@ -12,9 +12,23 @@ import java.util.Map;
 public class MySQLModel extends Model {
 	
 	/**
-	 * The concrete instance of the MySQLModel.
+	 * The SQL connection to the database.
 	 */
-	private static MySQLModel model;
+	private Connection connection;
+	
+	/**
+	 * The SQL statement from the database connection.
+	 */
+	private Statement statement;
+	
+	/**
+	 * The concrete instance of the MySQLModel.
+	 * Implemented as initialization on demand Bill Pugh suggested, 
+	 * mentioned on <a href="en.wikipedia.org/wiki/Singleton_pattern">wikipedia</a>.
+	 */
+	private static class MySQLModelHolder {
+		public static final MySQLModel instance = new MySQLModel();
+	}
 	
 	/**
 	 * Constructs a model and connects to a database.
@@ -39,23 +53,50 @@ public class MySQLModel extends Model {
 	}
 	
 	/**
-	 * Builds a select query from a map.
+	 * Builds a select query from a table with an optional condition.
+	 * @param table  The table to query
+	 * @param condition  The condition the query must meet.
+	 * @param selector  The fields to select.
+	 * @param join  An optional join statement.
+	 * @return String  The sql statement.
 	 */
-	private String buildSelectQuery(String table, Map<String, String> fields) {
-		// Build the query
-		String sql = "SELECT id from " + table + " WHERE ";
+	private String buildSelectQuery(String table, String condition, String selector, String join) {
+		String sql = "SELECT " + selector + " FROM " + table;
 		
-		// Iterate through the fields to add the condition to the statement.
+		// Add join
+		if (join.length() > 0)
+			sql += " JOIN " + join;
+		
+		// Add condition
+		if (condition.length() > 0)
+			sql += " WHERE " + condition;
+		
+		return sql;
+	}
+	
+	/**
+	 * Builds a select query from a table map with keys associated to their valuesj.
+	 * @param table  The table to query.
+	 * @param fields  The map with keys associated with a given value, tested by the logic equals.
+	 * @param selector  The fields to select.
+	 * @param join  An optional join statement.
+	 * @return String  The sql statement.
+	 */
+	private String buildSelectQuery(String table, Map<String, String> fields, String selector, String join) {
+		// Build the condition for the query
+		String condition = "";
+		
+		// Iterate through the fields to add the conditions.
 		int n = 1;
 		for (Map.Entry<String, String> e : fields.entrySet()) {
-			sql += e.getKey() + " = '" + e.getValue() + "' ";
+			condition += e.getKey() + " = '" + e.getValue() + "' ";
 			if (n < fields.size())
-				sql += "AND ";
+				condition += "AND ";
 			n++;
 		}
 		
 		// Return the statement.
-		return sql;
+		return buildSelectQuery(table, condition, selector, join);
 	}
 
 	public boolean delete(String table, int id) {
@@ -74,60 +115,65 @@ public class MySQLModel extends Model {
 		}
 	}
 
-	public ResultSet get(String table, Map<String, String> fields) {
-		// Build the query
-		String sql = buildSelectQuery(table, fields);
-		
+	/**
+	 * Executes a given query and returns the ResultSet.
+	 * @param sql  The query to perform.
+	 * @return  Returns the result. Can be null.
+	 */
+	private ResultSet executeAndReturnResult(String sql) {
 		try {
 			statement.execute(sql);
-			// Return result set
 			return statement.getResultSet();
 		} catch (SQLException e) {
-			Log.error("Unable to fetch information from table " + table + ": " + e);
-			// Return failure
+			Log.error("Unable to perform query " + sql + ": " + e);
+			// Return failure.
 			return null;
 		}
+	}
+
+	public ResultSet get(String table, String condition) {
+		// Build the query
+		String sql = buildSelectQuery(table, condition, "*", "");
+
+		// Return the result
+		return executeAndReturnResult(sql);
+	}
+	
+	public ResultSet get(String table, Map<String, String> fields) {
+		// Build the query
+		String sql = buildSelectQuery(table, fields, "*", "");
+
+		// Return the result
+		return executeAndReturnResult(sql);
+	}
+	
+	public ResultSet get(String table, String condition, String joinTable, String joinKey1, String joinKey2) {
+		// Build the query
+		String sql = buildSelectQuery(table, condition, "*", "JOIN " + joinTable + " ON " + joinKey1 + " = " + joinKey2);
+
+		// Return the result
+		return executeAndReturnResult(sql);
 	}
 	
 	public ResultSet get(String table, int id) {
 		// Build the query
 		String sql = "SELECT * from " + table + " WHERE id = '" + id + "'";
 
-		// Execute
-		try {
-			statement.execute(sql);
-			// Return the result set.
-			return statement.getResultSet();
-		} catch (SQLException e) {
-			Log.error("Unable to fetch information from table " + table + " where id = " + id + ": " + e);
-			// Return null for failure.
-			return null;
-		}
-	}
-
-	public ResultSet get(String table, int[] ids) {
-		// TODO Auto-generated method stub
-		return null;
+		// Return the result
+		return executeAndReturnResult(sql);
 	}
 	
 	/**
-	 * Gets an instance of the model. If the model hasn't been used before we  
-	 * instantiates a new, otherwise we reuse the old.
+	 * Retrieves an instance of the model.
 	 * @return An instance of the Model.
 	 */
 	public static MySQLModel getInstance() {
-		// Create a new model if none exists
-		if (model == null) {
-			model = new MySQLModel();
-		}
-		
-		// Return
-		return model;
+		return MySQLModelHolder.instance;
 	}
 
 	public int save(String table, Map<String, String> fields) {
 		// Check that the entity exists.
-		String sql = buildSelectQuery(table, fields);
+		String sql = buildSelectQuery(table, fields, "id", "");
 		
 		// Execute the query and examine the result.
 		try {

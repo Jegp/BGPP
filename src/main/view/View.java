@@ -3,6 +3,7 @@ package main.view;
 import javax.swing.*;
 import main.model.*;
 import java.awt.*;
+import java.awt.event.*;
 
 /**
  * The View of the booking-system.
@@ -11,70 +12,91 @@ import java.awt.*;
 public class View extends JFrame 
 {
 
+	private JButton reservationButton;
+	private JButton customerButton;
+	private JButton vehicleButton;
+	
+	private JPanel container;
+	private JPanel graphicContainer;
+	
+	private CreateVehicleView createVehicleView;
+	
+
+	
 	public View(Model model) 
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(900, 900);
+	    setLayout(new BorderLayout());
+	    setSize(1500, 1500);
+	    createVehicleView = new CreateVehicleView();
+			
+	    // create north, south, west and east panels
+	    JPanel northPanel = new JPanel(new FlowLayout());
+	    JPanel westPanel = new JPanel(new GridLayout(0, 1));
+	    JPanel eastPanel = new JPanel();
+	    JPanel southPanel = new JPanel();
+
+	        
+	    // create content
+	    ReservationContainer reservationContainer = new ReservationContainer();
+	    
+	    container = reservationContainer;
+	    
+	    // arrange the panels 
+	    
+	    add(container, BorderLayout.CENTER);
+	    add(northPanel, BorderLayout.NORTH);
+	    add(westPanel, BorderLayout.WEST);
+	    add(eastPanel, BorderLayout.EAST);
+	    add(southPanel, BorderLayout.SOUTH);
+	        
+	    // create buttons
+	    reservationButton = new JButton("Reservation"); 
+	    customerButton = new JButton("Customer");
+	    vehicleButton = new JButton("Vehicle");
+	        
+	    // add components to north panel
+	    northPanel.add(reservationButton);
+	    northPanel.add(customerButton);
+	    northPanel.add(vehicleButton);
+	        
+	    // add components to south panel
+	    // <currently empty>
+	        
+	    setVisible(true);
+	    pack();	
+	}
 		
-		
-		// create the menu
-		JMenu menu = new JMenu();
-		add(menu);
-		
-		// create the menu bar
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-        
-        // create the File menu
-        JMenu fileMenu = new JMenu("File");
-        menuBar.add(fileMenu);
-        
-        // create the Help menu
-        JMenu helpMenu = new JMenu("Help");
-        menuBar.add(helpMenu);
-        
-        // add "open" to the File menu
-        JMenuItem openItem = new JMenuItem("Open");
-        fileMenu.add(openItem);
-        
-        // add "quit" to the Quit menu
-        JMenuItem quitItem = new JMenuItem("Quit");
-        fileMenu.add(quitItem);
-        
-        // create north and south content panel
-        JPanel nPanel = new JPanel();
-        JPanel sPanel = new JPanel();
-        
-        // create center center content panel to contain data
-        JPanel contentPane = new JPanel();
-        contentPane.setBorder(BorderFactory.createLineBorder(Color.black));
-        contentPane.setBackground(Color.white);
-        
-        // arrange the panels 
-        add(contentPane, "Center");
-        add(nPanel, "North");
-        add(sPanel, "South");
-        
-        // create buttons
-        JButton a_Button = new JButton("A Button");
-        JButton search_Button = new JButton("Search");
-        JButton bookAcar_Button = new JButton("Make a reservation");
-        JButton backToMenu_Button = new JButton("Back to main menu");
-        
-        // Top panel
-        nPanel.add(search_Button);
-        nPanel.add(bookAcar_Button);
-        nPanel.add(a_Button);
-        
-        // Bottom panel
-        sPanel.add(backToMenu_Button);
-        
-        pack();
-        setVisible(true);
+	public void changeContainer(JPanel newContainer)
+	{
+		remove(container);
+		container = newContainer;
+		add(container, BorderLayout.CENTER);
+		pack();
+	}
+
+	public void addActionListenerToReservationButton(ActionListener listener)
+	{
+		reservationButton.addActionListener(listener);
 	}
 	
-	public void actionlistener()
+	public void addActionListenerToCustomerButton(ActionListener listener)
 	{
-		System.out.println("trololol");
+		customerButton.addActionListener(listener);
+	}
+	
+	public void addActionListenerToVehicleButton(ActionListener listener)
+	{
+		vehicleButton.addActionListener(listener);
+	}
+	
+	public void addMouseListenerToGraphics(MouseAdapter listener)
+	{
+		graphicContainer.addMouseListener(listener);
+	}
+
+	public void showVehicleView() {
+		createVehicleView.setVisible(true);
+		
 	}
 }
