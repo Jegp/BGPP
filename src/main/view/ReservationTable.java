@@ -7,11 +7,13 @@ import java.util.*;
 
 public class ReservationTable extends AbstractTableModel
 {
-	private Date startDate;
-	private Date endDate;
-	private int numberOfVehicles;
-	private boolean reservation = true;
+	public Date startDate;
+	public Date endDate;
+	public int numberOfVehicles;
+	public boolean reservation = true;
 	
+	public String[] date = new String[10];
+	public Object[][] data = new Object[10][numberOfVehicles];
 	public ReservationTable(Date startDate, Date endDate)
 	{
 		this.startDate = startDate;
@@ -23,14 +25,11 @@ public class ReservationTable extends AbstractTableModel
 		GregorianCalendar calendar = new GregorianCalendar();
 		calendar.setTime(startDate);
 		
-		int[] date = new int[10];
-		Object[][] data = new Object[5][5];
-		
 		/**
 		 * Initialize dates / columns
 		 */
 		for(int i = 0; i < 10; i++){
-			date[i] = calendar.get(Calendar.DAY_OF_MONTH);
+			date[i] = calendar.get(Calendar.DAY_OF_MONTH) + "" + "/" + calendar.get(Calendar.MONTH);
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 		}
 		
@@ -38,7 +37,7 @@ public class ReservationTable extends AbstractTableModel
 		 * Initializes reservations in the table
 		 */
 		for(int i = 0; i < 10; i++){
-		 for(int j = 0; j < numberOfVehicles; j++){
+		 for(int j = 0; j < numberOfVehicles - 1; j++){
 		  if(reservation){
 			  data[i][j] = "x";	  
 		  }
@@ -49,22 +48,20 @@ public class ReservationTable extends AbstractTableModel
 		}
 	}
 
-	@Override
+	public String getColumnName(int col){
+		return date[col].toString();
+	}
+	
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return date.length;
 	}
 
-	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return numberOfVehicles; //should be replaced with method from model.
 	}
 
-	@Override
 	public Object getValueAt(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-		return null;
+		return data[arg0][arg1];
 	}
 	
 	public boolean isEditable()
