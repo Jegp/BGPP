@@ -1,28 +1,61 @@
 package main.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
+
+import main.util.Log;
 
 /**
  * The interface for a data entities.
  *
  * @param <T>  The type of the entity.
  */
-public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityFactory<T> {
-
+public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityInterface<T> {
+	
 	/**
-	 * The id of the entity.
+	 * The ModelEntity's access to the model.
 	 */
-	public int id;
+	protected static Model model = Model.getInstance();
+	
+	/**
+	 * Deletes an entity from the model.
+	 * @return boolean  A flag to signal success or failure.
+	 */
+	public static <E extends ModelEntity<E>> boolean delete(E entity) {
+		// Return success or failure.
+		return model.delete(entity.getTable(), entity.getId());
+	}
 	
 	/**
 	 * @return The database fields associated with the given model entity.
 	 */
-	public HashMap<String, String> getFields;
+	abstract public Map<String, String> getFields();
+	
+	/**
+	 * Returns the id of the entity.
+	 */
+	abstract public int getId();
+	
+	/**
+	 * A helper function to examine whether a given result set contains any
+	 * rows. Also moves the cursor to the first line of the result set.
+	 * @return A boolean value signaling either success or failure.
+	 */
+	protected static boolean getFirstRowInResultSet(ResultSet res) {
+		try {
+			return (res != null && res.next());
+		} catch (SQLException e) {
+			Log.error("Error in retrieving result: " + e);
+			return false;
+		}
+	}
 	
 	/**
 	 * @return The name of the SQL table associated with the model entity.
 	 */
-	public String getSQLTable;
+	abstract public String getTable();
 	
 	/**
 	 * Saves a generic entity in the database.
@@ -31,11 +64,8 @@ public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityFactor
 	 * @return  The stored entity with an id.
 	 */
 	public static <E extends ModelEntity<E>> E save(E entity) {
-		String query = "insert into " + entity.getSQLTable;
-		int newId = 10;
-		// read all the fields from entry.getFields();
-		// "insert into " + table + " values (id = 1, description = "I'm with stupid");
-		return (E) entity.create(newId, entity);
+		int newId = model.save(entity.getTable(), entity.getFields());
+		return (E) entity.factory(newId, entity);
 	}
 	
 }

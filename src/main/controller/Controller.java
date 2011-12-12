@@ -1,59 +1,44 @@
 package main.controller;
 
-import main.model.Model;
-import main.view.CustomerContainer;
-import main.view.ReservationContainer;
-import main.view.VehicleContainer;
-import main.view.View;
 import java.awt.event.*;
+
+import main.model.Model;
+import main.view.View;
 
 /**
  * The Controller for the booking-system.
  */
-public class Controller 
-{		
-	private View view;
-	private Model model;
+public class Controller {
 	
-	public Controller(Model model, View view) 
-	{
-		this.view = view;
+	//The controller needs to interact with both the view and model
+	private Model c_model;
+	private View c_view;
+
+	//Constructor
+	public Controller(Model model, View view) {
+		c_model		= model;
+		c_view		= view;
 		
-		view.addActionListenerToReservationButton(new ListenerToReservation());
+		//Add an ActionListener to buttons in the view
+		view.AddNewWindowListener(new NewWindowBtnListener());
 		
-		view.addActionListenerToCustomerButton(new ListenerToCustomer());
 		
-		view.addActionListenerToVehicleButton(new ListenerToVehicle());
-	
+		System.out.println("I'm alive!");
 	}
 	
-	class ListenerToReservation implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-        view.changeContainer(new ReservationContainer());
-        System.out.println("Reservation button...."); //remember to remove, only used for checking proper reactions
-        view.pack();
-        }
-    }
-        
-    class ListenerToCustomer implements ActionListener {
-    	public void actionPerformed(ActionEvent e) {
-    	view.changeContainer(new CustomerContainer());
-    	System.out.println("Customer button...."); //remember to remove, only used for checking proper reactions
-    	view.pack();
-    	}
-    }
-    
-    class ListenerToVehicle implements ActionListener {
-    	public void actionPerformed(ActionEvent e) {
-    	view.changeContainer(new VehicleContainer());
-    	System.out.println("Vehicle button...."); //remember to remove, only used for checking proper reactions
-    	}
-    }
-    
-    class MouseAdapter {
-    	public void mouseClicked(MouseEvent e) {
-    	System.out.println("mouse has been pressed!!!");
-    	}
-    }
-}
-
+	////////////////////////////////////// Inner class newWindowBtnListener
+	class NewWindowBtnListener implements ActionListener {
+		/**
+		 * Build a new window
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			c_view.buildTestWindow();
+			
+		}
+		
+	}
+	
+	
+	
+} 
