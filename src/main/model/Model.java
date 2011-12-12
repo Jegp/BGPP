@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * The interface of the Model. Implemented as a singleton available through the 
- * <code>getInstance()</code> method. The model implements a SQL interface.
+ * <code>getInstance()</code> method. The model is designed to implement an SQL driver.
  */
 public abstract class Model {	
 	

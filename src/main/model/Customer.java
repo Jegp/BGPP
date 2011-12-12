@@ -90,28 +90,28 @@ public class Customer extends ModelEntity<Customer> {
 	}
 	
 	/**
-     * Creates a new user with a given id.
-     */
-    protected Customer factory(int id, Customer entry) {
-     	return new Customer(id, entry.firstName, entry.lastName, entry.email, entry.phone, entry.adress);
-    }
-    
+   * Creates a new user with a given id.
+   */
+  protected Customer factory(int id, Customer entry) {
+   	return new Customer(id, entry.firstName, entry.lastName, entry.email, entry.phone, entry.adress);
+  }
+  
 	public int getId() {
 		return id;
 	}
-    
-    /**
-     * Returns the fields of the current customer.
-     */
-    public HashMap<String, String> getFields() {
-    	return fields;
-    }
-     
-    /** 
-     * Returns the name of the table for the User entity.
-     */
-    public String getTable() {
-    	return "customer";
-    }
+  
+  /**
+   * Returns the fields of the current customer.
+   */
+  public HashMap<String, String> getFields() {
+  	return fields;
+  }
+   
+  /** 
+   * Returns the name of the table for the User entity.
+   */
+  public String getTable() {
+  	return "customer";
+  }
 	
 }

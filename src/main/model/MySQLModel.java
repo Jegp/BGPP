@@ -24,7 +24,7 @@ public class MySQLModel extends Model {
 			// Retrieve the database driver
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			
-			// Initialize connection with database, username and password
+			// Initialize connection with database, user name and password
 			connection = DriverManager.getConnection("jdbc:mysql://mysql.itu.dk/jegp_bgpp", "jegp_bgpp", "ldo8tf6o");
 			
 			// Retrieve statement
