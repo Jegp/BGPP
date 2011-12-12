@@ -149,7 +149,7 @@ public class MySQLModel extends Model {
 	
 	public ResultSet get(String table, String condition, String joinTable, String joinKey1, String joinKey2) {
 		// Build the query
-		String sql = buildSelectQuery(table, condition, "*", "JOIN " + joinTable + " ON " + joinKey1 + " = " + joinKey2);
+		String sql = buildSelectQuery(table, condition, "*", joinTable + " ON " + joinKey1 + " = " + joinKey2);
 
 		// Return the result
 		return executeAndReturnResult(sql);

@@ -128,7 +128,7 @@ public class Reservation extends ModelEntity<Reservation> {
 	 */
 	public static Reservation[] getFromPeriod(Period period) {
 		// Set the condition
-		String condition  = "WHERE period.startTime >= " + period.start.getTime() + 
+		String condition  = "period.startTime >= " + period.start.getTime() + 
 					 		" AND period.endTime <= " + period.end.getTime();
 		
 		// Execute the query
