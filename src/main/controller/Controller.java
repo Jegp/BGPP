@@ -19,24 +19,8 @@ public class Controller {
 		c_model		= model;
 		c_view		= view;
 		
-		//Add an ActionListener to buttons in the view
-		view.AddNewWindowListener(new NewWindowBtnListener());
-		
 		
 		System.out.println("I'm alive!");
-	}
-	
-	////////////////////////////////////// Inner class newWindowBtnListener
-	class NewWindowBtnListener implements ActionListener {
-		/**
-		 * Build a new window
-		 */
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			c_view.buildTestWindow();
-			
-		}
-		
 	}
 	
 	
