@@ -13,7 +13,7 @@ import main.util.Log;
 public class Vehicle extends ModelEntity<Vehicle> {
 
 	/**
-	 * the specific vehicles id in the database
+	 * The specific vehicles id in the database.
 	 */
 	public final int id;
 	

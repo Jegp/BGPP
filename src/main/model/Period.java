@@ -100,7 +100,7 @@ public class Period extends ModelEntity<Period> {
 			Log.info("Query for Period returned empty.");
 		}
 
-		// If nothing is found return null.
+		// If nothing is found, return null.
 		return null;
 	}
 

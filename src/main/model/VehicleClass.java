@@ -124,7 +124,7 @@ public class VehicleClass extends ModelEntity<VehicleClass> {
 			Log.info("Query for VehicleClasses returned empty.");
 		}
 		
-		// Return failure
+		// Return failure.
 		return null;
 	}
 	

@@ -24,6 +24,7 @@ public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityInterf
 	 * @return boolean  A flag to signal success or failure.
 	 */
 	public static <E extends ModelEntity<E>> boolean delete(E entity) {
+		// Return success or failure.
 		return model.delete(entity.getTable(), entity.getId());
 	}
 	

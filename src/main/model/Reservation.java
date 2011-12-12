@@ -153,7 +153,7 @@ public class Reservation extends ModelEntity<Reservation> {
 			Log.info("Query for Reservation with condition returned empty.");
 		}
 		
-		// Return failure
+		// Return failure.
 		return null;
 	}
 	

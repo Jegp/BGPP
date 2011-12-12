@@ -23,7 +23,7 @@ public abstract class Model {
 	
 	/**
 	 * Deletes a single entity by it's id from a given table.
-	 * @return  A boolean signaling success of failure.
+	 * @return  A boolean signalling success of failure.
 	 */
 	abstract public boolean delete(String table, int id);
 	

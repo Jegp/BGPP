@@ -115,7 +115,7 @@ public class MySQLModel extends Model {
 	}
 	
 	/**
-	 * Gets an instance of the model.
+	 * Retrieves an instance of the model.
 	 * @return An instance of the Model.
 	 */
 	public static MySQLModel getInstance() {
