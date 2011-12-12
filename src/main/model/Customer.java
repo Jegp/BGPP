@@ -177,7 +177,7 @@ public class Customer extends ModelEntity<Customer> {
 			Log.info("Query for Customers with condition returned empty.");
 		}
 		
-		// Return failure
+		// Return failure.
 		return null;
 	}
 	
