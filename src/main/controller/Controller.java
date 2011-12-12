@@ -47,6 +47,7 @@ public class Controller
     	public void actionPerformed(ActionEvent e) {
     	view.changeContainer(new VehicleContainer());
     	System.out.println("Vehicle button...."); //remember to remove, only used for checking proper reactions
+    	view.pack();
     	}
     }
     
