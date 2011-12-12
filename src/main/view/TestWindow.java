@@ -1,6 +1,7 @@
 package main.view;
 
 import javax.swing.*;
+import java.awt.event.*;
 
 /**
  * A test window
@@ -12,9 +13,15 @@ public class TestWindow extends JFrame {
 	public TestWindow() {
 		//Build a new test window
 		super("oh hai, I'm a new window");
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setSize(200, 200);
+		
 		pack();
-		setVisible(true);
+		setVisible(false);
+	}
+	
+	
+	
+	public void addBtn(JButton button) {
+		add(button);
 	}
 }

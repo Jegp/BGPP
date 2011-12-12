@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import main.model.*;
+import main.view.CancelBtn;
 
 /**
  * The View of the booking-system.
@@ -13,7 +14,8 @@ import main.model.*;
 public class View extends JFrame 
 {
 	
-	JButton newWindowBtn;
+	private JButton newWindowBtn;
+	private TestWindow testWindow;
 
 	public View(Model model) 
 	{
@@ -74,6 +76,10 @@ public class View extends JFrame
         // Bottom panel
         sPanel.add(backToMenu_Button);
         
+        testWindow = new TestWindow();
+        testWindow.addBtn(new CancelBtn(testWindow));
+		testWindow.pack();
+        
         pack();
         setVisible(true);
 	}
@@ -84,6 +90,8 @@ public class View extends JFrame
 	}
 	
 	public void buildTestWindow() {
-		new TestWindow();
+		//if (!testWindow.isVisible())
+		testWindow.setVisible(true);
+		
 	}
 }
