@@ -142,35 +142,6 @@ public class Customer extends ModelEntity<Customer> {
 		// If nothing is found return null.
 		return null;
 	}
-    
-    /**
-	 * Fetches a single Customer from a given id, if it exists.
-	 * @param entryId  The id of the customer.
-	 * @return  The Customer if it was found, otherwise null.
-	 */
-	public static Customer getWhereId(int entryId) {
-		ResultSet result = ModelEntity.model.get("customer", entryId);
-		// Examine if the result has any data
-		if (getFirstRowInResultSet(result)) {
-			try {
-				int id 			 = result.getInt(1);
-				String firstName = result.getString(2);
-				String lastName  = result.getString(3);
-				String email 	 = result.getString(4);
-				String phone 	 = result.getString(5);
-				String address	 = result.getString(6);
-				// Return
-				return new Customer(id, firstName, lastName, email, phone, address);
-			} catch (SQLException e) {
-				Log.error("Unable to retrieve data from result: " + e);
-			}
-		} else {
-			Log.info("Query for Customer returned empty.");
-		}
-
-		// If nothing is found return null.
-		return null;
-	}
 	
 	/**
 	 * Fetches a number of Customer from the database, which fulfills the 
