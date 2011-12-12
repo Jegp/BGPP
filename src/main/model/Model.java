@@ -9,17 +9,7 @@ import java.util.Map;
  * The interface of the Model. Implemented as a singleton available through the 
  * <code>getInstance()</code> method. The model implements a SQL interface.
  */
-public abstract class Model {	
-	
-	/**
-	 * The SQL connection accessible to the model interface.
-	 */
-	protected Connection connection;
-	
-	/**
-	 * The SQL statement accessible to the model interface.
-	 */
-	protected Statement statement;
+public abstract class Model {
 	
 	/**
 	 * Deletes a single entity by it's id from a given table.
@@ -28,23 +18,42 @@ public abstract class Model {
 	abstract public boolean delete(String table, int id);
 	
 	/**
+	 * Retrieves a number of fields with the given condition.
+	 * @param table  The table to perform the query on.
+	 * @param condition The condition that must be met for the query.
+	 * @return  The ResultSet of the query.
+	 */
+	abstract public ResultSet get(String table, String condition);
+	
+	/**
+	 * Retrieves a number of fields with the given condition. This function also 
+	 * allows the query to join with another table.
+	 * 
+	 * @param table  The table to perform the query on.
+	 * @param condition  The condition the query must meet.
+	 * @param joinTable  The table to join in the query.
+	 * @param joinKey1  The first key of the join query.
+	 * @param joinKey2  The second key of the join query.
+	 * @return  The ResultSet of the query.
+	 */
+	abstract public ResultSet get(String table, String condtion, String joinTable, String joinKey1, String joinKey2);
+	
+	/**
 	 * Retrieves a number of fields with the given fields from a given table.
+	 * @param table  The table to perform the query on.
+	 * @param fields  The fields (keys) which must have the given value (values).
 	 * @return  The ResultSet of the query.
 	 */
 	abstract public ResultSet get(String table, Map<String, String> fields);
 	
 	/**
 	 * Retrieves a single field with the given id from a given table.
+	 * @param table  The table to perform the query on.
+	 * @param id  The id of the entry to search for.
 	 * @return  The ResultSet of the query.
 	 */
 	abstract public ResultSet get(String table, int id);
-	
-	/**
-	 * Retrieves a number of fields with the given id's from a given table.
-	 * @return  The ResultSet of the query.
-	 */
-	abstract public ResultSet get(String table, int[] ids);
-	
+
 	/**
 	 * Returns the current implementation of the model.
 	 * @return An instance of the model.
