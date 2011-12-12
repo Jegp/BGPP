@@ -19,6 +19,8 @@ public class View extends JFrame
 	private JPanel container;
 	private JPanel graphicContainer;
 	
+	private CreateVehicleView createVehicleView;
+	
 
 	
 	public View(Model model) 
@@ -26,6 +28,7 @@ public class View extends JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLayout(new BorderLayout());
 	    setSize(1500, 1500);
+	    createVehicleView = new CreateVehicleView();
 			
 	    // create north, south, west and east panels
 	    JPanel northPanel = new JPanel(new FlowLayout());
@@ -90,5 +93,10 @@ public class View extends JFrame
 	public void addMouseListenerToGraphics(MouseAdapter listener)
 	{
 		graphicContainer.addMouseListener(listener);
+	}
+
+	public void showVehicleView() {
+		createVehicleView.setVisible(true);
+		
 	}
 }

@@ -45,4 +45,9 @@ public class VehicleContainer extends JPanel
 	public void addDeleteBtnListener(ActionListener dbl) {
 		deleteBtn.addActionListener(dbl);
 	}
+
+	public void addCreateVehicleBtnListener(ActionListener cvbl) {
+		addVehicleBtn.addActionListener(cvbl);
+		
+	}
 }

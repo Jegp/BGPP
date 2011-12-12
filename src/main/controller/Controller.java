@@ -24,6 +24,8 @@ public class Controller
 		view.addActionListenerToCustomerButton(new ListenerToCustomer());
 		
 		view.addActionListenerToVehicleButton(new ListenerToVehicle());
+		
+		
 	
 	}
 	
@@ -45,7 +47,10 @@ public class Controller
     
     class ListenerToVehicle implements ActionListener {
     	public void actionPerformed(ActionEvent e) {
-    	view.changeContainer(new VehicleContainer());
+    	VehicleContainer vehicleContainer = new VehicleContainer();
+    	vehicleContainer.addCreateVehicleBtnListener(new addVehicleBtnListener());
+    	view.changeContainer(vehicleContainer);
+    	
     	System.out.println("Vehicle button...."); //remember to remove, only used for checking proper reactions
     	view.pack();
     	}
@@ -54,6 +59,12 @@ public class Controller
     class MouseAdapter {
     	public void mouseClicked(MouseEvent e) {
     	System.out.println("mouse has been pressed!!!");
+    	}
+    }
+    
+    class addVehicleBtnListener implements ActionListener {
+    	public void actionPerformed(ActionEvent e) {
+    		view.showVehicleView();
     	}
     }
 }
