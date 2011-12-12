@@ -20,6 +20,14 @@ public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityInterf
 	protected static Model model = Model.getInstance();
 	
 	/**
+	 * Deletes an entity from the model.
+	 * @return boolean  A flag to signal success or failure.
+	 */
+	public static <E extends ModelEntity<E>> boolean delete(E entity) {
+		return model.delete(entity.getTable(), entity.getId());
+	}
+	
+	/**
 	 * @return The database fields associated with the given model entity.
 	 */
 	abstract public Map<String, String> getFields();
