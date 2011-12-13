@@ -4,18 +4,32 @@ import java.awt.*;
 
 import javax.swing.*;
 
-public class CustomerContainer
-	extends JPanel
-{
-	public CustomerContainer()
-	{
-		setLayout(new GridLayout(3, 2));
-		JTextField textField1 = new JTextField(20);
-		JTextField textField2 = new JTextField(20);
+import main.model.Customer;
+
+/**
+ * A container with information about customers as well as 
+ * methods to edit and delete customers.
+ */
+public class CustomerContainer extends JPanel {
+	
+	private JButton buttonSearch;
+	
+	public CustomerContainer() { 
+		setLayout(new BorderLayout());
 		
-		add(textField1);
-		add(textField2);
+		Customer[] customers = Customer.getAll();
+		CustomerTable table  = new CustomerTable(customers);
+		JTable customerTable = new JTable(table);
+		JScrollPane pane		 = new JScrollPane(customerTable);
 		
-		setVisible(true);
+		// Create the search button
+		buttonSearch = new JButton("Search for customers");
+		
+		// Add the table and the button
+		add(pane);
+		add(buttonSearch, BorderLayout.SOUTH);
 	}
+	
+	
+	
 }

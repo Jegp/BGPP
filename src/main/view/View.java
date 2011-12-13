@@ -25,7 +25,7 @@ public class View extends JFrame
 	
 	public View(Model model) 
 	{
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLayout(new BorderLayout());
 	    setSize(1500, 1500);
 	    createVehicleView = new CreateVehicleView();
@@ -35,7 +35,6 @@ public class View extends JFrame
 	    JPanel westPanel = new JPanel(new GridLayout(0, 1));
 	    JPanel eastPanel = new JPanel();
 	    JPanel southPanel = new JPanel();
-
 	        
 	    // create content
 	    ReservationContainer reservationContainer = new ReservationContainer();
@@ -63,6 +62,10 @@ public class View extends JFrame
 	    // add components to south panel
 	    // <currently empty>
 	        
+	    // Set title
+	    setTitle("Bookingsystem");
+
+	    // Display
 	    setVisible(true);
 	    pack();	
 	}

@@ -24,9 +24,6 @@ public class Controller
 		view.addActionListenerToCustomerButton(new ListenerToCustomer());
 		
 		view.addActionListenerToVehicleButton(new ListenerToVehicle());
-		
-		
-	
 	}
 	
 	class ListenerToReservation implements ActionListener {
@@ -39,9 +36,14 @@ public class Controller
         
     class ListenerToCustomer implements ActionListener {
     	public void actionPerformed(ActionEvent e) {
-    	view.changeContainer(new CustomerContainer());
-    	System.out.println("Customer button...."); //remember to remove, only used for checking proper reactions
-    	view.pack();
+	    	CustomerContainer container = new CustomerContainer();
+	    	
+	    	// Initialize controller for customer
+	    	new CustomerController(container);
+	    	
+	    	// Update view
+	    	view.changeContainer(container);
+	    	view.pack();
     	}
     }
     
