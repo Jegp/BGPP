@@ -2,6 +2,7 @@ package main.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -142,9 +143,11 @@ public class Reservation extends ModelEntity<Reservation> {
 				Reservation[] arr = new Reservation[result.getRow()];
 				result.beforeFirst();
 				while (result.next()) {
-					int id 			  = result.getInt(1);
-					System.out.println(result.getString("startTime"));
-					//arr[result.getRow() - 1] = new Reservation(id, customer, period, vehicle);
+					int id 			= result.getInt(1);
+					Customer c  = Customer.getWhereId(result.getInt(2));
+					Vehicle v   = Vehicle.getWhereId(result.getInt(3));
+					Period p    = new Period(new Date(result.getLong("startTime")), new Date(result.getLong("endTime")));
+					arr[result.getRow() - 1] = new Reservation(id, c, p, v);
 				}
 				
 				// Return
