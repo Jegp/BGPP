@@ -21,7 +21,9 @@ public class CustomerContainer extends JPanel {
 	
 	private JButton buttonSearch;
 	
-	CustomerTable customerTable;
+	private CustomerTable customerTable;
+	
+	private JScrollPane pane;
 	
 	/**
 	 * Creates a new container and initializes it with a list of all available customers.
@@ -30,19 +32,11 @@ public class CustomerContainer extends JPanel {
 		// Set the layout
 		setLayout(new BorderLayout());
 		
-		// Retrieve the customers and set the table model
-		Customer[] customers = Customer.getAll();
-		customerTable        = new CustomerTable(customers);
-		
-		// Enclose the table in a scroll pane
-		JScrollPane pane     = new JScrollPane(customerTable);
-		
 		// Create the search button
 		buttonSearch = new JButton("Search for customers");
 		buttonSearch.setPreferredSize(new Dimension(200, 50));
 		
-		// Add the table and the button
-		add(pane);
+		// Add the button
 		add(buttonSearch, BorderLayout.SOUTH);
 	}
 	
@@ -51,6 +45,35 @@ public class CustomerContainer extends JPanel {
 	 */
 	public void addListenerToSearchButton(ActionListener listener) {
 		buttonSearch.addActionListener(listener);
+	}
+	
+	/**
+	 * Reset the table with the given customers.
+	 * @param customers  An array of customers to show.
+	 */
+	public void showCustomers(Customer[] customers, MouseListener tableListener) {		
+		// Define the table model
+		customerTable = new CustomerTable(customers, tableListener);
+
+		// Remove the old pane if it exists
+		if (pane != null)
+			remove(pane);
+		
+		// Enclose the table in a new scroll pane
+		pane = new JScrollPane(customerTable);
+		
+		// Insert the new center element.
+		add(pane, BorderLayout.CENTER);
+		
+		// Validate
+		validate();
+	}
+	
+	/**
+	 * Retrieve the table with customers.
+	 */
+	public CustomerTable getCustomerTable() {
+		return customerTable;
 	}
 	
 }

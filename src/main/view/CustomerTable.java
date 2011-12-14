@@ -18,36 +18,26 @@ import main.model.Customer;
  */
 public class CustomerTable extends JTable {
 
-	private Customer[] customers;
 	private CustomerTableModel tableModel;
 	
 	/**
 	 * Creates a JTable showing a number of customers.
 	 */
-	public CustomerTable(final Customer[] customers) {
-		this.customers = customers;
+	public CustomerTable(final Customer[] customers, MouseListener tableListener) {
+		// Set the table model
 		tableModel = new CustomerTableModel(customers);
 		setModel(tableModel);
+		
+		// Set the right row height
 		setRowHeight(20);
+		
+		// Set the tooltip, so we know what to do with each row
 		setToolTipText("Click on row to edit.");
 		
 		// Adds a mouse listener 
-		addMouseListener(new MouseListener() {
-			// On click: Edit customer
-      public void mouseClicked(MouseEvent arg0) {
-	      int selectedRow = getSelectedRow();
-	      if (selectedRow >= 0) {
-	      	new CustomerWindow(customers[selectedRow]);
-	      }
-      }
-      public void mouseEntered(MouseEvent arg0) {}
-      public void mouseExited(MouseEvent arg0) {}
-      public void mousePressed(MouseEvent arg0) {} 
-      public void mouseReleased(MouseEvent arg0) {}
-			
-		});
+		addMouseListener(tableListener);
 	}
-	
+
 	/**
 	 * A Table Model for a given array of customers.
 	 */
@@ -87,13 +77,6 @@ public class CustomerTable extends JTable {
 	
 		public String getColumnName(int n){
 			return columnNames[n];
-		}
-		
-		/**
-		 * Returns the Customer array shown in the table model.
-		 */
-		public Customer[] getCustomers() {
-			return customers;
 		}
 	
 	  public int getRowCount() {
