@@ -1,6 +1,8 @@
 package main.controller;
 
 import main.model.Model;
+import main.model.Vehicle;
+import main.model.VehicleClass;
 import main.view.CustomerContainer;
 import main.view.ReservationContainer;
 import main.view.VehicleContainer;
@@ -24,6 +26,8 @@ public class Controller
 		view.addActionListenerToCustomerButton(new ListenerToCustomer());
 		
 		view.addActionListenerToVehicleButton(new ListenerToVehicle());
+		
+		view.addSaveVehicleListener(new saveVehicleBtnListener());
 	}
 	
 	class ListenerToReservation implements ActionListener {
@@ -67,6 +71,28 @@ public class Controller
     class addVehicleBtnListener implements ActionListener {
     	public void actionPerformed(ActionEvent e) {
     		view.showVehicleView();
+    		
+    	}
+    }
+    
+    class saveVehicleBtnListener implements ActionListener {
+    	public void actionPerformed(ActionEvent e) {
+    		String description = view.getNewVehicleDescription();
+    		String manufactorer = view.getNewVehicleManufactorer();
+    		String model = view.getNewVehicleModel();
+    		VehicleClass vehicleClass;
+    		
+    		//OBS OBS OBS OBS!!!!
+    		//if (!view.getNewVehicleClass().isEmpty()) {
+    		vehicleClass = new VehicleClass(view.getNewVehicleClass());
+    		
+    		
+    		if (!description.isEmpty() && !manufactorer.isEmpty() && !model.isEmpty() && (vehicleClass != null)) {
+    		Vehicle v = new Vehicle(description, manufactorer, model, vehicleClass);
+    		
+    		Vehicle.save(v);
+    		System.out.println("Succes");
+    		}
     	}
     }
 }

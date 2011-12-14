@@ -97,6 +97,50 @@ public class Vehicle extends ModelEntity<Vehicle> {
 	}
 	
 	/**
+	 * Fetches all the vehicles in the database.
+	 * @return  An array with all the available vehicles. 
+	 */
+	public static Vehicle[] getAll() {
+  	ResultSet result = ModelEntity.model.get("vehicle", "");
+  	
+  	// Return the result
+  	return getVehiclesFromResultSet(result);
+	}
+	
+	/**
+	 * Fetches a number of vehicles from a given ResultSet.
+	 */
+	private static Vehicle[] getVehiclesFromResultSet(ResultSet result) {
+		// Examine if the result has any content
+		if (getFirstRowInResultSet(result)) { 
+			// Retrieve the results
+			try {
+				result.last();
+				Vehicle[] arr = new Vehicle[result.getRow()];
+				result.beforeFirst();
+				
+				while (result.next()) {
+					int id 			   						= result.getInt(1);
+					String description				= result.getString(2);
+					String manufacturer				= result.getString(3);
+					String model 							= result.getString(4);
+					VehicleClass vehicleClass	= VehicleClass.getWhereId(result.getInt(5));
+					arr[result.getRow() - 1]  = new Vehicle(id, description, manufacturer, model, vehicleClass);
+				}
+				
+				// Return
+				return arr;
+			} catch (SQLException e) {
+				Log.error("Unable to retrieve data from result: " + e);
+			}
+		} else {
+			Log.info("Query for Vehicles with condition returned empty.");
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * Fetches a single Vehicle from a given id, if it exists.
 	 * @param entryId  The id of the vehicle.
 	 * @return  The Vehicle if it was found, otherwise null.
@@ -131,34 +175,9 @@ public class Vehicle extends ModelEntity<Vehicle> {
 	 */
 	public static Vehicle[] getWhere(Map<String, String> fields) {
 		ResultSet result = ModelEntity.model.get("vehicle", fields);
-		// Examine if the result has any content
-		if (getFirstRowInResultSet(result)) { 
-			// Retrieve the results
-			try {
-				result.last();
-				Vehicle[] arr = new Vehicle[result.getRow()];
-				result.beforeFirst();
-				
-				while (result.next()) {
-					int id 			   			= result.getInt(1);
-					String description			= result.getString(2);
-					String manufacturer			= result.getString(3);
-					String model 				= result.getString(4);
-					VehicleClass vehicleClass	= VehicleClass.getWhereId(result.getInt(5));
-					arr[result.getRow() - 1]    = new Vehicle(id, description, manufacturer, model, vehicleClass);
-				}
-				
-				// Return
-				return arr;
-			} catch (SQLException e) {
-				Log.error("Unable to retrieve data from result: " + e);
-			}
-		} else {
-			Log.info("Query for Vehicles with condition returned empty.");
-		}
 		
-		// Return failure
-		return null;
+		// Return the result
+		return getVehiclesFromResultSet(result);
 	}
 	
 }

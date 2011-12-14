@@ -42,8 +42,20 @@ public class CustomerWindow extends JFrame {
 	 * Create a new window that can manipulate the given customer.
 	 */
 	public CustomerWindow(Customer customer) {
+		// Set layout
+		setLayout(new BorderLayout());
+		
+		// Create center wrapper
+		JPanel center = new JPanel();
+		center.setLayout(new BorderLayout());
+		
+		// Create wrapping panels
+		JPanel northWrapper = new JPanel();
+		JPanel southWrapper = new JPanel();
+		
 		// Set the layout - 3px horizontal and 6 px vertical distance
-		setLayout(new GridLayout(8, 2, 3, 6));
+		northWrapper.setLayout(new GridLayout(5, 2, 3, 6));
+		southWrapper.setLayout(new GridLayout(1, 2, 3, 6));
 
 		// Throw error if customer is null
 		if (customer == null) {
@@ -70,19 +82,41 @@ public class CustomerWindow extends JFrame {
 		buttonCancel = new CancelButton(this);
 		
 		// Add the elements to the pane
-		add(textId);				add(fieldId); 
-		add(textFirstName); add(fieldFirstName);
-		add(textLastName);  add(fieldLastName);
-		add(textEmail);		  add(fieldEmail);
-		add(textPhone);		  add(fieldPhone);
-		add(textAddress);	  add(new JScrollPane(fieldAddress)); // Add a scroll pane for the text area.
-		textAddress.setPreferredSize(new Dimension(200, 80));
+		northWrapper.add(textId);					northWrapper.add(fieldId); 
+		northWrapper.add(textFirstName); 	northWrapper.add(fieldFirstName);
+		northWrapper.add(textLastName);  	northWrapper.add(fieldLastName);
+		northWrapper.add(textEmail);		  northWrapper.add(fieldEmail);
+		northWrapper.add(textPhone);		  northWrapper.add(fieldPhone);
+		southWrapper.add(textAddress);	  southWrapper.add(new JScrollPane(fieldAddress)); // Add a scroll pane for the text area.
+		textAddress.setPreferredSize(new Dimension(100, 60));
 		
-		// Add space
-		add(new JLabel("")); add(new JLabel(""));
+		// Add the wrappers to the center panel
+		center.add(northWrapper, BorderLayout.NORTH);
+		center.add(southWrapper, BorderLayout.SOUTH);
+		
+		// Add the center
+		add(center, BorderLayout.CENTER);
+		
+		// Add spaces
+		JLabel space1 = new JLabel("");
+		JLabel space2 = new JLabel("");
+		space1.setPreferredSize(new Dimension(10, 10));
+		space2.setPreferredSize(new Dimension(10, 10));
+		add(space1, BorderLayout.EAST); 
+		add(space2, BorderLayout.WEST);
+		
+		// Create a south wrapper
+		JPanel south = new JPanel();
+		south.setLayout(new GridLayout(1, 2, 3, 6));
 		
 		// Add the buttons
-		add(buttonSave); add(buttonCancel);
+		south.add(buttonSave); south.add(buttonCancel);
+		
+		// Add the south panel
+		add(south, BorderLayout.SOUTH);
+		
+		// Force it to fix size
+		setResizable(false);
 		
 		// Initialize
 		setVisible(true);

@@ -123,14 +123,23 @@ public class Reservation extends ModelEntity<Reservation> {
 	}
 	
 	/**
-	 * Fetches a number of Reservation from the database, which fulfills the 
+	 * Fetches a number of Reservations from the database, which collide with the given period, i. e.
+	 * reservations whose period  
 	 * @param fields  The fields (keys) with their expected values.
 	 * @return  The entry from the database if it exists, otherwise null.
 	 */
 	public static Reservation[] getFromPeriod(Period period) {
 		// Set the condition
-		String condition  = "period.startTime >= " + period.start.getTime() + 
-					 		" AND period.endTime <= " + period.end.getTime();
+											// Set a query:      |-----------------|
+											// Get the situation where the start time and endTime is inside the query
+										  // Data example:            |----|
+		String condition  = "(period.startTime >= " + period.start.getTime() + " AND period.endTime <= " + period.end.getTime() + ") " +
+											// Get the situation where the start time is before the query, BUT where the end time is after the start of the query
+											// Data example: |--------|
+												"OR (period.startTime <= " + period.start.getTime() + " AND period.endTime >= " + period.start.getTime() + ") " +
+											// Get the situation where the end time is after the query, BUT where the start time is before the end time of the query
+											// Data example:                  |---------|
+												"OR (period.end >= " + period.end.getTime() + " AND period.start <= " + period.end.getTime() + ")";
 		
 		// Execute the query
 		ResultSet result = model.get("reservation", condition, "period", "reservation.period", "period.id");

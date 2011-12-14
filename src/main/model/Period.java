@@ -78,6 +78,7 @@ public class Period extends ModelEntity<Period> {
 	 * Calculates the length between the period in days.
 	 */
 	public int getLengthInDays() {
+																									//  ms     sec  min  hours
 		return (int) (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
 	}
 
@@ -110,5 +111,15 @@ public class Period extends ModelEntity<Period> {
 		// If nothing is found, return null.
 		return null;
 	}
+	
+	/**
+	 * Examines whether the given date is included in the period, i. e. whether start <= date <= end.
+	 * @param date  The date to test.
+	 * @return  A boolean value signalling whether the given date is included or not.
+	 */
+	public boolean isIncluded(Date date) {
+		return (start.getTime() <= date.getTime() && date.getTime() <= end.getTime());
+	}
+	
 
 }

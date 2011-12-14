@@ -98,8 +98,28 @@ public class View extends JFrame
 		graphicContainer.addMouseListener(listener);
 	}
 
-	public void showVehicleView() {
+	public void showVehicleView()  {
 		createVehicleView.setVisible(true);
 		
+	}
+	
+	public void addSaveVehicleListener(ActionListener svl) {
+		createVehicleView.addSaveVehicleListener(svl);
+	}
+	
+	public String getNewVehicleDescription() {
+		return createVehicleView.getNewDescription();
+	}
+	
+	public String getNewVehicleModel() {
+		return createVehicleView.getModel();
+	}
+	
+	public String getNewVehicleManufactorer() {
+		return createVehicleView.getNewManufactorer();
+	}
+	
+	public String getNewVehicleClass() {
+		return createVehicleView.getVehicleClass();
 	}
 }
