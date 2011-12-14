@@ -8,13 +8,18 @@ public class ReservationContainer
 	extends JPanel
 	
 {
-	//Date startDate;
+	Date startDate;
 	Date endDate;
 	
 	
 	public ReservationContainer()
-	{
-		ReservationTable data = new ReservationTable(new Date(), endDate);
+	{	
+		GregorianCalendar calendar 		= new GregorianCalendar();
+		startDate 						= new Date(); 
+		endDate 						= new Date();
+		calendar.add(Calendar.MONTH, 10);
+		
+		ReservationTable data 			= new ReservationTable(startDate, endDate);
 		
 		JTable visualData = new JTable(data);
 		add(new JScrollPane(visualData));
