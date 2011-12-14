@@ -21,28 +21,27 @@ public class ReservationTable extends AbstractTableModel
 	
 	public ReservationTable(Date startDate, Date endDate) {
 		
-		Period period = new Period(startDate, endDate);
-		Reservation[] reservations = Reservation.getFromPeriod(period);
-		periodInDays = period.getLengthInDays();
-		Vehicle[] allVehicles = Vehicle.getAll();
+		Period period 				= new Period(startDate, endDate);
+		//Reservation[] reservations 	= Reservation.getFromPeriod(period);
+		periodInDays 				= period.getLengthInDays();
+		Vehicle[] allVehicles 		= Vehicle.getAll();
+		numberOfVehicles 			= allVehicles.length;
 		
-		numberOfVehicles = allVehicles.length;
-		
-		date 	= new String[periodInDays];
-		data 	= new Object[periodInDays][numberOfVehicles];
+		date 						= new String[periodInDays];
+		data 						= new Object[periodInDays][numberOfVehicles];
 		
 		//Initialize calendar
-		GregorianCalendar calendar = new GregorianCalendar();
+		GregorianCalendar calendar 	= new GregorianCalendar();
 		calendar.setTime(startDate);
 		
-	 	//Initialize dates / columns
+	 	//Initialize dates
 		for(int i = 0; i < periodInDays; i++) {
 			date[i] = calendar.get(Calendar.DAY_OF_MONTH) + "" + "/" + calendar.get(Calendar.MONTH);	
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 		}
 	}
 
-	public String getColumnName(int col){
+	public String getColumnName(int col) {
 		return date[col].toString();
 	}
 	

@@ -4,8 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.*;
 
-public class ReservationContainer
-	extends JPanel
+public class ReservationContainer extends JPanel
 	
 {
 	Date startDate;
@@ -17,11 +16,12 @@ public class ReservationContainer
 		GregorianCalendar calendar 		= new GregorianCalendar();
 		startDate 						= new Date(); 
 		endDate 						= new Date();
+		calendar.setTime(endDate);
 		calendar.add(Calendar.MONTH, 10);
 		
 		ReservationTable data 			= new ReservationTable(startDate, endDate);
 		
-		JTable visualData = new JTable(data);
+		JTable visualData 				= new JTable(data);
 		add(new JScrollPane(visualData));
 		
 		setVisible(true);		
