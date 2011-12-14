@@ -3,6 +3,8 @@ package main.view;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.*;
 import main.model.*;
@@ -86,8 +88,24 @@ public class CreateVehicleView extends JFrame {
 		return model.getText();
 	}
 	
-	public String getVehicleClass() {
-		return vehicleClasses[vehicleClass.getSelectedIndex()];
+	public int getVehicleClassID() {
+		HashMap<String, String> identifier = new HashMap<String,String>();
+		identifier.put("description", vehicleClasses[vehicleClass.getSelectedIndex()]);
+		VehicleClass[] temp = VehicleClass.getWhere(identifier);
+		
+		for (VehicleClass vc : temp) {
+			if (vc.description.equals(vehicleClasses[vehicleClass.getSelectedIndex()])) {
+				return vc.id;
+			}
+		}
+		return 0;
+	}
+	
+	public void kill() {
+		description.setText("");
+		manufacter.setText("");
+		model.setText("");
+		setVisible(false);		
 	}
 
 }
