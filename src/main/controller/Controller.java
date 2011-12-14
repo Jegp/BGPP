@@ -26,11 +26,8 @@ public class Controller
 		view.addActionListenerToCustomerButton(new ListenerToCustomer());
 		
 		view.addActionListenerToVehicleButton(new ListenerToVehicle());
-<<<<<<< HEAD
 		
 		view.addSaveVehicleListener(new saveVehicleBtnListener());
-=======
->>>>>>> branch 'master' of http://sdebitu@github.com/Jegp/BGPP.git
 	}
 	
 	class ListenerToReservation implements ActionListener {
