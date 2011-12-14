@@ -1,9 +1,13 @@
 package main.view;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.*;
-
+import main.model.*;
 import main.view.*;
 
 public class CreateVehicleView extends JFrame {
@@ -14,7 +18,8 @@ public class CreateVehicleView extends JFrame {
 	private JTextField model;
 	private JComboBox vehicleClass;
 	private CancelButton cancelButton;
-	String[] vehicleClasses;
+	private String[] vehicleClasses;
+	private Model v_model;
 	
 	
 	public CreateVehicleView() {
@@ -23,11 +28,10 @@ public class CreateVehicleView extends JFrame {
 		setSize(9000, 9000);
 		setLayout(new GridLayout(5, 2));
 		setResizable(false);
-		
-		//Array for dropdown
-		vehicleClasses = new String[]{"3 Doors", "5 Doors", "Stationcar", "Van"};
+		fillVehicleClasses();
 		
 		//Initialise instance variables
+		v_model = Model.getInstance();
 		description		= new JTextField();
 		manufacter 		= new JTextField();
 		model 			= new JTextField();
@@ -56,6 +60,18 @@ public class CreateVehicleView extends JFrame {
 		
 	}
 	
+	public void fillVehicleClasses() {
+		VehicleClass[] vehicleClassesInDb = VehicleClass.getAll();
+		ArrayList<String> descriptions = new ArrayList<String>();
+		
+		for (int i = 0; i < vehicleClassesInDb.length; i++) {
+			descriptions.add(vehicleClassesInDb[i].description);
+		}
+		
+		vehicleClasses = new String[descriptions.size()];
+		descriptions.toArray(vehicleClasses);
+	}
+	
 	public void addSaveVehicleListener(ActionListener svl) {
 		saveButton.addActionListener(svl);
 	}
@@ -72,8 +88,24 @@ public class CreateVehicleView extends JFrame {
 		return model.getText();
 	}
 	
-	public String getVehicleClass() {
-		return vehicleClasses[vehicleClass.getSelectedIndex()];
+	public int getVehicleClassID() {
+		HashMap<String, String> identifier = new HashMap<String,String>();
+		identifier.put("description", vehicleClasses[vehicleClass.getSelectedIndex()]);
+		VehicleClass[] temp = VehicleClass.getWhere(identifier);
+		
+		for (VehicleClass vc : temp) {
+			if (vc.description.equals(vehicleClasses[vehicleClass.getSelectedIndex()])) {
+				return vc.id;
+			}
+		}
+		return 0;
+	}
+	
+	public void kill() {
+		description.setText("");
+		manufacter.setText("");
+		model.setText("");
+		setVisible(false);		
 	}
 
 }

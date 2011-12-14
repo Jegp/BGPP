@@ -8,6 +8,10 @@ import main.view.ReservationContainer;
 import main.view.VehicleContainer;
 import main.view.View;
 import java.awt.event.*;
+import java.util.Map;
+
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  * The Controller for the booking-system.
@@ -80,18 +84,17 @@ public class Controller
     		String description = view.getNewVehicleDescription();
     		String manufactorer = view.getNewVehicleManufactorer();
     		String model = view.getNewVehicleModel();
-    		VehicleClass vehicleClass;
-    		
-    		//OBS OBS OBS OBS!!!!
-    		//if (!view.getNewVehicleClass().isEmpty()) {
-    		vehicleClass = new VehicleClass(view.getNewVehicleClass());
-    		
-    		
-    		if (!description.isEmpty() && !manufactorer.isEmpty() && !model.isEmpty() && (vehicleClass != null)) {
+    		int selectedVehicleClassID = view.getNewVehicleClassID();
+    		VehicleClass vehicleClass = VehicleClass.getWhereId(selectedVehicleClassID);
     		Vehicle v = new Vehicle(description, manufactorer, model, vehicleClass);
-    		
-    		Vehicle.save(v);
-    		System.out.println("Succes");
+   
+    		if (description.equals("") || manufactorer.equals("") || model.equals("")) {
+				JOptionPane.showMessageDialog(view.getCreateVehicleView(), "Please fill out all boxes",
+    					"Insufficient information", JOptionPane.ERROR_MESSAGE);
+    		} else {
+    			Vehicle.save(v);
+    			view.killCreateVehicleView();
+    			System.out.println("Succes");
     		}
     	}
     }

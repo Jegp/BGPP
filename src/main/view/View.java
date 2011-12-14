@@ -11,7 +11,6 @@ import java.awt.event.*;
  */
 public class View extends JFrame 
 {
-
 	private JButton reservationButton;
 	private JButton customerButton;
 	private JButton vehicleButton;
@@ -119,7 +118,15 @@ public class View extends JFrame
 		return createVehicleView.getNewManufactorer();
 	}
 	
-	public String getNewVehicleClass() {
-		return createVehicleView.getVehicleClass();
+	public int getNewVehicleClassID() {
+		return createVehicleView.getVehicleClassID();
+	}
+	
+	public void killCreateVehicleView() {
+		createVehicleView.kill();
+	}
+	
+	public CreateVehicleView getCreateVehicleView() {
+		return createVehicleView;
 	}
 }
