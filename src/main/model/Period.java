@@ -115,7 +115,7 @@ public class Period extends ModelEntity<Period> {
 	/**
 	 * Examines whether the given date is included in the period, i. e. whether start <= date <= end.
 	 * @param date  The date to test.
-	 * @return 
+	 * @return  A boolean value signalling whether the given date is included or not.
 	 */
 	public boolean isIncluded(Date date) {
 		return (start.getTime() <= date.getTime() && date.getTime() <= end.getTime());

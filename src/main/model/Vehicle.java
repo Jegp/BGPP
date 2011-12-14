@@ -101,7 +101,7 @@ public class Vehicle extends ModelEntity<Vehicle> {
 	 * @return  An array with all the available vehicles. 
 	 */
 	public static Vehicle[] getAll() {
-  	ResultSet result = ModelEntity.model.get("vehicle", "", "vehicleClass", "vehicle.vehicleClass", "vehicleClass.id");
+  	ResultSet result = ModelEntity.model.get("vehicle", "");
   	
   	// Return the result
   	return getVehiclesFromResultSet(result);
@@ -120,11 +120,11 @@ public class Vehicle extends ModelEntity<Vehicle> {
 				result.beforeFirst();
 				
 				while (result.next()) {
-					int id 			   			= result.getInt(1);
-					String description	= result.getString(2);
-					String manufacturer	= result.getString(3);
-					String model 				= result.getString(4);
-					VehicleClass vehicleClass	= new VehicleClass(result.getString(6));
+					int id 			   						= result.getInt(1);
+					String description				= result.getString(2);
+					String manufacturer				= result.getString(3);
+					String model 							= result.getString(4);
+					VehicleClass vehicleClass	= VehicleClass.getWhereId(result.getInt(5));
 					arr[result.getRow() - 1]  = new Vehicle(id, description, manufacturer, model, vehicleClass);
 				}
 				
@@ -174,7 +174,7 @@ public class Vehicle extends ModelEntity<Vehicle> {
 	 * @return  The entry from the database if it exists, otherwise null.
 	 */
 	public static Vehicle[] getWhere(Map<String, String> fields) {
-		ResultSet result = ModelEntity.model.get("vehicle", fields, "vehicleClass", "vehicle.vehicleClass", "vehicleClass.id");
+		ResultSet result = ModelEntity.model.get("vehicle", fields);
 		
 		// Return the result
 		return getVehiclesFromResultSet(result);

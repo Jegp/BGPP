@@ -24,7 +24,7 @@ public class View extends JFrame
 	
 	public View(Model model) 
 	{
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLayout(new BorderLayout());
 	    setSize(1500, 1500);
 	    createVehicleView = new CreateVehicleView();
