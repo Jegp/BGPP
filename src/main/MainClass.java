@@ -31,6 +31,7 @@ public class MainClass {
 		//Customer c2 = new Customer("Sune", "Debel", "sdeb@itu.dk", "114", "VejAlléen 12, 2200 Kbh C");
 		//c1 = Customer.save(c1);
 		//c2 = Customer.save(c2);
+		
 		VehicleClass v = new VehicleClass("Gammel lortebil");
 		v = VehicleClass.save(v);
 		System.out.println();
