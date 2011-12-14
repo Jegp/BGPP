@@ -2,53 +2,52 @@ package main.view;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+
+import main.model.Period;
+import main.model.Reservation;
+import main.model.Vehicle;
+
 import java.awt.*;
 import java.util.*;
 
 public class ReservationTable extends AbstractTableModel
 {
-	public Date startDate;
-	public Date endDate;
-	public int numberOfVehicles;
-	public boolean reservation = true;
+	private Date	 	startDate;
+	private Date 		endDate;	
+	private String[]	date;
+	private Object[][] 	data;
+	private int 		periodInDays;
+	private int 		numberOfVehicles;
 	
-	public String[] date = new String[10];
-	public Object[][] data = new Object[10][numberOfVehicles];
-	public ReservationTable(Date startDate, Date endDate)
-	{
-		this.startDate = startDate;
-		this.endDate = endDate;
+	public ReservationTable(Date startDate, Date endDate) {
 		
-		/**
-		 * Initialize calendar
-		 */
-		GregorianCalendar calendar = new GregorianCalendar();
+		Period period 				= new Period(startDate, endDate);
+		//Reservation[] reservations 	= Reservation.getFromPeriod(period);
+		periodInDays 				= period.getLengthInDays();
+		Vehicle[] allVehicles 		= Vehicle.getAll();
+		numberOfVehicles 			= allVehicles.length;
+		
+		date 						= new String[periodInDays];
+		data 						= new Object[periodInDays][numberOfVehicles];
+		
+		//Initialize calendar
+		GregorianCalendar calendar 	= new GregorianCalendar();
 		calendar.setTime(startDate);
 		
-		/**
-		 * Initialize dates / columns
-		 */
-		for(int i = 0; i < 10; i++){
-			date[i] = calendar.get(Calendar.DAY_OF_MONTH) + "" + "/" + calendar.get(Calendar.MONTH);
+	 	//Initialize dates
+		for(int i = 0; i < periodInDays; i++) {
+			date[i] = calendar.get(Calendar.DAY_OF_MONTH) + "" + "/" + calendar.get(Calendar.MONTH);	
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 		}
 		
-		/**
-		 * Initializes reservations in the table
-		 */
-		for(int i = 0; i < 10; i++){
-		 for(int j = 0; j < numberOfVehicles - 1; j++){
-		  if(reservation){
-			  data[i][j] = "x";	  
-		  }
-		  else{
-			  data[i][j] = "";
-		  }
-		 }
+		for(int i = 0; i < numberOfVehicles; i++) {
+			for(int j = 0; j < periodInDays; j++) {
+				data[i][j] = "x";
+			}
 		}
 	}
 
-	public String getColumnName(int col){
+	public String getColumnName(int col) {
 		return date[col].toString();
 	}
 	

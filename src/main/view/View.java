@@ -11,7 +11,6 @@ import java.awt.event.*;
  */
 public class View extends JFrame 
 {
-
 	private JButton reservationButton;
 	private JButton customerButton;
 	private JButton vehicleButton;
@@ -25,7 +24,7 @@ public class View extends JFrame
 	
 	public View(Model model) 
 	{
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLayout(new BorderLayout());
 	    setSize(1500, 1500);
 	    createVehicleView = new CreateVehicleView();
@@ -99,8 +98,7 @@ public class View extends JFrame
 	}
 
 	public void showVehicleView()  {
-		createVehicleView.setVisible(true);
-		
+		createVehicleView.setVisible(true);		
 	}
 	
 	public void addSaveVehicleListener(ActionListener svl) {
@@ -119,7 +117,19 @@ public class View extends JFrame
 		return createVehicleView.getNewManufactorer();
 	}
 	
-	public String getNewVehicleClass() {
-		return createVehicleView.getVehicleClass();
+	public int getNewVehicleClassID() {
+		return createVehicleView.getVehicleClassID();
+	}
+	
+	public void killCreateVehicleView() {
+		createVehicleView.kill();
+	}
+	
+	public CreateVehicleView getCreateVehicleView() {
+		return createVehicleView;
+	}
+	
+	public void updateVehicleTable(Vehicle[] vehicles) {
+		
 	}
 }

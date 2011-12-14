@@ -2,13 +2,18 @@ package main.view;
 
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
+
+import main.model.Vehicle;
+
 
 public class VehicleContainer extends JPanel	
 {
 	JButton addVehicleBtn;
 	JButton deleteBtn;
+	
+	VehicleTable vehicleTable;
+	
 	public VehicleContainer()
 	{
 		//Manage layouts
@@ -25,17 +30,20 @@ public class VehicleContainer extends JPanel
 		south.add(addVehicleBtn);
 		south.add(deleteBtn);
 		
-			
-		String[] columnNames = {"ID No.", "Manufacter", "Model", "Class"};
-		Object[][] data = {
-				{"10", "Toyota", "Corolla", "2 doors"},{"11", "Suzuki", "Swift", "2 doors"}
-		};		
-		JTable vehicleTable = new JTable(data, columnNames);
-		center.add(new JScrollPane(vehicleTable));
+		Vehicle[] vehicles = Vehicle.getAll();
+		vehicleTable = new VehicleTable(vehicles);
+		
+		JScrollPane pane = new JScrollPane(vehicleTable);
+		center.add(pane);
+		
 		add(south, BorderLayout.SOUTH);
 		add(center, BorderLayout.NORTH);
 		
 		setVisible(true);		
+	}
+	
+	public void updateTable(Vehicle[] vehicles) {
+		vehicleTable.updateTable(vehicles);
 	}
 	
 	public void addVehicleBtnListener(ActionListener vbl) {
