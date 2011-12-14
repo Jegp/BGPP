@@ -57,6 +57,16 @@ public class VehicleClass extends ModelEntity<VehicleClass> {
 		return new VehicleClass(id, entity.description);
 	}
 	
+	/**
+	 * Retrieves all vehicle classes from the database.
+	 * @return An array with vehicles.
+	 */
+	public static VehicleClass[] getAll() {
+		ResultSet result = model.get("vehicleClass", "");
+		
+		return getVehicleClassesFromResultSet(result);
+	}
+	
 	public HashMap<String, String> getFields() {
 		return fields;
 	}
@@ -67,6 +77,37 @@ public class VehicleClass extends ModelEntity<VehicleClass> {
 	
 	public String getTable() { 
 		return "vehicleClass"; 
+	}
+	
+	/**
+	 * Retrievs a number of vehiclesclasses from a given ResultSet.
+	 */
+	private static VehicleClass[] getVehicleClassesFromResultSet(ResultSet result) {
+		// Examine if the result has any content
+		if (getFirstRowInResultSet(result)) { 
+			// Retrieve the results
+			try {
+				result.last();
+				VehicleClass[] arr = new VehicleClass[result.getRow()];
+				result.beforeFirst();
+				
+				while (result.next()) {
+					int id 			   = result.getInt(1);
+					String description = result.getString(2);
+					arr[result.getRow() - 1] = new VehicleClass(id, description);
+				}
+				
+				// Return
+				return arr;
+			} catch (SQLException e) {
+				Log.error("Unable to retrieve data from result: " + e);
+			}
+		} else {
+			Log.info("Query for VehicleClasses returned empty.");
+		}
+		
+		// Return failure.
+		return null;
 	}
 	
 	/**
@@ -101,31 +142,8 @@ public class VehicleClass extends ModelEntity<VehicleClass> {
 	 */
 	public static VehicleClass[] getWhere(Map<String, String> fields) {
 		ResultSet result = model.get("vehicleClass", fields);
-		// Examine if the result has any content
-		if (getFirstRowInResultSet(result)) { 
-			// Retrieve the results
-			try {
-				result.last();
-				VehicleClass[] arr = new VehicleClass[result.getRow()];
-				result.beforeFirst();
-				
-				while (result.next()) {
-					int id 			   = result.getInt(1);
-					String description = result.getString(2);
-					arr[result.getRow() - 1] = new VehicleClass(id, description);
-				}
-				
-				// Return
-				return arr;
-			} catch (SQLException e) {
-				Log.error("Unable to retrieve data from result: " + e);
-			}
-		} else {
-			Log.info("Query for VehicleClasses returned empty.");
-		}
 		
-		// Return failure.
-		return null;
+		return getVehicleClassesFromResultSet(result);
 	}
 	
 }

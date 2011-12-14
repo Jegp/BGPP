@@ -17,11 +17,6 @@ public class MySQLModel extends Model {
 	private Connection connection;
 	
 	/**
-	 * The SQL statement from the database connection.
-	 */
-	private Statement statement;
-	
-	/**
 	 * The concrete instance of the MySQLModel.
 	 * Implemented as initialization on demand Bill Pugh suggested, 
 	 * mentioned on <a href="en.wikipedia.org/wiki/Singleton_pattern">wikipedia</a>.
@@ -40,9 +35,6 @@ public class MySQLModel extends Model {
 			
 			// Initialize connection with database, user name and password
 			connection = DriverManager.getConnection("jdbc:mysql://mysql.itu.dk/jegp_bgpp", "jegp_bgpp", "ldo8tf6o");
-			
-			// Retrieve statement
-			statement = connection.createStatement();
 			
 			// Log the success
 			Log.info("Successfully connected to MySQL database at itu.dk");
@@ -104,7 +96,7 @@ public class MySQLModel extends Model {
 		
 		// Execute
 		try {
-			statement.executeUpdate(sql);
+			getStatement().executeUpdate(sql);
 			
 			// Return true
 			return true;
@@ -121,7 +113,15 @@ public class MySQLModel extends Model {
 	 * @return  Returns the result. Can be null.
 	 */
 	private ResultSet executeAndReturnResult(String sql) {
+		// Examine connection
+		if (connection == null) {
+			Log.error("Connection to database cannot be established. Please check your connection.");
+			return null;
+		}
+		
+		// Execute query
 		try {
+			Statement statement = getStatement();
 			statement.execute(sql);
 			return statement.getResultSet();
 		} catch (SQLException e) {
@@ -142,6 +142,14 @@ public class MySQLModel extends Model {
 	public ResultSet get(String table, Map<String, String> fields) {
 		// Build the query
 		String sql = buildSelectQuery(table, fields, "*", "");
+
+		// Return the result
+		return executeAndReturnResult(sql);
+	}
+	
+	public ResultSet get(String table, Map<String, String> fields, String joinTable, String joinKey1, String joinKey2) {
+		// Build the query
+		String sql = buildSelectQuery(table, fields, "*", joinTable + " ON " + joinKey1 + " = " + joinKey2);
 
 		// Return the result
 		return executeAndReturnResult(sql);
@@ -170,6 +178,18 @@ public class MySQLModel extends Model {
 	public static MySQLModel getInstance() {
 		return MySQLModelHolder.instance;
 	}
+	
+	/**
+	 * Retrieves a new statement to execute queries on. 
+	 */
+	private Statement getStatement() {
+		try {
+			return connection.createStatement();
+		} catch (SQLException e) {
+			Log.error("Unable to connect to the database.");
+			return null;
+		}
+	}
 
 	public int save(String table, Map<String, String> fields) {
 		// Check that the entity exists.
@@ -177,6 +197,7 @@ public class MySQLModel extends Model {
 		
 		// Execute the query and examine the result.
 		try {
+			Statement statement = getStatement();
 			statement.execute(sql);
 			ResultSet res = statement.getResultSet();
 			if (res != null && res.next()) {
@@ -210,6 +231,7 @@ public class MySQLModel extends Model {
 		
 		// Execute insert statement.
 		try {
+			Statement statement = getStatement();
 			statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 			
 			// Retrieve the latest key and return it
