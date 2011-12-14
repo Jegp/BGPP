@@ -1,10 +1,11 @@
 package main.view;
+
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
-
+import main.model.*;
 import main.view.*;
+import java.sql.ResultSet;
 
 public class CreateVehicleView extends JFrame {
 	
@@ -14,7 +15,8 @@ public class CreateVehicleView extends JFrame {
 	private JTextField model;
 	private JComboBox vehicleClass;
 	private CancelButton cancelButton;
-	String[] vehicleClasses;
+	VehicleClass[] vehicleClasses;
+	private Model v_model;
 	
 	
 	public CreateVehicleView() {
@@ -23,11 +25,10 @@ public class CreateVehicleView extends JFrame {
 		setSize(9000, 9000);
 		setLayout(new GridLayout(5, 2));
 		setResizable(false);
-		
-		//Array for dropdown
-		vehicleClasses = new String[]{"3 Doors", "5 Doors", "Stationcar", "Van"};
+		fillVehicleClasses();
 		
 		//Initialise instance variables
+		v_model = Model.getInstance();
 		description		= new JTextField();
 		manufacter 		= new JTextField();
 		model 			= new JTextField();
@@ -56,6 +57,10 @@ public class CreateVehicleView extends JFrame {
 		
 	}
 	
+	public String[] fillVehicleClasses() {
+		ResultSet vehicleClassesInDb = v_model.
+	}
+	
 	public void addSaveVehicleListener(ActionListener svl) {
 		saveButton.addActionListener(svl);
 	}
@@ -72,7 +77,7 @@ public class CreateVehicleView extends JFrame {
 		return model.getText();
 	}
 	
-	public String getVehicleClass() {
+	public VehicleClass getVehicleClass() {
 		return vehicleClasses[vehicleClass.getSelectedIndex()];
 	}
 
