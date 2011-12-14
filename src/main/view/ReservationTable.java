@@ -12,12 +12,12 @@ import java.util.*;
 
 public class ReservationTable extends AbstractTableModel
 {
-	private Date startDate;
-	private Date endDate;	
-	private String[] date;
-	private Object[][] data;
-	private int periodInDays;
-	private int numberOfVehicles;
+	private Date	 	startDate;
+	private Date 		endDate;	
+	private String[]	date;
+	private Object[][] 	data;
+	private int 		periodInDays;
+	private int 		numberOfVehicles;
 	
 	public ReservationTable(Date startDate, Date endDate) {
 		
@@ -38,6 +38,12 @@ public class ReservationTable extends AbstractTableModel
 		for(int i = 0; i < periodInDays; i++) {
 			date[i] = calendar.get(Calendar.DAY_OF_MONTH) + "" + "/" + calendar.get(Calendar.MONTH);	
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
+		}
+		
+		for(int i = 0; i < numberOfVehicles; i++) {
+			for(int j = 0; j < periodInDays; j++) {
+				data[i][j] = "x";
+			}
 		}
 	}
 
