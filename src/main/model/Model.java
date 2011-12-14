@@ -47,18 +47,6 @@ public abstract class Model {
 	abstract public ResultSet get(String table, Map<String, String> fields);
 	
 	/**
-	 * Retrieves a number of fields with the given fields from a given table. This function also 
-	 * allows the query to join with another table.
-	 * @param table  The table to perform the query on.
-	 * @param fields  The fields (keys) which must have the given value (values).
-	 * @param joinTable  The table to join in the query.
-	 * @param joinKey1  The first key of the join query.
-	 * @param joinKey2  The second key of the join query.
-	 * @return  The ResultSet of the query.
-	 */
-	abstract public ResultSet get(String table, Map<String, String> fields, String joinTable, String joinKey1, String joinKey2);
-	
-	/**
 	 * Retrieves a single field with the given id from a given table.
 	 * @param table  The table to perform the query on.
 	 * @param id  The id of the entry to search for.
