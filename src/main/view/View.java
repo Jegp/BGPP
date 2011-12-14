@@ -98,8 +98,7 @@ public class View extends JFrame
 	}
 
 	public void showVehicleView()  {
-		createVehicleView.setVisible(true);
-		
+		createVehicleView.setVisible(true);		
 	}
 	
 	public void addSaveVehicleListener(ActionListener svl) {
@@ -128,5 +127,9 @@ public class View extends JFrame
 	
 	public CreateVehicleView getCreateVehicleView() {
 		return createVehicleView;
+	}
+	
+	public void updateVehicleTable(Vehicle[] vehicles) {
+		
 	}
 }
