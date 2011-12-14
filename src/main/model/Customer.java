@@ -90,31 +90,80 @@ public class Customer extends ModelEntity<Customer> {
 	}
 	
 	/**
-     * Creates a new user with a given id.
-     */
-    protected Customer factory(int id, Customer entry) {
-     	return new Customer(id, entry.firstName, entry.lastName, entry.email, entry.phone, entry.address);
-    }
-    
+   * Creates a new user with a given id.
+   */
+  protected Customer factory(int id, Customer entry) {
+   	return new Customer(id, entry.firstName, entry.lastName, entry.email, entry.phone, entry.address);
+  }
+  
+  /**
+   * Creates an array of customers from a given ResultSet.
+   * @param result  The ResultSet to extract data from.
+   */
+  private static Customer[] getCustomersFromResultSet(ResultSet result) {
+  	// Examine if the result has any content
+ 		if (getFirstRowInResultSet(result)) { 
+ 			// Retrieve the results
+ 			try {
+ 				result.last();
+ 				Customer[] arr = new Customer[result.getRow()];
+ 				result.beforeFirst();
+ 				
+ 				// Loop through the rows
+ 				while (result.next()) {
+ 					int id 			 		 = result.getInt(1);
+ 					String firstName = result.getString(2);
+ 					String lastName  = result.getString(3);
+ 					String email 	 	 = result.getString(4);
+ 					String phone 	 	 = result.getString(5);
+ 					String address	 = result.getString(6);
+ 					arr[result.getRow() - 1] = new Customer(id, firstName, lastName, email, phone, address);
+ 				}
+ 				
+ 				// Return
+ 				return arr;
+ 			} catch (SQLException e) {
+ 				Log.error("Unable to retrieve data from result: " + e);
+ 			}
+ 		} else {
+ 			Log.info("Query for Customers with condition returned empty.");
+ 		}
+ 		
+ 		// Return failure.
+ 		return null;
+  }
+  
+  
 	public int getId() {
 		return id;
 	}
+  
+  /**
+   * Returns the fields of the current customer.
+   */
+  public HashMap<String, String> getFields() {
+  	return fields;
+  }
+   
+  /** 
+   * Returns the name of the table for the User entity.
+   */
+  public String getTable() {
+  	return "customer";
+  }
+  
+  /**
+   * Returns an array with all the customers available in the database.
+   * @return An array with customers.
+   */
+  public static Customer[] getAll() {
+  	ResultSet result = model.get("customer", "");
+  	
+  	// Return the result
+  	return getCustomersFromResultSet(result);
+  }
     
-    /**
-     * Returns the fields of the current customer.
-     */
-    public HashMap<String, String> getFields() {
-    	return fields;
-    }
-     
-    /** 
-     * Returns the name of the table for the User entity.
-     */
-    public String getTable() {
-    	return "customer";
-    }
-    
-    /**
+  /**
 	 * Fetches a single Customer from a given id, if it exists.
 	 * @param entryId  The id of the customer.
 	 * @return  The Customer if it was found, otherwise null.
@@ -150,35 +199,9 @@ public class Customer extends ModelEntity<Customer> {
 	 */
 	public static Customer[] getWhere(Map<String, String> fields) {
 		ResultSet result = ModelEntity.model.get("customer", fields);
-		// Examine if the result has any content
-		if (getFirstRowInResultSet(result)) { 
-			// Retrieve the results
-			try {
-				result.last();
-				Customer[] arr = new Customer[result.getRow()];
-				result.beforeFirst();
-				
-				while (result.next()) {
-					int id 			 		 = result.getInt(1);
-					String firstName 		 = result.getString(2);
-					String lastName  		 = result.getString(3);
-					String email 	 		 = result.getString(4);
-					String phone 	 		 = result.getString(5);
-					String address	 		 = result.getString(6);
-					arr[result.getRow() - 1] = new Customer(id, firstName, lastName, email, phone, address);
-				}
-				
-				// Return
-				return arr;
-			} catch (SQLException e) {
-				Log.error("Unable to retrieve data from result: " + e);
-			}
-		} else {
-			Log.info("Query for Customers with condition returned empty.");
-		}
 		
-		// Return failure.
-		return null;
+		// Retrieve the array
+		return getCustomersFromResultSet(result);
 	}
 	
 }

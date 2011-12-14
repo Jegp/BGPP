@@ -73,6 +73,13 @@ public class Period extends ModelEntity<Period> {
 	public int getId() {
 		return id;
 	}
+	
+	/**
+	 * Calculates the length between the period in days.
+	 */
+	public int getLengthInDays() {
+		return (int) (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+	}
 
 	public String getTable() {
 		return "period";

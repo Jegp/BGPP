@@ -2,6 +2,7 @@ package main.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -126,22 +127,27 @@ public class Reservation extends ModelEntity<Reservation> {
 	 * @param fields  The fields (keys) with their expected values.
 	 * @return  The entry from the database if it exists, otherwise null.
 	 */
-	public static Reservation[] getWhere(Map<String, String> fields) {
-		ResultSet result = ModelEntity.model.get("customer", fields);
+	public static Reservation[] getFromPeriod(Period period) {
+		// Set the condition
+		String condition  = "period.startTime >= " + period.start.getTime() + 
+					 		" AND period.endTime <= " + period.end.getTime();
+		
+		// Execute the query
+		ResultSet result = model.get("reservation", condition, "period", "reservation.period", "period.id");
+
 		// Examine if the result has any content
-		if (getFirstRowInResultSet(result)) { 
+		if (getFirstRowInResultSet(result)) {
 			// Retrieve the results
 			try {
 				result.last();
 				Reservation[] arr = new Reservation[result.getRow()];
 				result.beforeFirst();
-				
 				while (result.next()) {
-					int id 			  = result.getInt(1);
-					Customer customer = Customer.getWhereId(result.getInt(2));
-					Period period  	  = Period.getWhereId(result.getInt(3));
-					Vehicle vehicle   = Vehicle.getWhereId(result.getInt(4));
-					arr[result.getRow() - 1] = new Reservation(id, customer, period, vehicle);
+					int id 			= result.getInt(1);
+					Customer c  = Customer.getWhereId(result.getInt(2));
+					Vehicle v   = Vehicle.getWhereId(result.getInt(3));
+					Period p    = new Period(new Date(result.getLong("startTime")), new Date(result.getLong("endTime")));
+					arr[result.getRow() - 1] = new Reservation(id, c, p, v);
 				}
 				
 				// Return

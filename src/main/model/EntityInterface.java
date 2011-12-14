@@ -3,7 +3,7 @@ package main.model;
 import java.util.Map;
 
 /**
- * Factory for entries in the database.
+ * Factory-interface for model entities.
  */
 public abstract class EntityInterface<T extends ModelEntity<T>> {
 	
