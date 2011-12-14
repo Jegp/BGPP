@@ -33,6 +33,7 @@ public class MainClass {
 		//c2 = Customer.save(c2);
 		VehicleClass v = new VehicleClass("Gammel lortebil");
 		v = VehicleClass.save(v);
+		System.out.println();
 	}
 
 }
