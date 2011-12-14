@@ -93,8 +93,8 @@ public class Controller
     					"Insufficient information", JOptionPane.ERROR_MESSAGE);
     		} else {
     			Vehicle.save(v);
+    			view.changeContainer(new VehicleContainer());
     			view.killCreateVehicleView();
-    			System.out.println("Succes");
     		}
     	}
     }

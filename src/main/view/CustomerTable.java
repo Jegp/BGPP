@@ -34,12 +34,12 @@ public class CustomerTable extends JTable {
 		// Adds a mouse listener 
 		addMouseListener(new MouseListener() {
 			// On click: Edit customer
-      public void mouseClicked(MouseEvent arg0) {
-	      int selectedRow = getSelectedRow();
-	      if (selectedRow >= 0) {
-	      	new CustomerWindow(customers[selectedRow]);
-	      }
-      }
+		public void mouseClicked(MouseEvent arg0) {
+			int selectedRow = getSelectedRow();
+			if (selectedRow >= 0) {
+				new CustomerWindow(customers[selectedRow]);
+			}
+		}
       public void mouseEntered(MouseEvent arg0) {}
       public void mouseExited(MouseEvent arg0) {}
       public void mousePressed(MouseEvent arg0) {} 
