@@ -11,16 +11,21 @@ import main.util.Log;
  * A vehicle in the booking-system.
  */
 public class Vehicle extends ModelEntity<Vehicle> {
-
-	/**
-	 * The specific vehicles id in the database.
-	 */
-	public final int id;
 	
 	/**
 	 * the specific vehicles description. 
 	 */
 	public final String description;
+	
+	/**
+	 * The fields of the current vehicle.
+	 */
+	private final HashMap<String, String> fields = new HashMap<String, String>();
+
+	/**
+	 * The specific vehicles id in the database.
+	 */
+	public final int id;
 	
 	/**
 	 * the specific vehicles manufacturer.
@@ -33,14 +38,14 @@ public class Vehicle extends ModelEntity<Vehicle> {
 	public final String model;
 	
 	/**
+	 * The table associated with the vehicle entity.
+	 */
+	public final static String table = "vehicle";
+	
+	/**
 	 * the vehicles vehicle class.
 	 */
 	public final VehicleClass vehicleClass;
-	
-	/**
-	 * The fields of the current vehicle.
-	 */
-	private final HashMap<String, String> fields;
 	
 	/**
 	 * Creates a new vehicle with a given id.
@@ -52,12 +57,7 @@ public class Vehicle extends ModelEntity<Vehicle> {
 		this.model 			= model;
 		this.vehicleClass	= vehicleClass;
 		
-		fields = new HashMap<String, String>();
-		fields.put("id", id + "");
-		fields.put("description", description);
-		fields.put("manufacturer", manufacturer);
-		fields.put("model", model);
-		fields.put("vehicleClass", vehicleClass.id + "");
+		setFields(description, manufacturer, model, vehicleClass, id);
 	}
 	
 	/**
@@ -70,11 +70,7 @@ public class Vehicle extends ModelEntity<Vehicle> {
 		this.model 			= model;
 		this.vehicleClass	= vehicleClass;
 		
-		fields = new HashMap<String, String>();
-		fields.put("description", description);
-		fields.put("manufacturer", manufacturer);
-		fields.put("model", model);
-		fields.put("vehicleClass", vehicleClass.id + "");
+		setFields(description, manufacturer, model, vehicleClass, 0);
 	}
 	
 	/**
@@ -93,7 +89,7 @@ public class Vehicle extends ModelEntity<Vehicle> {
 	}
 	
 	public String getTable() {
-		return "vehicle";
+		return table;
 	}
 	
 	/**
@@ -120,12 +116,12 @@ public class Vehicle extends ModelEntity<Vehicle> {
 				result.beforeFirst();
 				
 				while (result.next()) {
-					int id 			   						= result.getInt(1);
-					String description				= result.getString(2);
-					String manufacturer				= result.getString(3);
-					String model 							= result.getString(4);
+					int id 			   			= result.getInt(1);
+					String description			= result.getString(2);
+					String manufacturer			= result.getString(3);
+					String model 				= result.getString(4);
 					VehicleClass vehicleClass	= VehicleClass.getWhereId(result.getInt(5));
-					arr[result.getRow() - 1]  = new Vehicle(id, description, manufacturer, model, vehicleClass);
+					arr[result.getRow() - 1]  	= new Vehicle(id, description, manufacturer, model, vehicleClass);
 				}
 				
 				// Return
@@ -146,7 +142,7 @@ public class Vehicle extends ModelEntity<Vehicle> {
 	 * @return  The Vehicle if it was found, otherwise null.
 	 */
 	public static Vehicle getWhereId(int entryId) {
-		ResultSet result = ModelEntity.model.get("vehicle", entryId);
+		ResultSet result = ModelEntity.model.get(table, entryId);
 		// Examine if the result has any data
 		if (getFirstRowInResultSet(result)) {
 			try {
@@ -173,11 +169,22 @@ public class Vehicle extends ModelEntity<Vehicle> {
 	 * @param fields  The fields (keys) with their expected values.
 	 * @return  The entry from the database if it exists, otherwise null.
 	 */
-	public static Vehicle[] getWhere(Map<String, String> fields) {
-		ResultSet result = ModelEntity.model.get("vehicle", fields);
+	public static Vehicle[] searchWhere(Map<String, String> fields) {
+		ResultSet result = ModelEntity.model.search(table, fields);
 		
 		// Return the result
 		return getVehiclesFromResultSet(result);
+	}
+	
+	/**
+	 * Sets the field with the given values.
+	 */
+	private void setFields(String description, String manufacturer, String model, VehicleClass vehicleClass, int id) {
+		if (id != 0)              fields.put("id", id + "");
+		if (description != null)  fields.put("description", description);
+		if (manufacturer != null) fields.put("manufacturer", manufacturer);
+		if (model != null)        fields.put("model", model);
+		if (vehicleClass != null) fields.put("vehicleClass", vehicleClass.id + "");
 	}
 	
 }

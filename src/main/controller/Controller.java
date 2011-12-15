@@ -32,6 +32,8 @@ public class Controller
 		view.addActionListenerToVehicleButton(new ListenerToVehicle());
 		
 		view.addSaveVehicleListener(new saveVehicleBtnListener());
+		
+		
 	}
 	
 	class ListenerToReservation implements ActionListener {
@@ -98,6 +100,13 @@ public class Controller
     			view.killCreateVehicleView();
     		}
     	}
+    }
+    
+    class createActionListenerToCreateButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+    	
     }
 }
 

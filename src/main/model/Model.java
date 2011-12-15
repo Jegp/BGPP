@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * The interface of the Model. Implemented as a singleton available through the 
- * <code>getInstance()</code> method. The model is designed to implement an SQL driver.
+ * <code>getInstance()</code> method.
  */
 public abstract class Model {
 	
@@ -39,14 +39,6 @@ public abstract class Model {
 	abstract public ResultSet get(String table, String condtion, String joinTable, String joinKey1, String joinKey2);
 	
 	/**
-	 * Retrieves a number of fields with the given fields from a given table.
-	 * @param table  The table to perform the query on.
-	 * @param fields  The fields (keys) which must have the given value (values).
-	 * @return  The ResultSet of the query.
-	 */
-	abstract public ResultSet get(String table, Map<String, String> fields);
-	
-	/**
 	 * Retrieves a single field with the given id from a given table.
 	 * @param table  The table to perform the query on.
 	 * @param id  The id of the entry to search for.
@@ -63,16 +55,30 @@ public abstract class Model {
 	}
 	
 	/**
+	 * Examines whether a connection is available.
+	 */
+	abstract public boolean isConnected();
+	
+	/**
 	 * Store an entity in the given table with the given values of the fields.
 	 * If the entity already exists we simply return the id of the existing entity.
 	 * @return  The id of the stored entry. 0 (zero) if unsuccessful.
 	 */
 	abstract public int save(String table, Map<String, String> fields);
+
+	/**
+	 * Searches a table in the database for a number of entries with values as in the given fields.
+	 * @param table  The table to perform the query on.
+	 * @param fields  The fields (keys) which must resemble the given value (values).
+	 * @return  The ResultSet of the query.
+	 */
+	abstract public ResultSet search(String table, Map<String, String> fields);
 	
 	/**
 	 * Updates a single column in the given table with the given id. The column is 
 	 * updated with the given fields. 
+	 * @return  True if success false if failure.
 	 */
-	abstract public ResultSet update(String table, int id, Map<String, String> fields);
+	abstract public boolean update(String table, int id, Map<String, String> fields);
 	
 }

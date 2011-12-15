@@ -45,6 +45,11 @@ public class Customer extends ModelEntity<Customer> {
 	private HashMap<String, String> fields;
 	
 	/**
+	 * The table of the user entity.
+	 */
+	public final static String table = "customer";
+	
+	/**
 	 * Creates a public customer that hasn't been stored in the database yet.
 	 * @param id  The id of the user.
 	 * @param firstName  The first name of the user.
@@ -111,11 +116,11 @@ public class Customer extends ModelEntity<Customer> {
  				
  				// Loop through the rows
  				while (result.next()) {
- 					int id 			 		 = result.getInt(1);
+ 					int id 			 = result.getInt(1);
  					String firstName = result.getString(2);
  					String lastName  = result.getString(3);
- 					String email 	 	 = result.getString(4);
- 					String phone 	 	 = result.getString(5);
+ 					String email 	 = result.getString(4);
+ 					String phone 	 = result.getString(5);
  					String address	 = result.getString(6);
  					arr[result.getRow() - 1] = new Customer(id, firstName, lastName, email, phone, address);
  				}
@@ -144,12 +149,12 @@ public class Customer extends ModelEntity<Customer> {
   public HashMap<String, String> getFields() {
   	return fields;
   }
-   
-  /** 
-   * Returns the name of the table for the User entity.
+  
+  /**
+   * Return the name of the table for the customer entity.
    */
   public String getTable() {
-  	return "customer";
+	  return table;
   }
   
   /**
@@ -157,7 +162,7 @@ public class Customer extends ModelEntity<Customer> {
    * @return An array with customers.
    */
   public static Customer[] getAll() {
-  	ResultSet result = model.get("customer", "");
+  	ResultSet result = model.get(table, "");
   	
   	// Return the result
   	return getCustomersFromResultSet(result);
@@ -169,7 +174,7 @@ public class Customer extends ModelEntity<Customer> {
 	 * @return  The Customer if it was found, otherwise null.
 	 */
 	public static Customer getWhereId(int entryId) {
-		ResultSet result = ModelEntity.model.get("customer", entryId);
+		ResultSet result = ModelEntity.model.get(table, entryId);
 		// Examine if the result has any data
 		if (getFirstRowInResultSet(result)) {
 			try {
@@ -193,12 +198,12 @@ public class Customer extends ModelEntity<Customer> {
 	}
 	
 	/**
-	 * Fetches a number of Customer from the database, which fulfills the 
+	 * Fetches a number of Customer from the database, which resembles the given fields.
 	 * @param fields  The fields (keys) with their expected values.
 	 * @return  The entry from the database if it exists, otherwise null.
 	 */
-	public static Customer[] getWhere(Map<String, String> fields) {
-		ResultSet result = ModelEntity.model.get("customer", fields);
+	public static Customer[] searchWhere(Map<String, String> fields) {
+		ResultSet result = ModelEntity.model.search(table, fields);
 		
 		// Retrieve the array
 		return getCustomersFromResultSet(result);

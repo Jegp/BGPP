@@ -140,8 +140,8 @@ public class VehicleClass extends ModelEntity<VehicleClass> {
 	 * @param  fields  The fields (keys) with their expected values.
 	 * @return  The entry from the database if it exists, otherwise null.
 	 */
-	public static VehicleClass[] getWhere(Map<String, String> fields) {
-		ResultSet result = model.get("vehicleClass", fields);
+	public static VehicleClass[] searchWhere(Map<String, String> fields) {
+		ResultSet result = model.search("vehicleClass", fields);
 		
 		return getVehicleClassesFromResultSet(result);
 	}

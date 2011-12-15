@@ -91,7 +91,7 @@ public class CreateVehicleView extends JFrame {
 	public int getVehicleClassID() {
 		HashMap<String, String> identifier = new HashMap<String,String>();
 		identifier.put("description", vehicleClasses[vehicleClass.getSelectedIndex()]);
-		VehicleClass[] temp = VehicleClass.getWhere(identifier);
+		VehicleClass[] temp = VehicleClass.searchWhere(identifier);
 		
 		for (VehicleClass vc : temp) {
 			if (vc.description.equals(vehicleClasses[vehicleClass.getSelectedIndex()])) {

@@ -9,16 +9,21 @@ import java.util.Map;
 import main.util.Log;
 
 public class Reservation extends ModelEntity<Reservation> {
-
-	/**
-	 * the reservations ID. 
-	 */
-	public final int id;
 	
 	/**
 	 * the reservations user.
 	 */
 	public final Customer customer;
+	
+	/**
+	 * The fields of the reservation.
+	 */
+	private final HashMap<String, String> fields = new HashMap<String, String>();
+
+	/**
+	 * the reservations ID. 
+	 */
+	public final int id;
 	
 	/**
 	 * The time-period of the reservation.
@@ -31,9 +36,9 @@ public class Reservation extends ModelEntity<Reservation> {
 	public final Vehicle vehicle;
 	
 	/**
-	 * The fields of the reservation.
+	 * The table associated with the reservation entity.
 	 */
-	private HashMap<String, String> fields;
+	public final static String table = "reservation";
 	
 	/**
 	 * Instantiates a reservation with a given id.
@@ -44,11 +49,7 @@ public class Reservation extends ModelEntity<Reservation> {
 		this.period	  = period;
 		this.vehicle  = vehicle;
 		
-		fields = new HashMap<String, String>();
-		fields.put("id", id + "");
-		fields.put("customer", customer.id + "");
-		fields.put("period", period.id + "");
-		fields.put("vehicle", vehicle.id + "");
+		setFields(customer, period, vehicle, id);
 	}
 	
 	/**
@@ -64,10 +65,7 @@ public class Reservation extends ModelEntity<Reservation> {
 		this.period   = period;
 		this.vehicle  = vehicle;
 		
-		fields = new HashMap<String, String>();
-		fields.put("customer", customer.id + "");
-		fields.put("period", period.id + "");
-		fields.put("vehicle", vehicle.id + "");
+		setFields(customer, period, vehicle, 0);		
 	}
 	
 	/**
@@ -78,10 +76,70 @@ public class Reservation extends ModelEntity<Reservation> {
 	}
 	
 	/**
+	 * Set the fields to their respective values.
+	 */
+	private void setFields(Customer customer, Period period, Vehicle vehicle, int id) {
+		if (customer != null) fields.put("customer", customer.id + "");
+		if (period   != null) fields.put("period", period.id + "");
+		if (vehicle  != null) fields.put("vehicle", vehicle.id + "");
+		if (id       != 0)    fields.put("id", id + "");
+	}
+	
+	/**
 	 * Gets the fields of the current reservation.
 	 */
 	public HashMap<String, String> getFields() {
 		return fields;
+	}
+	
+	/**
+	 * Fetches a number of Reservations from the database, which collide with the given period, i. e.
+	 * reservations whose period  
+	 * @param fields  The fields (keys) with their expected values.
+	 * @return  The entry from the database if it exists, otherwise null.
+	 */
+	public static Reservation[] getFromPeriod(Period period) {
+		// Set the condition
+		// Set a query:      |-----------------|
+		// Get the situation where the start time and endTime is inside the query
+		// Data example:            |----|
+		String condition  = "(period.start >= " + period.start.getTime() + " AND period.end <= " + period.end.getTime() + ") " +
+		// Get the situation where the start time is before the query, BUT where the end time is after the start of the query
+		// Data example: |--------|
+							"OR (period.start <= " + period.start.getTime() + " AND period.end >= " + period.start.getTime() + ") " +
+		// Get the situation where the end time is after the query, BUT where the start time is before the end time of the query
+		// Data example:                  |---------|
+							"OR (period.end >= " + period.end.getTime() + " AND period.start <= " + period.end.getTime() + ")";
+		
+		// Execute the query
+		ResultSet result = model.get(table, condition, "period", "reservation.period", "period.id");
+
+		// Examine if the result has any content
+		if (getFirstRowInResultSet(result)) {
+			// Retrieve the results
+			try {
+				result.last();
+				Reservation[] arr = new Reservation[result.getRow()];
+				result.beforeFirst();
+				while (result.next()) {
+					int id 		= result.getInt(1);
+					Customer c  = Customer.getWhereId(result.getInt(2));
+					Vehicle v   = Vehicle.getWhereId(result.getInt(3));
+					Period p    = new Period(new Date(result.getLong("start")), new Date(result.getLong("end")));
+					arr[result.getRow() - 1] = new Reservation(id, c, p, v);
+				}
+				
+				// Return
+				return arr;
+			} catch (SQLException e) {
+				Log.error("Unable to retrieve a reservation from result: " + e);
+			}
+		} else {
+			Log.info("Query for reservations with the given condition returned empty.");
+		}
+		
+		// Return failure
+		return null;
 	}
 
 	public int getId() {
@@ -92,7 +150,7 @@ public class Reservation extends ModelEntity<Reservation> {
 	 * Returns the name of the table for the reservations. 
 	 */
 	public String getTable() {
-		return "reservation";
+		return table;
 	}
 
     /**
@@ -112,7 +170,7 @@ public class Reservation extends ModelEntity<Reservation> {
 				// Return
 				return new Reservation(id, customer, period, vehicle);
 			} catch (SQLException e) {
-				Log.error("Unable to retrieve data from result: " + e);
+				Log.error("Unable to retrieve a reservation from result: " + e);
 			}
 		} else {
 			Log.info("Query for Reservation returned empty.");
@@ -121,29 +179,17 @@ public class Reservation extends ModelEntity<Reservation> {
 		// If nothing is found return null.
 		return null;
 	}
+
 	
 	/**
-	 * Fetches a number of Reservations from the database, which collide with the given period, i. e.
-	 * reservations whose period  
-	 * @param fields  The fields (keys) with their expected values.
-	 * @return  The entry from the database if it exists, otherwise null.
+	 * Fetches any number of reservations which matches the search
+	 * criteria specified by the fields parameter.
+	 * @param fields  The fields to search for.
 	 */
-	public static Reservation[] getFromPeriod(Period period) {
-		// Set the condition
-											// Set a query:      |-----------------|
-											// Get the situation where the start time and endTime is inside the query
-										  // Data example:            |----|
-		String condition  = "(period.startTime >= " + period.start.getTime() + " AND period.endTime <= " + period.end.getTime() + ") " +
-											// Get the situation where the start time is before the query, BUT where the end time is after the start of the query
-											// Data example: |--------|
-												"OR (period.startTime <= " + period.start.getTime() + " AND period.endTime >= " + period.start.getTime() + ") " +
-											// Get the situation where the end time is after the query, BUT where the start time is before the end time of the query
-											// Data example:                  |---------|
-												"OR (period.end >= " + period.end.getTime() + " AND period.start <= " + period.end.getTime() + ")";
-		
+	public static Reservation[] searchWhere(Map<String, String> fields) {
 		// Execute the query
-		ResultSet result = model.get("reservation", condition, "period", "reservation.period", "period.id");
-
+		ResultSet result = model.search(table, fields);
+		
 		// Examine if the result has any content
 		if (getFirstRowInResultSet(result)) {
 			// Retrieve the results
@@ -152,23 +198,25 @@ public class Reservation extends ModelEntity<Reservation> {
 				Reservation[] arr = new Reservation[result.getRow()];
 				result.beforeFirst();
 				while (result.next()) {
-					int id 			= result.getInt(1);
+					int id 		= result.getInt(1);
 					Customer c  = Customer.getWhereId(result.getInt(2));
 					Vehicle v   = Vehicle.getWhereId(result.getInt(3));
-					Period p    = new Period(new Date(result.getLong("startTime")), new Date(result.getLong("endTime")));
+					Period p    = Period.getWhereId(result.getInt(4));
+					
+					// Return
 					arr[result.getRow() - 1] = new Reservation(id, c, p, v);
 				}
 				
 				// Return
 				return arr;
 			} catch (SQLException e) {
-				Log.error("Unable to retrieve data from result: " + e);
+				Log.error("Unable to retrieve a reservation from result: " + e);
 			}
 		} else {
-			Log.info("Query for Reservation with condition returned empty.");
+			Log.info("Query for reservations with the given condition returned empty.");
 		}
 		
-		// Return failure.
+		// Return failure
 		return null;
 	}
 	

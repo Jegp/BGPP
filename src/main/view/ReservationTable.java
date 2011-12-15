@@ -22,28 +22,46 @@ public class ReservationTable extends AbstractTableModel
 	public ReservationTable(Date startDate, Date endDate) {
 		
 		Period period 				= new Period(startDate, endDate);
-		//Reservation[] reservations 	= Reservation.getFromPeriod(period);
+		Reservation[] reservations 	= Reservation.getFromPeriod(period);
 		periodInDays 				= period.getLengthInDays();
 		Vehicle[] allVehicles 		= Vehicle.getAll();
 		numberOfVehicles 			= allVehicles.length;
 		
-		date 						= new String[periodInDays];
-		data 						= new Object[periodInDays][numberOfVehicles];
+		date 						= new String[periodInDays + 1];
+		data 						= new Object[numberOfVehicles][periodInDays + 1];
 		
 		//Initialize calendar
 		GregorianCalendar calendar 	= new GregorianCalendar();
 		calendar.setTime(startDate);
 		
 	 	//Initialize dates
-		for(int i = 0; i < periodInDays; i++) {
-			date[i] = calendar.get(Calendar.DAY_OF_MONTH) + "" + "/" + calendar.get(Calendar.MONTH);	
+		date[0] = "Vehicle";
+		for(int j = 1; j < periodInDays + 1; j++) {
+			date[j] = calendar.get(Calendar.DAY_OF_MONTH) + "" + "/" + calendar.get(Calendar.MONTH);
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
-		}
-		
-		for(int i = 0; i < numberOfVehicles; i++) {
-			for(int j = 0; j < periodInDays; j++) {
-				data[i][j] = "x";
 			}
+		
+		// creates the first column to contain all vehicles ID
+		for(int i = 0; i < numberOfVehicles; i++) {
+		 data[i][0] = allVehicles[i].model;
+		  if(reservations == null) {
+		  }
+		  else{
+		    // finds reservations with the same vehicle ID
+		  	for(int j = 0; j < reservations.length; j++) {
+		  		if(allVehicles[i].id == reservations[j].vehicle.getId()) {
+		  			// iterates over the reservations with the same vehicle ID, and checks if they are part of the column/date is a part of its period  
+		  			for(int k = 1; k < reservations.length; k++) {
+		  				// checks if the the current date is a part of the reservations period
+		  				if(reservations[k].period.isIncluded(calendar.getTime())) {
+		  					data[i][k] = "x";
+		  				}
+		  				// changes current day to the following to.
+		  				calendar.add(Calendar.DAY_OF_MONTH, 1);
+				  }
+			  }
+		   }
+		  }
 		}
 	}
 

@@ -21,11 +21,19 @@ public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityInterf
 	
 	/**
 	 * Deletes an entity from the model.
+	 * @param table  The table to delete from.
 	 * @return boolean  A flag to signal success or failure.
 	 */
-	public static <E extends ModelEntity<E>> boolean delete(E entity) {
-		// Return success or failure.
-		return model.delete(entity.getTable(), entity.getId());
+	public static boolean delete(String table, int id) {
+		// Return if id isn't set.
+		if (id != 0)
+			// Delete it and see if we're successful
+			return model.delete(table, id);
+		else
+			Log.error("Unable to delete entity without a specified id.");
+		
+		// Return failure
+		return false;
 	}
 	
 	/**
@@ -68,4 +76,27 @@ public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityInterf
 		return (E) entity.factory(newId, entity);
 	}
 	
+	/**
+	 * Updates an entity to the given fields.
+	 * @param entity  The entity with the updated fields.
+	 * @param id  The id of the entity to store.
+	 * @param <E>  The type of the entity.
+	 * @return  The entity.
+	 */
+	public static <E extends ModelEntity<E>> E update(E entity, int id) {
+		if (id != 0) {
+			// Execute the update query and retrieve the success flag.
+			boolean success = model.update(entity.getTable(), id, entity.getFields());
+			
+			// Log failure
+			if (!success)
+				Log.warning("Unable to update entity in table " + entity.getTable() + " where id = " + id + ".");
+			
+			// Return under any circumstances.
+			return entity;
+		} else {
+			Log.warning("Unable to update entity withouth an id. Please store the entity in the database first. Returning unchanges entity.");
+			return entity;
+		}
+	}
 }

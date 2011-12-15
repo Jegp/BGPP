@@ -26,6 +26,8 @@ public class MainClass {
 		// Initialize controller.
 		Controller controller = new Controller(model, view);
 		
+		System.out.println(System.currentTimeMillis());
+		
 		// Tests
 		//Customer c1 = new Customer("Daniel", "Varab", "forestdotcom@hotmail.com", "112", "VejAlléen 10, 2200 Kbh C");
 		//Customer c2 = new Customer("Sune", "Debel", "sdeb@itu.dk", "114", "VejAlléen 12, 2200 Kbh C");

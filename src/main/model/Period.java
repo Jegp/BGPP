@@ -12,6 +12,16 @@ import main.util.Log;
  * A period of time represented by a start and end time.
  */
 public class Period extends ModelEntity<Period> {
+	
+	/**
+	 * The end time of the period.
+	 */
+	public Date end;
+	
+	/**
+	 * The fields of the period entity.
+	 */
+	private final Map<String, String> fields = new HashMap<String, String>();
 
 	/**
 	 * The id of the period.
@@ -24,14 +34,9 @@ public class Period extends ModelEntity<Period> {
 	public Date start;
 	
 	/**
-	 * The end time of the period.
+	 * The table of the period entity.
 	 */
-	public Date end;
-	
-	/**
-	 * The fields of the period entity.
-	 */
-	private Map<String, String> fields;
+	public final static String table = "period";
 	
 	/**
 	 * Constructs a period with a given id.
@@ -41,10 +46,7 @@ public class Period extends ModelEntity<Period> {
 		this.start = start;
 		this.end   = end;
 		
-		fields = new HashMap<String, String>();
-		fields.put("id", id + "");
-		fields.put("start", start.toString());
-		fields.put("end", end.toString());
+		setFields(start, end, id);
 	}
 	
 	/**
@@ -57,9 +59,7 @@ public class Period extends ModelEntity<Period> {
 		this.start = start;
 		this.end   = end;
 		
-		fields = new HashMap<String, String>();
-		fields.put("start", start.toString());
-		fields.put("end", end.toString());
+		setFields(start, end, 0);
 	}
 
 	protected Period factory(int id, Period entity) {
@@ -83,7 +83,7 @@ public class Period extends ModelEntity<Period> {
 	}
 
 	public String getTable() {
-		return "period";
+		return table;
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public class Period extends ModelEntity<Period> {
 	 * @return  The period if it was found, otherwise null.
 	 */
 	public static Period getWhereId(int entryId) {
-		ResultSet result = ModelEntity.model.get("period", entryId);
+		ResultSet result = ModelEntity.model.get(table, entryId);
 		// Examine if the result has any data
 		if (getFirstRowInResultSet(result)) {
 			try {
@@ -102,7 +102,7 @@ public class Period extends ModelEntity<Period> {
 				// Return
 				return new Period(id, new Date(start), new Date(end));
 			} catch (SQLException e) {
-				Log.error("Unable to retrieve data from result: " + e);
+				Log.error("Unable to retrieve a period from result: " + e);
 			}
 		} else {
 			Log.info("Query for Period returned empty.");
@@ -115,10 +115,19 @@ public class Period extends ModelEntity<Period> {
 	/**
 	 * Examines whether the given date is included in the period, i. e. whether start <= date <= end.
 	 * @param date  The date to test.
-	 * @return  A boolean value signalling whether the given date is included or not.
+	 * @return  A boolean value signaling whether the given date is included or not.
 	 */
 	public boolean isIncluded(Date date) {
 		return (start.getTime() <= date.getTime() && date.getTime() <= end.getTime());
+	}
+	
+	/**
+	 * Set the fields with their respective values.
+	 */
+	private void setFields(Date start, Date end, int id) {
+		if (id != 0)       fields.put("id", id + "");
+		if (start != null) fields.put("start", start.toString());
+		if (end != null)   fields.put("end", end.toString());
 	}
 	
 
