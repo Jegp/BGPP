@@ -84,14 +84,15 @@ public class Controller
     		String description = view.getNewVehicleDescription();
     		String manufactorer = view.getNewVehicleManufactorer();
     		String model = view.getNewVehicleModel();
-    		int selectedVehicleClassID = view.getNewVehicleClassID();
-    		VehicleClass vehicleClass = VehicleClass.getWhereId(selectedVehicleClassID);
-    		Vehicle v = new Vehicle(description, manufactorer, model, vehicleClass);
+    		
    
     		if (description.equals("") || manufactorer.equals("") || model.equals("")) {
 				JOptionPane.showMessageDialog(view.getCreateVehicleView(), "Please fill out all boxes",
-    					"Insufficient information", JOptionPane.ERROR_MESSAGE);
+    			"Insufficient information", JOptionPane.ERROR_MESSAGE);
     		} else {
+    			int selectedVehicleClassID = view.getNewVehicleClassID();
+        		VehicleClass vehicleClass = VehicleClass.getWhereId(selectedVehicleClassID);
+        		Vehicle v = new Vehicle(description, manufactorer, model, vehicleClass);
     			Vehicle.save(v);
     			view.changeContainer(new VehicleContainer());
     			view.killCreateVehicleView();

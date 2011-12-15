@@ -128,8 +128,4 @@ public class View extends JFrame
 	public CreateVehicleView getCreateVehicleView() {
 		return createVehicleView;
 	}
-	
-	public void updateVehicleTable(Vehicle[] vehicles) {
-		
-	}
 }
