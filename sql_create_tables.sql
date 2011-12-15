@@ -26,8 +26,8 @@ vehicleClass INTEGER UNSIGNED REFERENCES vehicleClass(id));
 -- Create period table
 CREATE TABLE period (
 id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-startTime BIGINT UNSIGNED,
-endTime BIGINT UNSIGNED);
+start BIGINT UNSIGNED,
+end BIGINT UNSIGNED);
 
 -- Create reservation table
 CREATE TABLE reservation (
