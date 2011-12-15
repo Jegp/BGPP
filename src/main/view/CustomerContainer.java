@@ -25,6 +25,8 @@ public class CustomerContainer extends JPanel {
 	
 	private JScrollPane pane;
 	
+	private ActionListener tableListener;
+	
 	/**
 	 * Creates a new container and initializes it with a list of all available customers.
 	 */
@@ -43,7 +45,7 @@ public class CustomerContainer extends JPanel {
 	/**
 	 * Adds a listener to the search button.
 	 */
-	public void addListenerToSearchButton(ActionListener listener) {
+	public void setActionListenerToSearchButton(ActionListener listener) {
 		buttonSearch.addActionListener(listener);
 	}
 	
@@ -51,13 +53,13 @@ public class CustomerContainer extends JPanel {
 	 * Reset the table with the given customers.
 	 * @param customers  An array of customers to show.
 	 */
-	public void showCustomers(Customer[] customers, MouseListener tableListener) {		
-		// Define the table model
-		customerTable = new CustomerTable(customers, tableListener);
-
+	public void showCustomers(Customer[] customers) {
 		// Remove the old pane if it exists
 		if (pane != null)
 			remove(pane);
+		
+		// Define the table model
+		customerTable = new CustomerTable(customers);
 		
 		// Enclose the table in a new scroll pane
 		pane = new JScrollPane(customerTable);

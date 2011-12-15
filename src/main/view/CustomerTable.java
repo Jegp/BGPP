@@ -23,7 +23,7 @@ public class CustomerTable extends JTable {
 	/**
 	 * Creates a JTable showing a number of customers.
 	 */
-	public CustomerTable(final Customer[] customers, MouseListener tableListener) {
+	public CustomerTable(final Customer[] customers) {
 		// Set the table model
 		tableModel = new CustomerTableModel(customers);
 		setModel(tableModel);
@@ -33,9 +33,6 @@ public class CustomerTable extends JTable {
 		
 		// Set the tooltip, so we know what to do with each row
 		setToolTipText("Click on row to edit.");
-		
-		// Adds a mouse listener 
-		addMouseListener(tableListener);
 	}
 
 	/**
@@ -56,7 +53,13 @@ public class CustomerTable extends JTable {
 		/**
 		 * Creates a new customer table with the given customers.
 		 */
-		public CustomerTableModel(Customer[] customers) {			
+		public CustomerTableModel(Customer[] customers) {
+			// If there aren't any customers, store an empty array.
+			if (customers == null) {
+				data = new Object[0][0];
+				return;
+			}
+			
 			// Create the data array
 			data = new Object[customers.length][6];
 			

@@ -67,9 +67,10 @@ public class MySQLModel extends Model {
 	}
 	
 	/**
-	 * Builds a select query from a table map with keys associated to their valuesj.
+	 * Builds a select query from a table map with keys associated to their values. In the
+	 * method we use the SQL 'like' command, so any use of wildcards etc. is supported.
 	 * @param table  The table to query.
-	 * @param fields  The map with keys associated with a given value, tested by the logic equals.
+	 * @param fields  The map with keys associated with a given value, tested by the SQL 'LIKE' command.
 	 * @param selector  The fields to select.
 	 * @param join  An optional join statement.
 	 * @return String  The sql statement.
@@ -81,7 +82,7 @@ public class MySQLModel extends Model {
 		// Iterate through the fields to add the conditions.
 		int n = 1;
 		for (Map.Entry<String, String> e : fields.entrySet()) {
-			condition += e.getKey() + " = '" + e.getValue() + "' ";
+			condition += e.getKey() + " LIKE '" + e.getValue() + "' ";
 			if (n < fields.size())
 				condition += "AND ";
 			n++;
@@ -134,14 +135,6 @@ public class MySQLModel extends Model {
 	public ResultSet get(String table, String condition) {
 		// Build the query
 		String sql = buildSelectQuery(table, condition, "*", "");
-
-		// Return the result
-		return executeAndReturnResult(sql);
-	}
-	
-	public ResultSet get(String table, Map<String, String> fields) {
-		// Build the query
-		String sql = buildSelectQuery(table, fields, "*", "");
 
 		// Return the result
 		return executeAndReturnResult(sql);
@@ -237,6 +230,14 @@ public class MySQLModel extends Model {
 		
 		// If nothing has been returned so far we're unsuccessful. Return 0.
 		return 0;
+	}
+	
+	public ResultSet search(String table, Map<String, String> fields) {
+		// Build the query
+		String sql = buildSelectQuery(table, fields, "*", "");
+
+		// Return the result
+		return executeAndReturnResult(sql);
 	}
 
 	public ResultSet update(String table, int id, Map<String, String> fields) {

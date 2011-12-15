@@ -193,12 +193,12 @@ public class Customer extends ModelEntity<Customer> {
 	}
 	
 	/**
-	 * Fetches a number of Customer from the database, which fulfills the 
+	 * Fetches a number of Customer from the database, which resembles the given fields.
 	 * @param fields  The fields (keys) with their expected values.
 	 * @return  The entry from the database if it exists, otherwise null.
 	 */
-	public static Customer[] getWhere(Map<String, String> fields) {
-		ResultSet result = ModelEntity.model.get("customer", fields);
+	public static Customer[] searchWhere(Map<String, String> fields) {
+		ResultSet result = ModelEntity.model.search("customer", fields);
 		
 		// Retrieve the array
 		return getCustomersFromResultSet(result);

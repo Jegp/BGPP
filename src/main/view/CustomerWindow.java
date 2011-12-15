@@ -22,6 +22,7 @@ public class CustomerWindow extends JFrame {
 	private final JLabel textEmail	   = new JLabel("Email:");
 	private final JLabel textPhone     = new JLabel("Phone number:");
 	private final JLabel textAddress   = new JLabel("Address:");
+	private JLabel textHelpTip;
 	
 	public final JTextField fieldFirstName;
 	public final JTextField fieldLastName;
@@ -36,7 +37,7 @@ public class CustomerWindow extends JFrame {
 	/**
 	 * Create a new window that searches for a given customer.
 	 */
-	public CustomerWindow(ActionListener searchListener) {
+	public CustomerWindow() {
 		// Set the title
 		setTitle("Search for customers");
 		
@@ -47,14 +48,14 @@ public class CustomerWindow extends JFrame {
 		fieldPhone 		 = new JTextField("");
 		fieldAddress 	 = new JTextArea("");
 		
+		// Set the help text
+		textHelpTip = new JLabel("<html>It's possible to do wildcard searches <br />using the character '%'.</html>");
+		
 		// Create buttons
 		buttonDelete = new JButton("");
 		buttonDelete.setVisible(false);
 		buttonSubmit = new JButton("Search");
 		buttonCancel = new CancelButton(this);
-		
-		// Add the save listener
-		buttonSubmit.addActionListener(searchListener);
 		
 		// Generate layout
 		generateLayout();
@@ -63,7 +64,7 @@ public class CustomerWindow extends JFrame {
 	/**
 	 * Create a new window that can manipulate the given customer.
 	 */
-	public CustomerWindow(Customer customer, ActionListener deleteListener, ActionListener saveListener) {
+	public CustomerWindow(Customer customer) {
 		// Throw error if customer is null
 		if (customer == null) {
 			Log.error("CustomerWindow was initialized without a customer. Throwing exception.");
@@ -85,12 +86,24 @@ public class CustomerWindow extends JFrame {
 		buttonSubmit = new JButton("Save");
 		buttonCancel = new CancelButton(this);
 		
-		// Add listeners
-		buttonDelete.addActionListener(deleteListener);
-		buttonSubmit.addActionListener(saveListener);
-		
 		// Generate the layout
 		generateLayout();
+	}
+	
+	/**
+	 * Add an action listener to the submit button.
+	 */
+	public void addActionListenerToSubmitButton(ActionListener listener) {
+		if (buttonSubmit != null)
+			buttonSubmit.addActionListener(listener);
+	}
+	
+	/**
+	 * Add an action listener to the delete button.
+	 */
+	public void addActionListenerToDeleteButton(ActionListener listener) {
+		if (buttonDelete != null)
+			buttonDelete.addActionListener(listener);
 	}
 	
 	/**
@@ -124,12 +137,12 @@ public class CustomerWindow extends JFrame {
 		southWrapper.setLayout(new GridLayout(1, 2, 3, 6));
 
 		// Add the elements to the pane
-		northWrapper.add(textFirstName); 	northWrapper.add(fieldFirstName);
-		northWrapper.add(textLastName);  	northWrapper.add(fieldLastName);
-		northWrapper.add(textEmail);		  northWrapper.add(fieldEmail);
-		northWrapper.add(textPhone);		  northWrapper.add(fieldPhone);
-		northWrapper.add(new JLabel());	  northWrapper.add(new JLabel()); // Add empty space
-		southWrapper.add(textAddress);	  southWrapper.add(new JScrollPane(fieldAddress)); // Add a scroll pane for the text area.
+		northWrapper.add(textFirstName);	northWrapper.add(fieldFirstName);
+		northWrapper.add(textLastName);		northWrapper.add(fieldLastName);
+		northWrapper.add(textEmail);		northWrapper.add(fieldEmail);
+		northWrapper.add(textPhone);		northWrapper.add(fieldPhone);
+		northWrapper.add(new JLabel());		northWrapper.add(new JLabel()); // Add empty space
+		southWrapper.add(textAddress);		southWrapper.add(new JScrollPane(fieldAddress)); // Add a scroll pane for the text area.
 		textAddress.setPreferredSize(new Dimension(100, 60));
 		
 		// Add the wrappers to the center panel
@@ -141,13 +154,32 @@ public class CustomerWindow extends JFrame {
 		
 		// Create a south wrapper
 		JPanel south = new JPanel();
-		south.setLayout(new GridLayout(2, 3, 3, 6));
+		south.setLayout(new BorderLayout());
 		
-		// Add space
-		south.add(new JLabel()); south.add(new JLabel()); south.add(new JLabel());
+		// Create inline wrappers and set their layout
+		JPanel southDescription = new JPanel();
+		JPanel southButtons     = new JPanel();	
+		southDescription.setLayout(new BorderLayout());
+		southButtons.setLayout(new GridLayout(1, 3, 3, 6));
 		
-		// Add the buttons
-		south.add(buttonDelete); south.add(buttonSubmit); south.add(buttonCancel);
+		// Add the help
+		if (textHelpTip != null) {
+			southDescription.add(textHelpTip, BorderLayout.CENTER);
+		
+			// Add space
+			JPanel space4 = new JPanel(); space4.setPreferredSize(new Dimension(10, 5));
+			JPanel space5 = new JPanel(); space5.setPreferredSize(new Dimension(10, 5));
+			southDescription.add(space4, BorderLayout.EAST);
+			southDescription.add(space5, BorderLayout.WEST);
+		}
+		
+		// Add space and buttons
+		//southButtons.add(new JLabel()); southButtons.add(new JLabel()); southButtons.add(new JLabel());
+		southButtons.add(buttonDelete); southButtons.add(buttonSubmit); southButtons.add(buttonCancel);
+		
+		// Add the wrappers to the south panel
+		south.add(southDescription, BorderLayout.NORTH);
+		south.add(southButtons, BorderLayout.SOUTH);
 		
 		// Add the south panel
 		add(south, BorderLayout.SOUTH);
