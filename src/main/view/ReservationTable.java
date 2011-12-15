@@ -27,29 +27,22 @@ public class ReservationTable extends AbstractTableModel
 		Vehicle[] allVehicles 		= Vehicle.getAll();
 		numberOfVehicles 			= allVehicles.length;
 		
-		date 						= new String[periodInDays];
-		data 						= new Object[numberOfVehicles][periodInDays];
+		date 						= new String[periodInDays + 1];
+		data 						= new Object[numberOfVehicles][periodInDays + 1];
 		
 		//Initialize calendar
 		GregorianCalendar calendar 	= new GregorianCalendar();
 		calendar.setTime(startDate);
 		
 	 	//Initialize dates
-		for(int j = 0; j < periodInDays; j++){
+		date[0] = "Vehicle";
+		for(int j = 1; j < periodInDays + 1; j++){
 			date[j] = calendar.get(Calendar.DAY_OF_MONTH) + "" + "/" + calendar.get(Calendar.MONTH);
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 			}
 		
 		for(int i = 0; i < numberOfVehicles; i++) {
-			for(int j = 0; j < periodInDays; j++) {
-				//if(reservations[i].period.isIncluded(calendar.getTime())) {
-				//	data[i][j] = "x";
-				//}
-				//else{
-				//	data[i][j] = "";
-				//}
-				//calendar.add(Calendar.DAY_OF_MONTH, j);
-			}	
+			data[i][0] = allVehicles[i].id;	
 		}
 	}
 
