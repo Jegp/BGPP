@@ -55,6 +55,11 @@ public abstract class Model {
 	}
 	
 	/**
+	 * Examines whether a connection is available.
+	 */
+	abstract public boolean isConnected();
+	
+	/**
 	 * Store an entity in the given table with the given values of the fields.
 	 * If the entity already exists we simply return the id of the existing entity.
 	 * @return  The id of the stored entry. 0 (zero) if unsuccessful.

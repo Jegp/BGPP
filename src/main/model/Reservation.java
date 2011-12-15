@@ -133,10 +133,10 @@ public class Reservation extends ModelEntity<Reservation> {
 											// Set a query:      |-----------------|
 											// Get the situation where the start time and endTime is inside the query
 										  // Data example:            |----|
-		String condition  = "(period.startTime >= " + period.start.getTime() + " AND period.endTime <= " + period.end.getTime() + ") " +
+		String condition  = "(period.startTime >= " + period.start.getTime() + " AND period.end <= " + period.end.getTime() + ") " +
 											// Get the situation where the start time is before the query, BUT where the end time is after the start of the query
 											// Data example: |--------|
-												"OR (period.startTime <= " + period.start.getTime() + " AND period.endTime >= " + period.start.getTime() + ") " +
+												"OR (period.start <= " + period.start.getTime() + " AND period.end >= " + period.start.getTime() + ") " +
 											// Get the situation where the end time is after the query, BUT where the start time is before the end time of the query
 											// Data example:                  |---------|
 												"OR (period.end >= " + period.end.getTime() + " AND period.start <= " + period.end.getTime() + ")";
@@ -155,7 +155,7 @@ public class Reservation extends ModelEntity<Reservation> {
 					int id 			= result.getInt(1);
 					Customer c  = Customer.getWhereId(result.getInt(2));
 					Vehicle v   = Vehicle.getWhereId(result.getInt(3));
-					Period p    = new Period(new Date(result.getLong("startTime")), new Date(result.getLong("endTime")));
+					Period p    = new Period(new Date(result.getLong("start")), new Date(result.getLong("end")));
 					arr[result.getRow() - 1] = new Reservation(id, c, p, v);
 				}
 				

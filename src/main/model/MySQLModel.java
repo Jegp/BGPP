@@ -175,6 +175,10 @@ public class MySQLModel extends Model {
 			return null;
 		}
 	}
+	
+	public boolean isConnected() {
+		return connection != null;
+	}
 
 	public int save(String table, Map<String, String> fields) {
 		// Check that the entity exists.
