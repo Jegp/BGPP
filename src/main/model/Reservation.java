@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
-
 import main.util.Log;
 
 public class Reservation extends ModelEntity<Reservation> {
