@@ -36,13 +36,32 @@ public class ReservationTable extends AbstractTableModel
 		
 	 	//Initialize dates
 		date[0] = "Vehicle";
-		for(int j = 1; j < periodInDays + 1; j++){
+		for(int j = 1; j < periodInDays + 1; j++) {
 			date[j] = calendar.get(Calendar.DAY_OF_MONTH) + "" + "/" + calendar.get(Calendar.MONTH);
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 			}
 		
+		// creates the first column to contain all vehicles ID
 		for(int i = 0; i < numberOfVehicles; i++) {
-			data[i][0] = allVehicles[i].id;	
+		 data[i][0] = allVehicles[i].model;
+		  if(reservations == null) {
+		  }
+		  else{
+		    // finds reservations with the same vehicle ID
+		  	for(int j = 0; j < reservations.length; j++) {
+		  		if(allVehicles[i].id == reservations[j].vehicle.getId()) {
+		  			// iterates over the reservations with the same vehicle ID, and checks if they are part of the column/date is a part of its period  
+		  			for(int k = 1; k < reservations.length; k++) {
+		  				// checks if the the current date is a part of the reservations period
+		  				if(reservations[k].period.isIncluded(calendar.getTime())) {
+		  					data[i][k] = "x";
+		  				}
+		  				// changes current day to the following to.
+		  				calendar.add(Calendar.DAY_OF_MONTH, 1);
+				  }
+			  }
+		   }
+		  }
 		}
 	}
 
