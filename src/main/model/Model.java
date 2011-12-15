@@ -77,7 +77,8 @@ public abstract class Model {
 	/**
 	 * Updates a single column in the given table with the given id. The column is 
 	 * updated with the given fields. 
+	 * @return  True if success false if failure.
 	 */
-	abstract public ResultSet update(String table, int id, Map<String, String> fields);
+	abstract public boolean update(String table, int id, Map<String, String> fields);
 	
 }

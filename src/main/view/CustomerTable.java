@@ -18,6 +18,9 @@ import main.model.Customer;
  */
 public class CustomerTable extends JTable {
 
+	/**
+	 * The active table model.
+	 */
 	private CustomerTableModel tableModel;
 	
 	/**

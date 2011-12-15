@@ -25,7 +25,10 @@ public class CustomerContainer extends JPanel {
 	
 	private JScrollPane pane;
 	
-	private ActionListener tableListener;
+	/**
+	 * The mouse listener used on customer tables.
+	 */
+	private MouseListener tableListener; 
 	
 	/**
 	 * Creates a new container and initializes it with a list of all available customers.
@@ -53,7 +56,7 @@ public class CustomerContainer extends JPanel {
 	 * Reset the table with the given customers.
 	 * @param customers  An array of customers to show.
 	 */
-	public void showCustomers(Customer[] customers) {
+	public CustomerTable showCustomers(Customer[] customers) {
 		// Remove the old pane if it exists
 		if (pane != null)
 			remove(pane);
@@ -69,6 +72,9 @@ public class CustomerContainer extends JPanel {
 		
 		// Validate
 		validate();
+		
+		// Return the table
+		return customerTable;
 	}
 	
 	/**

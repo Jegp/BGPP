@@ -35,18 +35,24 @@ public class CustomerWindow extends JFrame {
 	public final CancelButton buttonCancel;
 	
 	/**
+	 * The id of the customer.
+	 */
+	public final int customerId;
+	
+	/**
 	 * Create a new window that searches for a given customer.
 	 */
 	public CustomerWindow() {
 		// Set the title
 		setTitle("Search for customers");
 		
-		// Set the elements to contain data of the customer
-		fieldFirstName = new JTextField("");
-		fieldLastName  = new JTextField("");
-		fieldEmail 		 = new JTextField("");
-		fieldPhone 		 = new JTextField("");
-		fieldAddress 	 = new JTextArea("");
+		// Set the elements to empty fields
+		fieldFirstName	= new JTextField("");
+		fieldLastName	= new JTextField("");
+		fieldEmail		= new JTextField("");
+		fieldPhone		= new JTextField("");
+		fieldAddress	= new JTextArea("");
+		customerId		= 0;
 		
 		// Set the help text
 		textHelpTip = new JLabel("<html>It's possible to do wildcard searches <br />using the character '%'.</html>");
@@ -65,21 +71,25 @@ public class CustomerWindow extends JFrame {
 	 * Create a new window that can manipulate the given customer.
 	 */
 	public CustomerWindow(Customer customer) {
-		// Throw error if customer is null
+		// Close the window if the customer doesn't exists or hasn't been stored yet.
 		if (customer == null) {
-			Log.error("CustomerWindow was initialized without a customer. Throwing exception.");
-			throw new NullPointerException("Unable to edit customer if no customer is given.");
+			Log.error("Cannot edit a non-existing customer.");
+			dispose();
+		} else if (customer.id == 0) {
+			Log.error("Cannot edit a customer that does not exist in the database.");
+			dispose();
 		}
 		
 		// Set the title
 		setTitle("Edit " + customer.firstName + " " + customer.lastName);
 		
 		// Set the elements to contain data of the customer
-		fieldFirstName = new JTextField(customer.firstName);
-		fieldLastName  = new JTextField(customer.lastName);
-		fieldEmail 		 = new JTextField(customer.email);
-		fieldPhone 		 = new JTextField(customer.phone);
-		fieldAddress 	 = new JTextArea(customer.address);
+		fieldFirstName	= new JTextField(customer.firstName);
+		fieldLastName	= new JTextField(customer.lastName);
+		fieldEmail		= new JTextField(customer.email);
+		fieldPhone		= new JTextField(customer.phone);
+		fieldAddress	= new JTextArea(customer.address);
+		customerId		= customer.id;
 		
 		// Create buttons
 		buttonDelete = new JButton("Delete");
