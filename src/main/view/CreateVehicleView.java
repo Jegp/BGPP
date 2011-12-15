@@ -55,12 +55,12 @@ public class CreateVehicleView extends JFrame {
 		
 		
 		pack();
-		setVisible(false);
+		setVisible(true);
 		
 		
 	}
 	
-	public void fillVehicleClasses() {
+	private void fillVehicleClasses() {
 		VehicleClass[] vehicleClassesInDb = VehicleClass.getAll();
 		ArrayList<String> descriptions = new ArrayList<String>();
 		
@@ -84,11 +84,11 @@ public class CreateVehicleView extends JFrame {
 		return manufacter.getText();
 	}
 	
-	public String getModel() {
+	public String getNewModel() {
 		return model.getText();
 	}
 	
-	public int getVehicleClassID() {
+	public int getNewVehicleClassID() {
 		HashMap<String, String> identifier = new HashMap<String,String>();
 		identifier.put("description", vehicleClasses[vehicleClass.getSelectedIndex()]);
 		VehicleClass[] temp = VehicleClass.searchWhere(identifier);

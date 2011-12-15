@@ -29,11 +29,7 @@ public class Controller
 		
 		view.addActionListenerToCustomerButton(new ListenerToCustomer());
 		
-		view.addActionListenerToVehicleButton(new ListenerToVehicle());
-		
-		view.addSaveVehicleListener(new saveVehicleBtnListener());
-		
-		
+		view.addActionListenerToVehicleButton(new ListenerToVehicle());		
 	}
 	
 	class ListenerToReservation implements ActionListener {
@@ -59,11 +55,10 @@ public class Controller
     
     class ListenerToVehicle implements ActionListener {
     	public void actionPerformed(ActionEvent e) {
-    	VehicleContainer vehicleContainer = new VehicleContainer();
-    	vehicleContainer.addCreateVehicleBtnListener(new addVehicleBtnListener());
-    	view.changeContainer(vehicleContainer);
+    	VehicleContainer container = new VehicleContainer();
     	
-    	System.out.println("Vehicle button...."); //remember to remove, only used for checking proper reactions
+    	new VehicleController(container);
+    	view.changeContainer(container);
     	view.pack();
     	}
     }
@@ -74,33 +69,7 @@ public class Controller
     	}
     }
     
-    class addVehicleBtnListener implements ActionListener {
-    	public void actionPerformed(ActionEvent e) {
-    		view.showVehicleView();
-    		
-    	}
-    }
     
-    class saveVehicleBtnListener implements ActionListener {
-    	public void actionPerformed(ActionEvent e) {
-    		String description = view.getNewVehicleDescription();
-    		String manufactorer = view.getNewVehicleManufactorer();
-    		String model = view.getNewVehicleModel();
-    		
-   
-    		if (description.equals("") || manufactorer.equals("") || model.equals("")) {
-				JOptionPane.showMessageDialog(view.getCreateVehicleView(), "Please fill out all boxes",
-    			"Insufficient information", JOptionPane.ERROR_MESSAGE);
-    		} else {
-    			int selectedVehicleClassID = view.getNewVehicleClassID();
-        		VehicleClass vehicleClass = VehicleClass.getWhereId(selectedVehicleClassID);
-        		Vehicle v = new Vehicle(description, manufactorer, model, vehicleClass);
-    			Vehicle.save(v);
-    			view.changeContainer(new VehicleContainer());
-    			view.killCreateVehicleView();
-    		}
-    	}
-    }
     
     class createActionListenerToCreateButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
