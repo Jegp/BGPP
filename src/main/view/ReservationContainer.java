@@ -1,6 +1,8 @@
 package main.view;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 import java.util.*;
 import java.util.Timer;
@@ -10,8 +12,12 @@ public class ReservationContainer extends JPanel
 {
 	Date startDate;
 	Date endDate;
+	JButton searchButton;
+	JButton createReservation;
 	
-	
+	/**
+	 * Creates a new container
+	 */
 	public ReservationContainer()
 	{	
 		startDate 						= new Date(System.currentTimeMillis());		//day - hours - seconds ect. 
@@ -47,5 +53,19 @@ public class ReservationContainer extends JPanel
 		southPanel.add(searchButton);
 		
 		setVisible(true);		
+	}
+	
+	/**
+	 * Adds a listener to the search button.
+	 */
+	public JButton getSearchButton() {
+		return searchButton;
+	}
+	
+	/**
+	 * Adds a listener to the create reservation button.
+	 */
+	public void setActionListenerToCreateButton(ActionListener listener) {
+		createReservation.addActionListener(listener);
 	}
 }
