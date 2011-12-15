@@ -133,7 +133,7 @@ public class Reservation extends ModelEntity<Reservation> {
 											// Set a query:      |-----------------|
 											// Get the situation where the start time and endTime is inside the query
 										  // Data example:            |----|
-		String condition  = "(period.startTime >= " + period.start.getTime() + " AND period.end <= " + period.end.getTime() + ") " +
+		String condition  = "(period.start >= " + period.start.getTime() + " AND period.end <= " + period.end.getTime() + ") " +
 											// Get the situation where the start time is before the query, BUT where the end time is after the start of the query
 											// Data example: |--------|
 												"OR (period.start <= " + period.start.getTime() + " AND period.end >= " + period.start.getTime() + ") " +
