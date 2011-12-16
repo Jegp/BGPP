@@ -20,7 +20,7 @@ public class Controller
 		// Store the view.
 		this.view = view;
 		
-		// Add a listener to the reservationbutton
+		// Add a listener to the reservation button
 		view.addActionListenerToReservationButton(new ListenerToReservation());
 		
 		// Add a listener to the customer button
@@ -43,9 +43,12 @@ public class Controller
 	
 	class ListenerToReservation implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-        view.changeContainer(new ReservationContainer());
-        System.out.println("Reservation button...."); //remember to remove, only used for checking proper reactions
-        view.pack();
+        	ReservationContainer container = new ReservationContainer();
+        	
+        	new ReservationController(container);
+        	//Update view
+        	view.changeContainer(container);
+        	view.pack();
         }
     }
         
@@ -55,7 +58,6 @@ public class Controller
 	    	
 	    	// Initialize controller for customer
 	    	new CustomerController(container);
-	    	
 	    	// Update view
 	    	view.changeContainer(container);
 	    	view.pack();
@@ -76,15 +78,6 @@ public class Controller
     	public void mouseClicked(MouseEvent e) {
     	System.out.println("mouse has been pressed!!!");
     	}
-    }
-    
-    
-    
-    class createActionListenerToCreateButton implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			
-		}
-    	
     }
 }
 

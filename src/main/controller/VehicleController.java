@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import main.controller.Controller.createActionListenerToCreateButton;
 import main.model.Vehicle;
 import main.model.VehicleClass;
 import main.view.CreateVehicleView;

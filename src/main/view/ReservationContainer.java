@@ -4,16 +4,20 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+
+import main.controller.ReservationController;
+
 import java.util.*;
 import java.util.Timer;
 
 public class ReservationContainer extends JPanel
 	
 {
-	Date startDate;
-	Date endDate;
-	JButton searchButton;
-	JButton createReservation;
+	private Date startDate;
+	private Date endDate;
+	private JButton searchButton;
+	private JButton createReservationButton;
+	private ReservationController controller;
 	
 	/**
 	 * Creates a new container
@@ -40,8 +44,8 @@ public class ReservationContainer extends JPanel
 		JTextField startOfPeriod		= new JTextField("Today", 10); //remake
 		JTextField endOfPeriod			= new JTextField("Tomorrow", 10); //remake
 		
-		JButton createReservation		= new JButton("Create Reservation");
-		JButton searchButton			= new JButton("Search");
+		createReservationButton			= new JButton("Create Reservation");
+		searchButton					= new JButton("Search");
 		
 		ReservationTable data 			= new ReservationTable(startDate, endDate);
 		JScrollPane scrollPane			= new JScrollPane(new JTable(data));
@@ -49,23 +53,20 @@ public class ReservationContainer extends JPanel
 		centerPanel.add(scrollPane);
 		northPanel.add(startOfPeriod);
 		northPanel.add(endOfPeriod);
-		southPanel.add(createReservation);
+		southPanel.add(createReservationButton);
 		southPanel.add(searchButton);
 		
 		setVisible(true);		
 	}
 	
-	/**
-	 * Adds a listener to the search button.
-	 */
-	public JButton getSearchButton() {
-		return searchButton;
+	public JButton getCreateReservationButton() {
+		return createReservationButton;
 	}
 	
 	/**
-	 * Adds a listener to the create reservation button.
+	 * returns button
 	 */
-	public void setActionListenerToCreateButton(ActionListener listener) {
-		createReservation.addActionListener(listener);
+	public JButton getSearchButton() {
+		return searchButton;
 	}
 }
