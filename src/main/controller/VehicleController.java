@@ -100,6 +100,7 @@ public class VehicleController {
 							Vehicle.update(v, selectedVehicle.id);
 							vehicleTable.updateTable(Vehicle.getAll());
 							editVehicleView.kill();
+							vehicles = Vehicle.getAll();
 					
 					
 					
