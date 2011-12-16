@@ -33,26 +33,16 @@ public class CustomerTest extends Customer {
 	}
 
 	@Test
-	public void testGetId() {
-		assertEquals("Unable to fetch the correct id", 0, customer.getId());
-		assertEquals("Unable to fetch the correct id", 625, customerWithId.getId());
-	}
-
-	@Test
-	public void testFactoryIntCustomer() {
+	public void testFactoryCustomer() {
 		Customer newCustomer = factory(720, customer); 
 		
-		assertEquals("Unable to associate a new it to a customer", 720, newCustomer.id);
+		assertEquals("Unable to associate a new id to an existing customer", 720, newCustomer.id);
 	}
 
 	@Test
 	public void testGetFields() {
 		HashMap<String, String> fields = customerWithId.getFields();
 
-		for (Map.Entry<String, String> e : fields.entrySet()) {
-			System.out.println(e.getKey() + " " + e.getValue());
-		}
-		
 		assertTrue("Cannot store the correct values of the fields",
 				fields.get("id").equals(625 + "") &&
 				fields.get("firstName").equals("André") &&
