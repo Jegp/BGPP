@@ -33,8 +33,9 @@ public class CreateReservationView extends JFrame{
 	private JTextField startDateTextField;
 	private JTextField endDateTextField;
 	
-	public final JButton customerCreateButton = new JButton("Create");
-	public final JButton customerSearchButton = new JButton("Search");
+	public final JButton customerCreateButton 	= new JButton("Create");
+	public final JButton customerSearchButton 	= new JButton("Search");
+	public final JButton updatePeriodButton	= new JButton("Update");
 	
 	public final JButton saveButton			= new JButton("Save"); 
 	public final JButton editButton			= new JButton("Edit");
@@ -73,7 +74,7 @@ public class CreateReservationView extends JFrame{
 		this.vehicle	= vehicle;
 		
 		//date -> string
-		dateFormat							= new SimpleDateFormat("MM/dd/yyyy");
+		dateFormat							= new SimpleDateFormat("dd/MM/yyyy");
 		String periodStartToString 			= dateFormat.format(period.start);
 		String periodEndToString			= dateFormat.format(period.end);
 		
@@ -89,12 +90,10 @@ public class CreateReservationView extends JFrame{
 		setTitle("Create Reservation");
 		setLayout(new BorderLayout());
 
-		JPanel northPanel		= new JPanel(new GridLayout(1,2));
-		JPanel withinNorthPanel = new JPanel(new GridLayout(1,2));	
-		JPanel centerPanel 		= new JPanel(new GridLayout(4,2));
+		JPanel northPanel		= new JPanel(new GridLayout(1,2,1,3));
+		JPanel withinNorthPanel = new JPanel(new GridLayout(1,2,1,3));	
+		JPanel centerPanel 		= new JPanel(new GridLayout(5,2,1,3));
 		JPanel southPanel		= new JPanel(new FlowLayout());
-		JPanel eastPanel  		= new JPanel(new GridLayout(4,1));
-
 		
 		//arrange the north panel with JLabels, JTextFields and JButtons
 		emptyLabel1.setVisible(false);
@@ -115,6 +114,9 @@ public class CreateReservationView extends JFrame{
 		centerPanel.add(endDateLabel);
 		centerPanel.add(endDateTextField);
 		
+		centerPanel.add(emptyLabel2);
+		centerPanel.add(updatePeriodButton);
+		
 		centerPanel.add(vehicleLabel);
 		centerPanel.add(vehicleDropDown);
 		
@@ -132,7 +134,7 @@ public class CreateReservationView extends JFrame{
 		setVisible(true);
 	}
 	
-	public void getAllVehiclesinArray() {
+	public void setAllVehiclesinArray() {
 		Vehicle[] vehicles 			= Vehicle.getAll();
 		Reservation[] reservations	= Reservation.getFromPeriod(period);
 		availableVehicles			= new String[vehicles.length];
@@ -157,7 +159,6 @@ public class CreateReservationView extends JFrame{
 		 }
 		}
 		
-		
 	}
 	
 	public void getAllCustomersInArray() {
@@ -169,27 +170,20 @@ public class CreateReservationView extends JFrame{
 		}	
 	}
 	
-	public void submitInput() {
-		customerInput		= allCustomers[customerDropDown.getSelectedIndex()];
-		startDateInput		= startDateTextField.getText();
-		endDateInput		= endDateTextField.getText();
-		vehicleInput		= availableVehicles[vehicleDropDown.getSelectedIndex()];
-	}
-	
-	public Period setPeriod() {
+	public void setPeriod() {
 		try {
 		startDate			= dateFormat.parse(startDateTextField.getText());	
 		endDate				= dateFormat.parse(endDateTextField.getText());
 		
-		calendar			= new GregorianCalendar();
-		calendar.setTime(startDate);
-		
 		period				= new Period(startDate, endDate);
+		
+		calendar			= new GregorianCalendar();
+		calendar.setTime(startDate);		
+		
 		} catch (ParseException e) {
 			System.out.println("Invalid calendar input");
 			e.printStackTrace();
 		}
-		return period;
 
 	}
 	
@@ -199,5 +193,17 @@ public class CreateReservationView extends JFrame{
 
 	public JButton getCustomerSearchButton() {
 		return customerSearchButton;
+	}
+	
+	public JButton getSaveButton() {
+		return saveButton;
+	}
+	
+	public JButton getEditButton() {
+		return editButton;
+	}
+	
+	public JButton getUpdateButton() {
+		return updatePeriodButton;
 	}
 }
