@@ -86,8 +86,9 @@ public class Period extends ModelEntity<Period> {
 	 * Calculates the length between the period in days.
 	 */
 	public int getLengthInDays() {
-																									//  ms     sec  min  hours
-		return (int) (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+		System.out.println(end.getTime() + " " + start.getTime());
+													  //  ms     sec  min  hours = one day
+		return (int) ((end.getTime() - start.getTime()) / (1000L * 60L * 60L * 24L));
 	}
 
 	public String getTable() {
