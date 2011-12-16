@@ -42,6 +42,10 @@ public class Period extends ModelEntity<Period> {
 	 * Constructs a period with a given id.
 	 */
 	private Period(int id, Date start, Date end) {
+		// Ensure that the start date really comes before end.
+		start = start.before(end) ? start : end;
+		end   = start.before(end) ? end : start;
+		
 		this.id    = id;
 		this.start = start;
 		this.end   = end;
@@ -55,6 +59,10 @@ public class Period extends ModelEntity<Period> {
 	 * @param end  The time the period end.
 	 */
 	public Period(Date start, Date end) {
+		// Ensure that the start date really comes before end.
+		start = start.before(end) ? start : end;
+		end   = start.before(end) ? end : start;
+		
 		this.id    = 0; // Signal that the entity hasn't been saved
 		this.start = start;
 		this.end   = end;
@@ -126,8 +134,8 @@ public class Period extends ModelEntity<Period> {
 	 */
 	private void setFields(Date start, Date end, int id) {
 		if (id != 0)       fields.put("id", id + "");
-		if (start != null) fields.put("start", start.toString());
-		if (end != null)   fields.put("end", end.toString());
+		if (start != null) fields.put("start", start.getTime() + "");
+		if (end != null)   fields.put("end", end.getTime() + "");
 	}
 	
 

@@ -12,8 +12,10 @@ import main.util.Log;
 
 /**
  * A window that displays information about a given customer
- * as well as methods to manipulate that customer. This window is not meant 
- * for creating customers.
+ * as well as methods to manipulate each fields. The window thus has 
+ * two purposes: search and edit. Search is initialized through the
+ * empty constructor while passing a customer to the class creates a 
+ * search window. This window is not meant for creating customers.
  */
 public class CustomerWindow extends JFrame {
 	
@@ -24,14 +26,45 @@ public class CustomerWindow extends JFrame {
 	private final JLabel textAddress   = new JLabel("Address:");
 	private JLabel textHelpTip;
 	
+	/**
+	 * The field which contains information about the first name.
+	 */
 	public final JTextField fieldFirstName;
+	
+	/**
+	 * The field which contains information about the last name.
+	 */
 	public final JTextField fieldLastName;
+	
+	/**
+	 * The field which contains information about the email.
+	 */
 	public final JTextField fieldEmail;
+	
+	/**
+	 * The field which contains information about the phone.
+	 */
 	public final JTextField fieldPhone;
+	
+	/**
+	 * The field which contains information about the address.
+	 */
 	public final JTextArea fieldAddress;
 	
+	/**
+	 * The button which deletes a customer. Only relevant while in edit mode.
+	 */
 	public final JButton buttonDelete;
+	
+	/**
+	 * The button which submits the information from the view. Used in both search
+	 * and edit mode.
+	 */
 	public final JButton buttonSubmit;
+	
+	/**
+	 * The button which closes the screen and deletes the information in the window.
+	 */
 	public final CancelButton buttonCancel;
 	
 	/**
@@ -55,7 +88,7 @@ public class CustomerWindow extends JFrame {
 		customerId		= 0;
 		
 		// Set the help text
-		textHelpTip = new JLabel("<html>It's possible to do wildcard searches <br />using the character '%'.</html>");
+		textHelpTip = new JLabel("<html>It's possible to do wildcard searches through the character '%' <br />(example: 'Jo%' matches both 'Joe', 'John' and 'Joseph').</html>");
 		
 		// Create buttons
 		buttonDelete = new JButton("");
@@ -98,22 +131,6 @@ public class CustomerWindow extends JFrame {
 		
 		// Generate the layout
 		generateLayout();
-	}
-	
-	/**
-	 * Add an action listener to the submit button.
-	 */
-	public void addActionListenerToSubmitButton(ActionListener listener) {
-		if (buttonSubmit != null)
-			buttonSubmit.addActionListener(listener);
-	}
-	
-	/**
-	 * Add an action listener to the delete button.
-	 */
-	public void addActionListenerToDeleteButton(ActionListener listener) {
-		if (buttonDelete != null)
-			buttonDelete.addActionListener(listener);
 	}
 	
 	/**

@@ -2,12 +2,11 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.swing.JButton;
 
 import main.model.Customer;
 import main.model.Reservation;
@@ -44,7 +43,7 @@ public class CustomerController {
 			public void actionPerformed(ActionEvent e) {
 				final CustomerWindow window = new CustomerWindow();
 				
-				window.addActionListenerToSubmitButton(new ActionListener() {
+				window.buttonSubmit.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {						
 						// And assign fields
@@ -95,7 +94,7 @@ public class CustomerController {
 		// If the customers array is empty, don't bother setting the listener, otherwise move on!
 		if (customers != null) {
 			// Set the listener for the table
-			table.addMouseListener(new MouseListener() {
+			table.addMouseListener(new MouseAdapter() {
 	
 				// On click: Edit customer in a new window (if the row exists)
 				public void mouseClicked(MouseEvent e) {
@@ -106,7 +105,7 @@ public class CustomerController {
 						final CustomerWindow window = new CustomerWindow(customers[selectedRow]);
 						
 						// Define the action listener for the delete button
-						window.addActionListenerToDeleteButton(new ActionListener() {
+						window.buttonDelete.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent arg0) {
 								int customerId = window.customerId;
 								if (customerId == 0) {
@@ -138,7 +137,7 @@ public class CustomerController {
 						});
 	
 						// And define the action listener for the save button
-						window.addActionListenerToSubmitButton(new ActionListener() {
+						window.buttonSubmit.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 								int customerId = window.customerId;
 								if (customerId != 0) {
@@ -182,13 +181,7 @@ public class CustomerController {
 							}
 						});
 					}
-				}
-				// No need for these...
-				public void mouseEntered(MouseEvent e)  {}
-				public void mouseExited(MouseEvent e)   {}
-				public void mousePressed(MouseEvent e)  {} 
-				public void mouseReleased(MouseEvent e) {}
-	
+				}	
 			});
 		}
 	}

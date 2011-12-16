@@ -1,8 +1,6 @@
 package main.model;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.Map;
 
 /**
@@ -10,6 +8,11 @@ import java.util.Map;
  * <code>getInstance()</code> method.
  */
 public abstract class Model {
+	
+	/**
+	 * Close the connection to the database
+	 */
+	abstract public void close();
 	
 	/**
 	 * Deletes a single entity by it's id from a given table.

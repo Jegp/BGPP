@@ -28,7 +28,7 @@ public class MySQLModel extends Model {
 	/**
 	 * Constructs a model and connects to a database.
 	 */
-	private MySQLModel() {
+	protected MySQLModel() {
 		try {
 			// Retrieve the database driver
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -52,7 +52,7 @@ public class MySQLModel extends Model {
 	 * @param join  An optional join statement.
 	 * @return String  The sql statement.
 	 */
-	private String buildSelectQuery(String table, String condition, String selector, String join) {
+	protected String buildSelectQuery(String table, String condition, String selector, String join) {
 		String sql = "SELECT " + selector + " FROM " + table;
 		
 		// Add join
@@ -75,21 +75,30 @@ public class MySQLModel extends Model {
 	 * @param join  An optional join statement.
 	 * @return String  The sql statement.
 	 */
-	private String buildSelectQuery(String table, Map<String, String> fields, String selector, String join) {
+	protected String buildSelectQuery(String table, Map<String, String> fields, String selector, String join) {
 		// Build the condition for the query
 		String condition = "";
 		
 		// Iterate through the fields to add the conditions.
 		int n = 1;
 		for (Map.Entry<String, String> e : fields.entrySet()) {
-			condition += e.getKey() + " LIKE '" + e.getValue() + "' ";
+			condition += e.getKey() + " LIKE '" + e.getValue() + "'";
 			if (n < fields.size())
-				condition += "AND ";
+				condition += " AND ";
 			n++;
 		}
 		
 		// Return the statement.
 		return buildSelectQuery(table, condition, selector, join);
+	}
+	
+	public void close() {
+		try {
+			connection.close();
+			Log.info("Connection to database successfully closed.");
+		} catch (SQLException e) {
+			Log.error("Connection to database could not be closed properly: " + e);
+		}
 	}
 
 	public boolean delete(String table, int id) {
@@ -113,7 +122,7 @@ public class MySQLModel extends Model {
 	 * @param sql  The query to perform.
 	 * @return  Returns the result. Can be null.
 	 */
-	private ResultSet executeAndReturnResult(String sql) {
+	protected ResultSet executeAndReturnResult(String sql) {
 		// Examine connection
 		if (connection == null) {
 			Log.error("Connection to database cannot be established.");
