@@ -4,10 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Date;
+import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 
-import main.controller.Controller.createActionListenerToCreateButton;
+import main.model.Reservation;
 import main.model.Vehicle;
 import main.model.VehicleClass;
 import main.view.CreateVehicleView;
@@ -98,7 +100,12 @@ public class VehicleController {
 							VehicleClass vehicleClass = VehicleClass.getWhereId(selectedVehicleClassID);
 							Vehicle v = new Vehicle(description, manufactorer, model, vehicleClass);
 							Vehicle.update(v, selectedVehicle.id);
+							
+							if (Vehicle.getAll() != null) {
 							vehicleTable.updateTable(Vehicle.getAll());
+							} else {
+								vehicleTable.updateTable(new Vehicle[0]);
+							}
 							editVehicleView.kill();
 							vehicles = Vehicle.getAll();
 					
@@ -137,20 +144,36 @@ public class VehicleController {
 		
 	}
 	
-	public void updateTable() {
-		vehicleTable.updateTable(Vehicle.getAll());
-	}
-	
 	class DeleteVehicleBtnListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			
 			if (vehicleTable.getSelectedRow() >= 0) {
-				Vehicle v = vehicles[vehicleTable.getSelectedRow()];
-				Vehicle.delete(v.getTable(), v.id);
-				updateTable();
-				vehicles = Vehicle.getAll();
+				HashMap<String, String> fields = new HashMap<String, String>();
+				boolean hasFutureReservations = false;
+				fields.put("vehicle", vehicles[vehicleTable.getSelectedRow()].id + "");
+				Reservation[] relevantReservations = Reservation.searchWhere(fields);
+				if (relevantReservations != null)
+				for (Reservation r : relevantReservations) {
+					if (r.period.end.after(new Date()))
+						hasFutureReservations = true;
+				}
+				
+				
+				
+				if (hasFutureReservations) {
+					Vehicle v = vehicles[vehicleTable.getSelectedRow()];
+					Vehicle.delete(v.getTable(), v.id);
+					if (Vehicle.getAll() != null) {
+						vehicleTable.updateTable(Vehicle.getAll());
+						vehicles = Vehicle.getAll();
+					} else {				
+						vehicleTable.updateTable(new Vehicle[0]);
+					}				 	
+				} else {
+						JOptionPane.showMessageDialog(vehicleContainer, "That vehicle has a future reservation");						
+				}
 			}
 			
 		}
