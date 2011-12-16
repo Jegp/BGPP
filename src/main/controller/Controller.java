@@ -10,17 +10,23 @@ import java.awt.event.*;
 /**
  * The Controller for the booking-system.
  */
-public class Controller 
-{		
-	private View view;
-	private Model model;
+public class Controller {
 	
-	public Controller(final Model model, View view) 
-	{
+	/**
+	 * The view 
+	 */
+	private View view;
+	
+	/**
+	 * Creates a controller that handles the three windows: Reservation, Customer and Vehicle.
+	 * @param model  The model to show data from.
+	 * @param view  The view to control.
+	 */
+	public Controller(final Model model, View view) {
 		// Store the view.
 		this.view = view;
 		
-		// Add a listener to the reservationbutton
+		// Add a listener to the reservation button
 		view.addActionListenerToReservationButton(new ListenerToReservation());
 		
 		// Add a listener to the customer button
@@ -76,9 +82,7 @@ public class Controller
     	public void mouseClicked(MouseEvent e) {
     	System.out.println("mouse has been pressed!!!");
     	}
-    }
-    
-    
+    }    
     
     class createActionListenerToCreateButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
