@@ -10,8 +10,6 @@ import main.model.Period;
 import org.junit.Before;
 import org.junit.Test;
 
-import sun.security.action.GetLongAction;
-
 public class PeriodTest {
 
 	// Setup periods

@@ -1,17 +1,11 @@
 package main.controller;
 
 import main.model.Model;
-import main.model.Vehicle;
-import main.model.VehicleClass;
 import main.view.CustomerContainer;
 import main.view.ReservationContainer;
 import main.view.VehicleContainer;
 import main.view.View;
 import java.awt.event.*;
-import java.util.Map;
-
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 
 /**
  * The Controller for the booking-system.

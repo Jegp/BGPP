@@ -2,10 +2,8 @@ package test.main.model;
 
 import static org.junit.Assert.*;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 
-import main.model.Model;
 import main.model.MySQLModel;
 
 import org.junit.Before;

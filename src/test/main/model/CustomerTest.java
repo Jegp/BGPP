@@ -2,9 +2,7 @@ package test.main.model;
 
 import static org.junit.Assert.*;
 
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
-import java.util.Map;
 
 import main.model.Customer;
 

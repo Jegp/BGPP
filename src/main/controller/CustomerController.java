@@ -7,8 +7,6 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.JButton;
-
 import main.model.Customer;
 import main.model.Reservation;
 import main.util.Log;

@@ -1,7 +1,5 @@
 package main.model;
 
-import java.util.Map;
-
 /**
  * Factory-interface for model entities.
  */
