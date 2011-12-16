@@ -162,7 +162,7 @@ public class VehicleController {
 				
 				
 				
-				if (hasFutureReservations) {
+				if (!hasFutureReservations) {
 					Vehicle v = vehicles[vehicleTable.getSelectedRow()];
 					Vehicle.delete(v.getTable(), v.id);
 					if (Vehicle.getAll() != null) {
