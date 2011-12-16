@@ -22,9 +22,10 @@ public class View extends JFrame
 	
 	public View(Model model) 
 	{
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLayout(new BorderLayout());
-	    setSize(1500, 1500);
+	    
 			
 	    // create north, south, west and east panels
 	    JPanel northPanel = new JPanel(new FlowLayout());
@@ -59,8 +60,14 @@ public class View extends JFrame
 	    setTitle("Bookingsystem");
 
 	    // Display
+	    GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	    setMaximizedBounds(e.getMaximumWindowBounds());
+	    
+	    setPreferredSize(e.getMaximumWindowBounds().getSize());
+	    pack();
+	    
 	    setVisible(true);
-	    pack();	
+	    
 	}
 		
 	public void changeContainer(JPanel newContainer)
@@ -68,7 +75,6 @@ public class View extends JFrame
 		remove(container);
 		container = newContainer;
 		add(container, BorderLayout.CENTER);
-		pack();
 	}
 
 	public void addActionListenerToReservationButton(ActionListener listener)
@@ -89,5 +95,9 @@ public class View extends JFrame
 	public void addMouseListenerToGraphics(MouseAdapter listener)
 	{
 		graphicContainer.addMouseListener(listener);
+	}
+	
+	public void maximize() {
+		
 	}
 }

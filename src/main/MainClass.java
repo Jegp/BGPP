@@ -1,5 +1,7 @@
 package main;
 
+import javax.swing.JOptionPane;
+
 import main.controller.*;
 import main.util.Log;
 import main.view.*;
@@ -12,6 +14,7 @@ public class MainClass {
 	
 	/**
 	 * Initializes the application by instantiating the Model-View-Controller (MVC).
+	 * If no connection could be made the application display an error message and closes.
 	 */
 	public static void main(String[] args) {
 		// Initialize the log with a file handler.
@@ -21,22 +24,28 @@ public class MainClass {
 		// Model-View-Controller pattern
 		// Initialize model.
 		Model model = MySQLModel.getInstance();
+		
 		// Initialize view.
 		View view = new View(model);
+		
+		// Examine connection and close if none could be found
+		if (!model.isConnected()) {
+			// Create message
+			String message = "<html>No connection to the database could be made. <br />" +
+							 "Please check your connection and restart the application.</html>";
+			
+			// Show message
+			JOptionPane.showMessageDialog(view, message, "No connection found.", JOptionPane.ERROR_MESSAGE);
+			
+			// Quit!
+			System.exit(0);
+		}
+		
 		// Initialize controller.
-		Controller controller = new Controller(model, view);
+		new Controller(model, view);
 		
-		System.out.println(System.currentTimeMillis());
-		
-		// Tests
-		//Customer c1 = new Customer("Daniel", "Varab", "forestdotcom@hotmail.com", "112", "VejAlléen 10, 2200 Kbh C");
-		//Customer c2 = new Customer("Sune", "Debel", "sdeb@itu.dk", "114", "VejAlléen 12, 2200 Kbh C");
-		//c1 = Customer.save(c1);
-		//c2 = Customer.save(c2);
-		
-		VehicleClass v = new VehicleClass("Gammel lortebil");
-		v = VehicleClass.save(v);
-		System.out.println();
+		// Log success!
+		Log.info("Application initialized correct.");
 	}
 
 }

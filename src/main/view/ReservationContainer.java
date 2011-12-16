@@ -45,10 +45,12 @@ public class ReservationContainer extends JPanel
 		JTextField endOfPeriod			= new JTextField("Tomorrow", 10); //remake
 		
 		createReservationButton			= new JButton("Create Reservation");
+		createReservationButton.setPreferredSize(new Dimension(200, 50));
 		searchButton					= new JButton("Search");
 		
 		ReservationTable data 			= new ReservationTable(startDate, endDate);
 		JScrollPane scrollPane			= new JScrollPane(new JTable(data));
+		scrollPane.setPreferredSize(new Dimension(1200, 600));
 		
 		centerPanel.add(scrollPane);
 		northPanel.add(startOfPeriod);

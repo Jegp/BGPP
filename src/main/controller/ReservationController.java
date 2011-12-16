@@ -7,7 +7,6 @@ import javax.swing.JButton;
 
 import main.view.CreateReservationView;
 import main.view.ReservationContainer;
-import main.view.TestWindow;
 
 public class ReservationController {	
 	private ReservationContainer container;

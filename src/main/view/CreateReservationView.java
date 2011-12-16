@@ -54,7 +54,6 @@ public class CreateReservationView extends JFrame{
 	private GregorianCalendar calendar;
 	
 	public CreateReservationView() {		
-		customerTextField		= new JTextField(10);
 		startDateTextField 		= new JTextField(10);
 		endDateTextField		= new JTextField(10);
 
@@ -78,7 +77,6 @@ public class CreateReservationView extends JFrame{
 		String periodStartToString 			= dateFormat.format(period.start);
 		String periodEndToString			= dateFormat.format(period.end);
 		
-		customerTextField 	= new JTextField(customer.firstName + " " + customer.lastName);
 		startDateTextField 	= new JTextField(periodStartToString);
 		endDateTextField	= new JTextField(periodEndToString);
 		
@@ -92,10 +90,11 @@ public class CreateReservationView extends JFrame{
 		setLayout(new BorderLayout());
 
 		JPanel northPanel		= new JPanel(new GridLayout(1,2));
-		JPanel withinNorthPanel = new JPanel(new GridLayout(1,2));
-		
+		JPanel withinNorthPanel = new JPanel(new GridLayout(1,2));	
 		JPanel centerPanel 		= new JPanel(new GridLayout(4,2));
 		JPanel southPanel		= new JPanel(new FlowLayout());
+		JPanel eastPanel  		= new JPanel(new GridLayout(4,1));
+
 		
 		//arrange the north panel with JLabels, JTextFields and JButtons
 		emptyLabel1.setVisible(false);
@@ -174,7 +173,7 @@ public class CreateReservationView extends JFrame{
 		customerInput		= allCustomers[customerDropDown.getSelectedIndex()];
 		startDateInput		= startDateTextField.getText();
 		endDateInput		= endDateTextField.getText();
-		vehicleInput		= availableVehicles[vehicleDropDown.getSelectedIndex()];	
+		vehicleInput		= availableVehicles[vehicleDropDown.getSelectedIndex()];
 	}
 	
 	public Period setPeriod() {

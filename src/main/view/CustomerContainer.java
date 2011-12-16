@@ -19,7 +19,15 @@ import main.model.Customer;
  */
 public class CustomerContainer extends JPanel {
 	
-	private JButton buttonSearch;
+	/**
+	 * The delete button.
+	 */
+	public final JButton buttonDelete;
+	
+	/**
+	 * The search button.
+	 */
+	public final JButton buttonSearch;
 	
 	private CustomerTable customerTable;
 	
@@ -37,12 +45,24 @@ public class CustomerContainer extends JPanel {
 		// Set the layout
 		setLayout(new BorderLayout());
 		
+		// Create the delete button and disable it.
+		buttonDelete = new JButton("Delete");
+		buttonDelete.setEnabled(false);
+
 		// Create the search button
 		buttonSearch = new JButton("Search for customers");
 		buttonSearch.setPreferredSize(new Dimension(200, 50));
 		
+		// Create a wrapper panel and westpanel for esthetic reasons
+		JPanel wrapper = new JPanel(new GridLayout(1, 2));
+		JPanel west = new JPanel();
+		
 		// Add the button
-		add(buttonSearch, BorderLayout.SOUTH);
+		wrapper.add(buttonSearch); wrapper.add(buttonDelete);
+		
+		// Add the wrapper panel
+		add(wrapper, BorderLayout.SOUTH);
+		add(west, BorderLayout.WEST);
 	}
 	
 	/**
@@ -68,7 +88,10 @@ public class CustomerContainer extends JPanel {
 		pane = new JScrollPane(customerTable);
 		
 		// Insert the new center element.
-		add(pane, BorderLayout.CENTER);
+		pane.setPreferredSize(new Dimension(1200, 600));
+		JPanel centerPanel = new JPanel();
+		centerPanel.add(pane);
+		add(centerPanel, BorderLayout.CENTER);
 		
 		// Validate
 		validate();

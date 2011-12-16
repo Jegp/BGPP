@@ -45,6 +45,38 @@ public class MySQLModel extends Model {
 	}
 	
 	/**
+	 * Builds an insert query which inserts an elemnt into the given table.
+	 */
+	protected String buildInsertQuery(String table, Map<String, String> fields) {
+		// Start query
+		String sql = "INSERT INTO " + table;
+		String columns = " (";
+		String values  = " VALUES(";
+		
+		// Iterate through the elements to add them to the columns and values respectively
+		int n = 1;
+		for (Map.Entry<String, String> e : fields.entrySet()) {
+			columns += e.getKey();
+			values += "'" + e.getValue() + "'";
+
+			// If there are more elements, add a comma
+			if (n < fields.size()) {
+				columns += ", ";
+				values  += ", ";
+			}
+			n++;
+		}
+		
+		// Finish the query
+		columns += ")"; 
+		values += ")";
+		sql += columns + values;
+		
+		// Return
+		return sql;
+	}
+	
+	/**
 	 * Builds a select query from a table with an optional condition.
 	 * @param table  The table to query
 	 * @param condition  The condition the query must meet.
@@ -90,6 +122,29 @@ public class MySQLModel extends Model {
 		
 		// Return the statement.
 		return buildSelectQuery(table, condition, selector, join);
+	}
+	
+	/**
+	 * Builds an udpate query which updates the entity with the given id in the given table
+	 * with the given fields.
+	 */
+	protected String buildUpdateQuery(String table, int id, Map<String, String> fields) {
+		String sql = "UPDATE " + table + " SET ";
+		
+		// Insert the values
+		int n = 1;
+		for (Map.Entry<String, String> entry : fields.entrySet()) {
+			sql += entry.getKey() + " = '" + entry.getValue() + "'";
+			if (n < fields.size())
+				sql += ", ";
+			n++;
+		}
+		
+		// Set the where clause
+		sql += " WHERE id = '" + id + "'";
+		
+		// Return
+		return sql;
 	}
 	
 	public void close() {
@@ -207,25 +262,7 @@ public class MySQLModel extends Model {
 		}
 		
 		// If nothing exists in the database then store the information.
-		sql = "INSERT INTO " + table + " ";
-		String columns = "(";
-		String values  = " VALUES (";
-		
-		int n = 1;
-		for (Map.Entry<String, String> e : fields.entrySet()) {
-			columns += e.getKey();
-			values += "'" + e.getValue() + "'";
-			if (n < fields.size()) {
-				columns += ", ";
-				values  += ", ";
-			}
-			n++;
-		}
-		
-		// Finish the query
-		columns += ")"; 
-		values += ")";
-		sql += columns + " " + values;
+		sql = buildInsertQuery(table, fields);
 		
 		// Execute insert statement.
 		try {
@@ -255,19 +292,7 @@ public class MySQLModel extends Model {
 
 	public boolean update(String table, int id, Map<String, String> fields) {
 		// Build the query
-		String sql = "UPDATE " + table + " SET ";
-		
-		// Insert the values
-		int n = 1;
-		for (Map.Entry<String, String> entry : fields.entrySet()) {
-			sql += entry.getKey() + "= '" + entry.getValue() + "'";
-			if (n < fields.size())
-				sql += ", ";
-			n++;
-		}
-		
-		// Set the where clause
-		sql += " WHERE id = '" + id + "'";
+		String sql = buildUpdateQuery(table, id, fields);
 		
 		// Execute
 		Statement statement = getStatement();
