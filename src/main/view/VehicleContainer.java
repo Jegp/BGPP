@@ -57,4 +57,8 @@ public class VehicleContainer extends JPanel
 		add(pane, BorderLayout.CENTER);
 	}
 	
+	public void addDeleteVehicleBtnListener(ActionListener e) {
+		deleteBtn.addActionListener(e);
+	}
+	
 }

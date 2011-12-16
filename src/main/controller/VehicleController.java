@@ -33,7 +33,8 @@ public class VehicleController {
 		vehicleTable.addMouseListener(new EditVehicleListener());
 		vehicleContainer.addTable(vehicleTable);		
 		
-		this.vehicleContainer.addCreateVehicleBtnListener(new addVehicleBtnListener());
+		this.vehicleContainer.addCreateVehicleBtnListener(new AddVehicleBtnListener());
+		this.vehicleContainer.addDeleteVehicleBtnListener(new DeleteVehicleBtnListener());
 		
 		
 		
@@ -41,7 +42,7 @@ public class VehicleController {
 		
 	}
 	
-	class addVehicleBtnListener implements ActionListener {
+	class AddVehicleBtnListener implements ActionListener {
     	public void actionPerformed(ActionEvent e) {
     		final CreateVehicleView createVehicleView = new CreateVehicleView();
     		
@@ -61,6 +62,7 @@ public class VehicleController {
         			Vehicle.save(v);
         			vehicleTable.updateTable(Vehicle.getAll());
         			createVehicleView.kill();
+        			vehicles = Vehicle.getAll();
         		}
         	}    		
     		});
@@ -70,12 +72,41 @@ public class VehicleController {
 	class EditVehicleListener implements MouseListener {
 
 		@Override
-		public void mouseClicked(MouseEvent arg0) {
+		public void mouseClicked(MouseEvent e) {
+			
+			if (e.getClickCount() == 2) {
+				final Vehicle selectedVehicle = vehicles[vehicleTable.getSelectedRow()];
 			
 			
-			int selectedRow = vehicleTable.getSelectedRow();
 			
-			new EditVehicleView(vehicles[selectedRow]);
+				final EditVehicleView editVehicleView = new EditVehicleView(selectedVehicle);
+			
+				editVehicleView.addSaveActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						String description = editVehicleView.getNewDescription();
+						String manufactorer = editVehicleView.getNewManufactorer();
+						String model = editVehicleView.getNewModel();
+	        		
+	       
+						if (description.equals("") || manufactorer.equals("") || model.equals("")) {
+							JOptionPane.showMessageDialog(editVehicleView, "Please fill out all boxes",
+									"Insufficient information", JOptionPane.ERROR_MESSAGE);
+						} else {
+							int selectedVehicleClassID = editVehicleView.getNewVehicleClassID();
+							VehicleClass vehicleClass = VehicleClass.getWhereId(selectedVehicleClassID);
+							Vehicle v = new Vehicle(description, manufactorer, model, vehicleClass);
+							Vehicle.update(v, selectedVehicle.id);
+							vehicleTable.updateTable(Vehicle.getAll());
+							editVehicleView.kill();
+					
+					
+					
+				}
+				}
+			});
+			}
 			
 		}
 
@@ -104,8 +135,25 @@ public class VehicleController {
 		}
 		
 	}
+	
 	public void updateTable() {
 		vehicleTable.updateTable(Vehicle.getAll());
+	}
+	
+	class DeleteVehicleBtnListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			
+			if (vehicleTable.getSelectedRow() >= 0) {
+				Vehicle v = vehicles[vehicleTable.getSelectedRow()];
+				Vehicle.delete(v.getTable(), v.id);
+				updateTable();
+				vehicles = Vehicle.getAll();
+			}
+			
+		}
+		
 	}
 
 }

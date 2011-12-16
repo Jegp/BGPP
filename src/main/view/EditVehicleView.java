@@ -1,7 +1,9 @@
 package main.view;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -30,12 +32,15 @@ public class EditVehicleView extends JFrame {
 		setResizable(false);
 		fillVehicleClasses();
 		
+		
 		saveButton = new JButton("Save");
 		cancelButton = new CancelButton(this);
 		this.description = new JTextField(vehicle.description);
 		this.manufacter = new JTextField(vehicle.manufacturer);
 		this.model = new JTextField(vehicle.model);
 		this.vehicleClass = new JComboBox(vehicleClasses);
+		
+		setDropDown(vehicle.vehicleClass.description);
 		
 		//Add content
 		add(new JLabel("Description:"));
@@ -65,6 +70,51 @@ public class EditVehicleView extends JFrame {
 		
 		vehicleClasses = new String[descriptions.size()];
 		descriptions.toArray(vehicleClasses);
+	}
+	
+	private void setDropDown(String selectedVehicleClass) {
+		for (int i = 0; i < vehicleClasses.length; i++) {
+			if (selectedVehicleClass.equals(vehicleClasses[i])) {
+				vehicleClass.setSelectedIndex(i);
+			}
+		}
+	}
+	
+	public void addSaveActionListener(ActionListener e) {
+		
+		saveButton.addActionListener(e);
+	}
+	
+	public String getNewDescription() {
+		return description.getText();
+	}
+	
+	public String getNewModel() {
+		return model.getText();
+	}
+	
+	public String getNewManufactorer() {
+		return manufacter.getText();
+	}
+	
+	public int getNewVehicleClassID() {
+		HashMap<String, String> identifier = new HashMap<String,String>();
+		identifier.put("description", vehicleClasses[vehicleClass.getSelectedIndex()]);
+		VehicleClass[] temp = VehicleClass.searchWhere(identifier);
+		
+		for (VehicleClass vc : temp) {
+			if (vc.description.equals(vehicleClasses[vehicleClass.getSelectedIndex()])) {
+				return vc.id;
+			}
+		}
+		return 0;
+	}
+	
+	public void kill() {
+		description.setText("");
+		manufacter.setText("");
+		model.setText("");
+		setVisible(false);		
 	}
 
 }
