@@ -70,9 +70,10 @@ public class Controller {
     
     class ListenerToVehicle implements ActionListener {
     	public void actionPerformed(ActionEvent e) {
-    	VehicleContainer container = new VehicleContainer();
     	
-    	new VehicleController(container);
+    	VehicleContainer container = new VehicleContainer();
+    	VehicleController vc = new VehicleController(container);
+    	
     	view.changeContainer(container);
     	view.pack();
     	}

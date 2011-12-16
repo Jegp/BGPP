@@ -68,6 +68,10 @@ public class VehicleTable extends JTable {
 			return columnNames[n];
 		}
 		
+		public Vehicle[] getVehicles() {
+			return vehicles;
+		}
+		
 	}
 	
 

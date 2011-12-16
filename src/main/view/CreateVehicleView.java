@@ -4,11 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.*;
 import main.model.*;
-import main.view.*;
 
 public class CreateVehicleView extends JFrame {
 	
@@ -19,7 +17,6 @@ public class CreateVehicleView extends JFrame {
 	private JComboBox vehicleClass;
 	private CancelButton cancelButton;
 	private String[] vehicleClasses;
-	private Model v_model;
 	
 	
 	public CreateVehicleView() {
@@ -31,7 +28,6 @@ public class CreateVehicleView extends JFrame {
 		fillVehicleClasses();
 		
 		//Initialise instance variables
-		v_model = Model.getInstance();
 		description		= new JTextField();
 		manufacter 		= new JTextField();
 		model 			= new JTextField();
