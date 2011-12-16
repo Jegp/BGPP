@@ -12,6 +12,11 @@ import java.util.Map;
 public abstract class Model {
 	
 	/**
+	 * Close the connection to the database
+	 */
+	abstract public void close();
+	
+	/**
 	 * Deletes a single entity by it's id from a given table.
 	 * @return  A boolean signalling success of failure.
 	 */
