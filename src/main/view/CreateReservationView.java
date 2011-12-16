@@ -74,7 +74,7 @@ public class CreateReservationView extends JFrame{
 		setLayout(new BorderLayout());
 		
 		JPanel northPanel = new JPanel(new GridLayout(4,2));
-		JPanel 
+		//JPanel 
 		JPanel southPanel = new JPanel(new FlowLayout());
 		JPanel eastPanel  = new JPanel(new GridLayout(4,1));
 		

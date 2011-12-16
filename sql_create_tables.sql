@@ -35,3 +35,11 @@ id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 customer INTEGER UNSIGNED REFERENCES customer(id),
 vehicle INTEGER UNSIGNED REFERENCES vehicle(id),
 period INTEGER UNSIGNED REFERENCES period(id));
+
+-- Insert vehicle classes
+INSERT INTO vehicleClass (description) VALUES("3-door car");
+INSERT INTO vehicleClass (description) VALUES("5-door car");
+INSERT INTO vehicleClass (description) VALUES("Stationcar");
+INSERT INTO vehicleClass (description) VALUES("Sportscar");
+INSERT INTO vehicleClass (description) VALUES("Bicycle");
+INSERT INTO vehicleClass (description) VALUES("Motorcycle");
