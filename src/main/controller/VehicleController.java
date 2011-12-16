@@ -1,21 +1,13 @@
 package main.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.Date;
 import java.util.HashMap;
-
 import javax.swing.JOptionPane;
-
 import main.model.Reservation;
 import main.model.Vehicle;
 import main.model.VehicleClass;
-import main.view.CreateVehicleView;
-import main.view.EditVehicleView;
-import main.view.VehicleContainer;
-import main.view.VehicleTable;
+import main.view.*;
 
 public class VehicleController {
 	
@@ -37,11 +29,6 @@ public class VehicleController {
 		
 		this.vehicleContainer.addCreateVehicleBtnListener(new AddVehicleBtnListener());
 		this.vehicleContainer.addDeleteVehicleBtnListener(new DeleteVehicleBtnListener());
-		
-		
-		
-		
-		
 	}
 	
 	class AddVehicleBtnListener implements ActionListener {
@@ -108,12 +95,9 @@ public class VehicleController {
 							}
 							editVehicleView.kill();
 							vehicles = Vehicle.getAll();
-					
-					
-					
+						}
 				}
-				}
-			});
+				});
 			}
 			
 		}
@@ -150,10 +134,10 @@ public class VehicleController {
 		public void actionPerformed(ActionEvent arg0) {
 			
 			if (vehicleTable.getSelectedRow() >= 0) {
-				HashMap<String, String> fields = new HashMap<String, String>();
-				boolean hasFutureReservations = false;
-				fields.put("vehicle", vehicles[vehicleTable.getSelectedRow()].id + "");
+				HashMap<String, String> fields = new HashMap<String, String>();				
+				fields.put("vehicle", "" + vehicles[vehicleTable.getSelectedRow()].id);
 				Reservation[] relevantReservations = Reservation.searchWhere(fields);
+				boolean hasFutureReservations = false;
 				if (relevantReservations != null)
 				for (Reservation r : relevantReservations) {
 					if (r.period.end.after(new Date()))
