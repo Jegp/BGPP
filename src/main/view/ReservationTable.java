@@ -25,7 +25,12 @@ public class ReservationTable extends AbstractTableModel
 		Reservation[] reservations 	= Reservation.getFromPeriod(period);
 		periodInDays 				= period.getLengthInDays();
 		Vehicle[] allVehicles 		= Vehicle.getAll();
+		if(allVehicles == null) {
+			numberOfVehicles		= 0;
+		}
+		else {
 		numberOfVehicles 			= allVehicles.length;
+		}
 		
 		date 						= new String[periodInDays + 1];
 		data 						= new Object[numberOfVehicles][periodInDays + 1];
@@ -36,6 +41,7 @@ public class ReservationTable extends AbstractTableModel
 		
 	 	//Initialize dates
 		date[0] = "Vehicle";
+		//adds all the vehicles to the first column
 		for(int j = 1; j < periodInDays + 1; j++) {
 			date[j] = calendar.get(Calendar.DAY_OF_MONTH) + "" + "/" + calendar.get(Calendar.MONTH);
 			calendar.add(Calendar.DAY_OF_MONTH, 1);

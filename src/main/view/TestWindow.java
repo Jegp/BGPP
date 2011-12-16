@@ -16,7 +16,7 @@ public class TestWindow extends JFrame {
 		setSize(200, 200);
 		
 		pack();
-		setVisible(false);
+		setVisible(true);
 	}
 	
 	

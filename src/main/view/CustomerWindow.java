@@ -52,11 +52,6 @@ public class CustomerWindow extends JFrame {
 	public final JTextArea fieldAddress;
 	
 	/**
-	 * The button which deletes a customer. Only relevant while in edit mode.
-	 */
-	public final JButton buttonDelete;
-	
-	/**
 	 * The button which submits the information from the view. Used in both search
 	 * and edit mode.
 	 */
@@ -91,8 +86,6 @@ public class CustomerWindow extends JFrame {
 		textHelpTip = new JLabel("<html>It's possible to do wildcard searches through the character '%' <br />(example: 'Jo%' matches both 'Joe', 'John' and 'Joseph').</html>");
 		
 		// Create buttons
-		buttonDelete = new JButton("");
-		buttonDelete.setVisible(false);
 		buttonSubmit = new JButton("Search");
 		buttonCancel = new CancelButton(this);
 		
@@ -125,7 +118,6 @@ public class CustomerWindow extends JFrame {
 		customerId		= customer.id;
 		
 		// Create buttons
-		buttonDelete = new JButton("Delete");
 		buttonSubmit = new JButton("Save");
 		buttonCancel = new CancelButton(this);
 		
@@ -187,7 +179,7 @@ public class CustomerWindow extends JFrame {
 		JPanel southDescription = new JPanel();
 		JPanel southButtons     = new JPanel();	
 		southDescription.setLayout(new BorderLayout());
-		southButtons.setLayout(new GridLayout(1, 3, 3, 6));
+		southButtons.setLayout(new GridLayout(1, 2, 3, 6));
 		
 		// Add the help
 		if (textHelpTip != null) {
@@ -200,9 +192,8 @@ public class CustomerWindow extends JFrame {
 			southDescription.add(space5, BorderLayout.WEST);
 		}
 		
-		// Add space and buttons
-		//southButtons.add(new JLabel()); southButtons.add(new JLabel()); southButtons.add(new JLabel());
-		southButtons.add(buttonDelete); southButtons.add(buttonSubmit); southButtons.add(buttonCancel);
+		// Add buttons
+		southButtons.add(buttonSubmit); southButtons.add(buttonCancel);
 		
 		// Add the wrappers to the south panel
 		south.add(southDescription, BorderLayout.NORTH);

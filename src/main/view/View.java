@@ -46,17 +46,14 @@ public class View extends JFrame
 	    add(southPanel, BorderLayout.SOUTH);
 	        
 	    // create buttons
-	    reservationButton = new JButton("Reservation"); 
-	    customerButton = new JButton("Customer");
-	    vehicleButton = new JButton("Vehicle");
+	    reservationButton 	= new JButton("Reservation"); 
+	    customerButton 		= new JButton("Customer");
+	    vehicleButton 		= new JButton("Vehicle");
 	        
 	    // add components to north panel
 	    northPanel.add(reservationButton);
 	    northPanel.add(customerButton);
 	    northPanel.add(vehicleButton);
-	        
-	    // add components to south panel
-	    // <currently empty>
 	        
 	    // Set title
 	    setTitle("Bookingsystem");
