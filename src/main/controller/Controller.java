@@ -21,15 +21,30 @@ public class Controller
 	private View view;
 	private Model model;
 	
-	public Controller(Model model, View view) 
+	public Controller(final Model model, View view) 
 	{
+		// Store the view.
 		this.view = view;
 		
+		// Add a listener to the reservationbutton
 		view.addActionListenerToReservationButton(new ListenerToReservation());
 		
+		// Add a listener to the customer button
 		view.addActionListenerToCustomerButton(new ListenerToCustomer());
 		
+		// Add a listener to the vehicle button
 		view.addActionListenerToVehicleButton(new ListenerToVehicle());		
+		
+		// Add a listener to close the connection to the database.
+		view.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent arg0) {
+				// Close the connection to the model
+				model.close();
+				
+				// Exit
+				System.exit(0);
+			}
+		});
 	}
 	
 	class ListenerToReservation implements ActionListener {
