@@ -47,7 +47,7 @@ public class MySQLModelTest extends MySQLModel {
 	// Test query from selector and condition
 	public void testQueryBuilderWithSelector() {
 		query = buildSelectQuery(table, condition, selector, "");
-		assertEquals("Can build queries from a condition with a given selector", 
+		assertEquals("Unable to build queries from a condition with a given selector", 
 					 "SELECT field1, field2 FROM table WHERE field = 'value'", query);
 	}
 	
@@ -55,7 +55,7 @@ public class MySQLModelTest extends MySQLModel {
 	// Test query from selector, condition and join statement
 	public void testQueryBuilderWithConditionAndJoin() {
 		query = buildSelectQuery(table, condition, selector, join);
-		assertEquals("Can build queries from a condition, selector and join statement", 
+		assertEquals("Unable to build queries from a condition, selector and join statement", 
 					 "SELECT field1, field2 FROM table JOIN otherTable ON field3 = 'value' WHERE field = 'value'", query);
 	}
 		
@@ -63,7 +63,7 @@ public class MySQLModelTest extends MySQLModel {
 	// Test query from hash map
 	public void testQueryBuilderWithHashMap() {
 		query = buildSelectQuery(table, fields, "*", "");
-		assertEquals("Can build queries from a HashMap",
+		assertEquals("Unable to build queries from a HashMap",
 					 "SELECT * FROM table WHERE field LIKE 'value' AND anotherField LIKE 'yetAnotherValue'", query);
 	}
 	
@@ -71,7 +71,7 @@ public class MySQLModelTest extends MySQLModel {
 	// Test query from a hash map with join and selectors
 	public void testQueryBuilderWithHashMapAndJoin() {
 		query = buildSelectQuery(table, fields, selector, join);
-		assertEquals("Can build queries from a HashMap and with JOIN statements", 
+		assertEquals("Unable to build queries from a HashMap and with JOIN statements", 
 					 "SELECT field1, field2 FROM table JOIN otherTable ON field3 = 'value' WHERE field LIKE 'value' AND anotherField LIKE 'yetAnotherValue'", query);
 		
 	}
