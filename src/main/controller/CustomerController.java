@@ -8,6 +8,8 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.JOptionPane;
+
 import main.model.Customer;
 import main.model.Reservation;
 import main.util.Log;
@@ -159,11 +161,13 @@ public class CustomerController {
 									
 									if (errorList.size() > 0) {
 										String message = "Unable to update customer with empty fields: ";
-										for (int n = 0; n >= errorList.size(); n++) {
-											// Add a field to the message (and a "," if we're not iterating over the last element
-											message += errorList.get(n) + ((n < errorList.size()) ? ", " : "");
+										for (int n = 0; n < errorList.size(); n++) {
+											// Add a field to the message (and a "," if we're not iterating over the last element)
+											message += errorList.get(n) + ((n < errorList.size() - 1) ? ", " : ".");
 										}
-										Log.error(message);
+										
+										// Show the message
+										JOptionPane.showMessageDialog(window, message);
 									} else {
 										// Update the customer in the database.
 										Customer customer = new Customer(firstName, lastName, email, phone, address);
@@ -171,13 +175,13 @@ public class CustomerController {
 										
 										// Update the customer table
 										showCustomerTable(Customer.getAll());
+										
+										// Close the window
+										window.dispose();
 									}
 								} else {
 									Log.warning("Unable to update a customer without an id. Please make sure the customer is stored in the database.");
 								}
-								
-								// Close the window
-								window.dispose();
 							}
 						});
 					}

@@ -159,7 +159,7 @@ public class Reservation extends ModelEntity<Reservation> {
 	 * @return  The Reservation if it was found, otherwise null.
 	 */
 	public static Reservation getWhereId(int entryId) {
-		ResultSet result = ModelEntity.model.get("reservation", entryId);
+		ResultSet result = model.get("reservation", entryId);
 		// Examine if the result has any data
 		if (getFirstRowInResultSet(result)) {
 			try {
