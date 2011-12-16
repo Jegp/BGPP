@@ -122,7 +122,9 @@ public class VehicleController {
 
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			if (vehicleTable.getSelectedRow() >= 0) {
+				vehicleContainer.enableDeleteButton();
+			}
 			
 		}
 		
@@ -156,7 +158,8 @@ public class VehicleController {
 						vehicleTable.updateTable(new Vehicle[0]);
 					}				 	
 				} else {
-						JOptionPane.showMessageDialog(vehicleContainer, "That vehicle has a future reservation");						
+						JOptionPane.showMessageDialog(vehicleContainer, "That vehicle has a future reservation",
+						"Future Reservation", JOptionPane.ERROR_MESSAGE);						
 				}
 			}
 			

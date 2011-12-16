@@ -53,14 +53,16 @@ public class CustomerContainer extends JPanel {
 		buttonSearch = new JButton("Search for customers");
 		buttonSearch.setPreferredSize(new Dimension(200, 50));
 		
-		// Create a wrapper panel
+		// Create a wrapper panel and westpanel for esthetic reasons
 		JPanel wrapper = new JPanel(new GridLayout(1, 2));
+		JPanel west = new JPanel();
 		
 		// Add the button
 		wrapper.add(buttonSearch); wrapper.add(buttonDelete);
 		
 		// Add the wrapper panel
 		add(wrapper, BorderLayout.SOUTH);
+		add(west, BorderLayout.WEST);
 	}
 	
 	/**
@@ -86,7 +88,10 @@ public class CustomerContainer extends JPanel {
 		pane = new JScrollPane(customerTable);
 		
 		// Insert the new center element.
-		add(pane, BorderLayout.CENTER);
+		pane.setPreferredSize(new Dimension(1200, 600));
+		JPanel centerPanel = new JPanel();
+		centerPanel.add(pane);
+		add(centerPanel, BorderLayout.CENTER);
 		
 		// Validate
 		validate();
