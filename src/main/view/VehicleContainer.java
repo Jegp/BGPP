@@ -42,8 +42,8 @@ public class VehicleContainer extends JPanel
 		setVisible(true);		
 	}
 	
-	public void updateTable(Vehicle[] vehicles) {
-		vehicleTable.updateTable(vehicles);
+	public void updateTable() {
+		vehicleTable.updateTable(Vehicle.getAll());
 	}
 	
 	public void addVehicleBtnListener(ActionListener vbl) {
