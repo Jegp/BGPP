@@ -25,7 +25,12 @@ public class ReservationTable extends AbstractTableModel
 		Reservation[] reservations 	= Reservation.getFromPeriod(period);
 		periodInDays 				= period.getLengthInDays();
 		Vehicle[] allVehicles 		= Vehicle.getAll();
+		if(allVehicles == null) {
+			numberOfVehicles		= 0;
+		}
+		else {
 		numberOfVehicles 			= allVehicles.length;
+		}
 		
 		date 						= new String[periodInDays + 1];
 		data 						= new Object[numberOfVehicles][periodInDays + 1];

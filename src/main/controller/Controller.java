@@ -10,13 +10,19 @@ import java.awt.event.*;
 /**
  * The Controller for the booking-system.
  */
-public class Controller 
-{		
-	private View view;
-	private Model model;
+public class Controller {
 	
-	public Controller(final Model model, View view) 
-	{
+	/**
+	 * The view 
+	 */
+	private View view;
+	
+	/**
+	 * Creates a controller that handles the three windows: Reservation, Customer and Vehicle.
+	 * @param model  The model to show data from.
+	 * @param view  The view to control.
+	 */
+	public Controller(final Model model, View view) {
 		// Store the view.
 		this.view = view;
 		
@@ -66,9 +72,10 @@ public class Controller
     
     class ListenerToVehicle implements ActionListener {
     	public void actionPerformed(ActionEvent e) {
-    	VehicleContainer container = new VehicleContainer();
     	
-    	new VehicleController(container);
+    	VehicleContainer container = new VehicleContainer();
+    	VehicleController vc = new VehicleController(container);
+    	
     	view.changeContainer(container);
     	view.pack();
     	}

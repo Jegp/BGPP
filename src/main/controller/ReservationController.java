@@ -5,6 +5,7 @@ import java.awt.*;
 
 import javax.swing.JButton;
 
+import main.view.CreateReservationView;
 import main.view.ReservationContainer;
 import main.view.TestWindow;
 
@@ -22,7 +23,7 @@ public class ReservationController {
 	
 	class ActionListenerToCreateReservationButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			TestWindow window = new TestWindow();
+			CreateReservationView window = new CreateReservationView();
 		}
 	}
 	
