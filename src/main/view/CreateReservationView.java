@@ -89,39 +89,38 @@ public class CreateReservationView extends JFrame{
 	}
 	
 	public void setAllVehiclesinArray() {
-		vehicles 			= Vehicle.getAll();
+		vehicles 	 				= Vehicle.getAll();
 		Reservation[] reservations	= Reservation.getFromPeriod(period);
 		availableVehicles			= new String[vehicles.length];
-		int reservedInThePeriod		= 0;
-		
-		//iterates through every slot in the drop down box
-		for(int k = 0; k < vehicles.length; k++) {
-		 //iterates through all vehicles
-		 for(int i = 0; i < vehicles.length; i++) {
-		  if(reservations != null) {
-			  //iterates through reservations to find the reservations vehicle ID's
-			  for(int j = 0; j < reservations.length; j++) {
-				 if(vehicles[i].id == reservations[j].vehicle.id) {
-					for(int n = 0; n < period.getLengthInDays(); n++) {
-						if(reservations[j].period.isIncluded(startDate)) {
-							reservedInThePeriod++;
-						}
-						if(n == period.getLengthInDays() - 1 && reservedInThePeriod == 0) {
-							availableVehicles[k] = vehicles[i].model;
-						}
-					calendar.add(Calendar.DAY_OF_MONTH, n);
-					}
-				 }
-				 else {
-					 availableVehicles[k] = vehicles[i].model;
-				 }
-			  availableVehicles[k] = vehicles[i].model;
-			  }}
-		  else if(reservations == null) {
-			  availableVehicles[k] = vehicles[i].model;
+		int index = 0;
+		//iterates through every slot in the drop down box, and is the length of all vehicles (might not fill the whole thing) 
+		for(int i = 0; i < vehicles.length; i++) {
+		 if(reservations != null) {
+		  for(int j = 0; j <reservations.length; j++) {
+		    if(vehicles[i].model == reservations[j].vehicle.model) {
+			 for(int k = 1; k < period.getLengthInDays() + 1; k++) {
+				 int daysBookedInDays = 0;
+				  if(reservations[i].period.isIncluded(calendar.getTime())) {
+					 daysBookedInDays++;
+				  }
+				 calendar.add(Calendar.DAY_OF_MONTH, k);
+				  if(k == period.getLengthInDays() + 1 && daysBookedInDays == 0) {
+					 availableVehicles[index] = vehicles[i].model;
+					 index++;
+				  }
+			 }
+		    }
+		    else {
+		    availableVehicles[index] = vehicles[i].model;
+		    index++;
+		    }
 		  }
 		 }
-	    }
+		 else {
+			 availableVehicles[index] = vehicles[i].model;
+			 index++;
+		 }
+		}
 		
 		vehicleDropDown = new JComboBox(availableVehicles);
 		centerPanel.add(vehicleDropDown);
