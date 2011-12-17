@@ -231,7 +231,7 @@ public class MySQLModel extends Model {
 	/**
 	 * Retrieves a new statement to execute queries on. 
 	 */
-	private Statement getStatement() {
+	protected Statement getStatement() {
 		try {
 			return connection.createStatement();
 		} catch (SQLException e) {

@@ -1,13 +1,11 @@
 package test.main.model;
 
+import java.sql.*;
+import java.util.HashMap;
+import org.junit.*;
 import static org.junit.Assert.*;
 
-import java.util.HashMap;
-
 import main.model.MySQLModel;
-
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * The the MySQL implementation of the model.
@@ -27,6 +25,10 @@ public class MySQLModelTest extends MySQLModel {
 	// Set up hash map
 	HashMap<String, String> fields;
 	
+	// Set up Statement and ResultSet
+	ResultSet r;
+	Statement s;
+	
 	/**
 	 * Dummy constructor.
 	 */
@@ -39,6 +41,22 @@ public class MySQLModelTest extends MySQLModel {
 		fields = new HashMap<String, String>();
 		fields.put("field", "value");
 		fields.put("anotherField", "yetAnotherValue");
+		
+		// Create a table just for testing with three fields: id, field and anotherField
+		s = getStatement();
+		s.execute("CREATE TABLE test (" +
+				"id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT," +
+				"field char(50)," +
+				"anotherField char(50));");
+		
+		// Add dummy value
+		s.execute("INSERT INTO test VALUES (1, 'value', 'yetAnotherValue')");
+	}
+	
+	@After
+	public void tearDown() throws Exception {
+		// Remove table test and all it's entities
+		s.execute("DROP TABLE test");
 	}
 	
 	// Test query insertion
@@ -87,6 +105,77 @@ public class MySQLModelTest extends MySQLModel {
 		query = buildUpdateQuery(table, 42, fields);
 		assertEquals("Unable to build update query with the given fields",
 				"UPDATE table SET field = 'value', anotherField = 'yetAnotherValue' WHERE id = '42'", query);
+	}
+	
+	//////////////////////////////////////////////
+	// Test database queries
+	//////////////////////////////////////////////
+	
+	@Test
+	// Test insertion
+	public void testSave() throws Exception {
+		int insertedId = save("test", fields);
+		
+		// examine if the table contains the values
+		s.execute("SELECT * FROM test WHERE field = 'value' AND anotherField = 'yetAnotherValue'");
+		
+		r = s.getResultSet();
+		
+		// test insertion
+		assertTrue("Unable to insert elements", r.next());
+		
+		// Test values
+		assertEquals("Unable to insert the right values", "value", r.getString(2));
+
+		// test inserted Id
+		assertEquals("Unable to retrieve inserted id", 1, insertedId);
+	}
+	
+	@Test
+	// Test search
+	public void testSearch() throws Exception {
+		// Define search criteria
+		HashMap<String, String> search = new HashMap<String, String>();
+		search.put("anotherField", "yetAnotherValue");
+		
+		r = search("test", search);
+		
+		// test id
+		assertTrue("Unable to search for elements", r.next());
+	}
+	
+	@Test
+	// Test update
+	public void testUpdate() throws Exception {
+		// Define search criteria
+		HashMap<String, String> search = new HashMap<String, String>();
+		search.put("field", "updatedValue");
+		
+		boolean success = update("test", 1, search);
+		
+		// Examine if the values are correct
+		s.execute("SELECT COUNT(*) FROM test WHERE field = 'updatedValue'");
+		
+		r = s.getResultSet();
+		
+		// test
+		assertTrue("Unable to insert elements", success);
+		assertTrue("Unable to update values", r.next());
+	}
+	
+	@Test
+	// Test delete
+	public void testDelete() throws Exception {
+		boolean success = delete("test", 1);
+		
+		// Examine if element still exists
+		s.execute("SELECT COUNT(*) FROM test");
+		r = s.getResultSet();
+		r.next();
+		
+		// Test
+		assertTrue("Unable to delete entry", success);
+		assertEquals("Unable to delete entry", 0, r.getInt(1));
 	}
 
 }
