@@ -257,7 +257,7 @@ public class MySQLModel extends Model {
 				int id = res.getInt(1);
 				if (id != 0) return id;
 			}
-		} catch (SQLException e){
+		} catch (SQLException e) {
 			Log.error("Unable to perform select query from " + table + ": " + e);
 		}
 		
