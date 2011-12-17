@@ -11,7 +11,7 @@ import main.util.Log;
  *
  * @param <T>  The type of the entity.
  */
-public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityInterface<T> {
+public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityInterface<T> {	
 	
 	/**
 	 * The ModelEntity's access to the model.
@@ -48,7 +48,7 @@ public abstract class ModelEntity<T extends ModelEntity<T>> extends EntityInterf
 	/**
 	 * A helper function to examine whether a given result set contains any
 	 * rows. Also moves the cursor to the first line of the result set.
-	 * @return A boolean value signaling either success or failure.
+	 * @return A boolean value signalling either success or failure.
 	 */
 	protected static boolean getFirstRowInResultSet(ResultSet res) {
 		try {
