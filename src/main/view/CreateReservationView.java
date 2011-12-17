@@ -37,7 +37,7 @@ public class CreateReservationView extends JFrame{
 	
 	public final JButton customerCreateButton 	= new JButton("Create");
 	public final JButton customerSearchButton 	= new JButton("Search");
-	public final JButton updatePeriodButton	= new JButton("Update");
+	public final JButton updatePeriodButton		= new JButton("Update");
 	
 	public final JButton saveButton			= new JButton("Save"); 
 	public final JButton editButton			= new JButton("Edit");
@@ -51,7 +51,7 @@ public class CreateReservationView extends JFrame{
 	
 	private JComboBox customerDropDown;
 	private JComboBox vehicleDropDown;
-	private String[] allCustomers;
+	private String[] customerComboBox;
 	private String[] availableVehicles;
 		
 	private SimpleDateFormat dateFormat;
@@ -63,9 +63,9 @@ public class CreateReservationView extends JFrame{
 
 		editButton.setVisible(false);
 		
-		getAllCustomersInArray();
+		setCustomerComboBox();
 		
-		customerDropDown	= new JComboBox(allCustomers);
+		customerDropDown	= new JComboBox(customerComboBox);
 		
 		setLayout();
 	}
@@ -88,7 +88,37 @@ public class CreateReservationView extends JFrame{
 		setLayout();
 	}
 	
-	public void setAllVehiclesinArray() {
+	public void setPeriod() {
+		try {
+		startDateInput		= startDateTextField.getText();
+		endDateInput		= endDateTextField.getText();
+		
+		dateFormat			= new SimpleDateFormat("dd/MM/yyyy");
+		
+		startDate			= dateFormat.parse(startDateInput);	
+		endDate				= dateFormat.parse(endDateInput);
+		
+		period				= new Period(startDate, endDate);
+		
+		calendar			= new GregorianCalendar();
+		calendar.setTime(startDate);		
+		
+		} catch (ParseException e) {
+			System.out.println("Invalid calendar input");
+			e.printStackTrace();
+		}
+	}
+	
+	public void setCustomerComboBox() {
+		customers				= Customer.getAll();
+		customerComboBox		= new String[customers.length];
+		
+		for(int i = 0; i < customers.length; i++) {
+			customerComboBox[i] = customers[i].firstName + " " + customers[i].lastName;
+		}	
+	}
+	
+	public void setVehicleComboBox() {
 		vehicles 	 				= Vehicle.getAll();
 		Reservation[] reservations	= Reservation.getFromPeriod(period);
 		availableVehicles			= new String[vehicles.length];
@@ -128,42 +158,8 @@ public class CreateReservationView extends JFrame{
 		
 	}
 	
-	public void setPeriod() {
-		try {
-		startDateInput		= startDateTextField.getText();
-		endDateInput		= endDateTextField.getText();
-		
-		dateFormat			= new SimpleDateFormat("dd/MM/yyyy");
-		
-		startDate			= dateFormat.parse(startDateInput);	
-		endDate				= dateFormat.parse(endDateInput);
-		
-		period				= new Period(startDate, endDate);
-		
-		calendar			= new GregorianCalendar();
-		calendar.setTime(startDate);		
-		
-		} catch (ParseException e) {
-			System.out.println("Invalid calendar input");
-			e.printStackTrace();
-		}
-	}
-	
-	public void getAllCustomersInArray() {
-		customers				= Customer.getAll();
-		allCustomers			= new String[customers.length];
-		
-		for(int i = 0; i < customers.length; i++) {
-			allCustomers[i] = customers[i].firstName + " " + customers[i].lastName;
-		}	
-	}
-	
-	public int submit() {
-		for(int i = 0; i < customers.length; i++) {
-			if(allCustomers[customerDropDown.getSelectedIndex()].equals(customers[i].firstName + "" + customers[i].lastName)) {
-				customer = customers[i];
-			}
-		}
+	public void submit() {		
+		customer = customers[customerDropDown.getSelectedIndex()];
 		
 		for(int i = 0; i < vehicles.length; i++) {
 			if(availableVehicles[vehicleDropDown.getSelectedIndex()].equals(vehicles[i].model)) {
@@ -171,10 +167,12 @@ public class CreateReservationView extends JFrame{
 			}
 		}
 		
+		System.out.println(customer);
+		System.out.println(period);
+		System.out.println(vehicle);
+		
 		Reservation reservation = new Reservation(customer, period, vehicle);
 		Reservation.save(reservation);
-		
-		return 0;
 	}
 	
 	public void setLayout() {

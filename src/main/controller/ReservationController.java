@@ -51,12 +51,13 @@ public class ReservationController {
 	class ActionListenerToUpdateButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			createReservationWindow.setPeriod();
-			createReservationWindow.setAllVehiclesinArray();
+			createReservationWindow.setVehicleComboBox();
 		}
 	}
 	
 	class ActionListenerToCreateCustomerButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+		createReservationWindow.dispose();
 		createCustomerWindow = new CreateCustomerForReservationWindow();
 		createCustomerWindow.getSubmitButton().addActionListener(new ActionListenerToSubmitNewCustomerButton());
 		}

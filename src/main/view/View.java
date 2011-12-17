@@ -28,15 +28,18 @@ public class View extends JFrame
 	    
 			
 	    // create north, south, west and east panels
-	    JPanel northPanel = new JPanel(new FlowLayout());
-	    JPanel westPanel = new JPanel(new GridLayout(0, 1));
-	    JPanel eastPanel = new JPanel();
-	    JPanel southPanel = new JPanel();
-	        
-	    // create content
-	    ReservationContainer reservationContainer = new ReservationContainer();
+	    JPanel northPanel 	= new JPanel(new FlowLayout());
+	    JPanel westPanel 	= new JPanel(new GridLayout(0, 1));
+	    JPanel eastPanel 	= new JPanel();
+	    JPanel southPanel 	= new JPanel();
 	    
-	    container = reservationContainer;
+	    // create primitive start panel.
+	    JPanel startPanel 	= new JPanel(); // perhaps add picture?
+	    JLabel startText	= new JLabel("Pick a catagory to start business!");
+	    startPanel.add(startText);
+	    
+	    // set starting panel
+	    container = startPanel;
 	    
 	    // arrange the panels 
 	    
@@ -67,7 +70,6 @@ public class View extends JFrame
 	    pack();
 	    
 	    setVisible(true);
-	    
 	}
 		
 	public void changeContainer(JPanel newContainer)
@@ -76,7 +78,7 @@ public class View extends JFrame
 		container = newContainer;
 		add(container, BorderLayout.CENTER);
 	}
-
+	
 	public void addActionListenerToReservationButton(ActionListener listener)
 	{
 		reservationButton.addActionListener(listener);

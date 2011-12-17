@@ -129,7 +129,7 @@ public class CreateCustomerForReservationWindow extends JFrame {
 		Customer customer = new Customer(firstNameInput, lastNameInput, emailInput, phoneInput, adressInput);
 		Customer.save(customer);
 		
-		remove(this);
+		dispose();
 	}
 	
 	/**
