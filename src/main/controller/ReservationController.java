@@ -5,12 +5,14 @@ import java.awt.*;
 
 import javax.swing.JButton;
 
+import main.view.CreateCustomerForReservationWindow;
 import main.view.CreateReservationView;
 import main.view.ReservationContainer;
 
 public class ReservationController {	
-	private CreateReservationView window;
+	private CreateReservationView createReservationWindow;
 	private ReservationContainer container;
+	private CreateCustomerForReservationWindow createCustomerWindow;
 	
 	public ReservationController(ReservationContainer container) {
 		
@@ -21,10 +23,11 @@ public class ReservationController {
 	
 	class ActionListenerToCreateReservationButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			CreateReservationView window = new CreateReservationView();
-			window.getSaveButton().addActionListener(new ActionListerToSaveButton());
-			window.getEditButton().addActionListener(new ActionListenerToEditButton());
-			window.getUpdateButton().addActionListener(new ActionListenerToUpdateButton());
+			createReservationWindow = new CreateReservationView();
+			createReservationWindow.getSaveButton().addActionListener(new ActionListerToSaveButton());
+			createReservationWindow.getEditButton().addActionListener(new ActionListenerToEditButton());
+			createReservationWindow.getUpdateButton().addActionListener(new ActionListenerToUpdateButton());
+			createReservationWindow.getCustomerCreateButton().addActionListener(new ActionListenerToCreateCustomerButton());
 		}
 	}
 	
@@ -35,7 +38,7 @@ public class ReservationController {
 	
 	class ActionListerToSaveButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("save!!!!");
+			createReservationWindow.submit();
 		}
 	}
 	
@@ -47,7 +50,21 @@ public class ReservationController {
 	
 	class ActionListenerToUpdateButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			window.setInput();
+			createReservationWindow.setPeriod();
+			createReservationWindow.setAllVehiclesinArray();
+		}
+	}
+	
+	class ActionListenerToCreateCustomerButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+		createCustomerWindow = new CreateCustomerForReservationWindow();
+		createCustomerWindow.getSubmitButton().addActionListener(new ActionListenerToSubmitNewCustomerButton());
+		}
+	}
+	
+	class ActionListenerToSubmitNewCustomerButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+		createCustomerWindow.submit();
 		}
 	}
 }
