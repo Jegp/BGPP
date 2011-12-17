@@ -148,7 +148,6 @@ public class CreateReservationView extends JFrame{
 			System.out.println("Invalid calendar input");
 			e.printStackTrace();
 		}
-
 	}
 	
 	public void getAllCustomersInArray() {
