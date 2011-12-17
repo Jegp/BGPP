@@ -167,12 +167,9 @@ public class CreateReservationView extends JFrame{
 			}
 		}
 		
-		System.out.println(customer);
-		System.out.println(period);
-		System.out.println(vehicle);
-		
 		Reservation reservation = new Reservation(customer, period, vehicle);
-		Reservation.save(reservation);
+		reservation = Reservation.save(reservation);
+		System.out.println(reservation);
 	}
 	
 	public void setLayout() {
