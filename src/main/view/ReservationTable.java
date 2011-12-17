@@ -16,12 +16,15 @@ public class ReservationTable extends AbstractTableModel
 	private Date 		endDate;	
 	private String[]	date;
 	private Object[][] 	data;
+	private Period		period;
 	private int 		periodInDays;
 	private int 		numberOfVehicles;
 	
 	public ReservationTable(Date startDate, Date endDate) {
 		
-		Period period 				= new Period(startDate, endDate);
+		this.startDate				= startDate;
+		this.endDate				= endDate;
+		period 						= new Period(startDate, endDate);
 		Reservation[] reservations 	= Reservation.getFromPeriod(period);
 		periodInDays 				= period.getLengthInDays();
 		Vehicle[] allVehicles 		= Vehicle.getAll();
@@ -38,14 +41,17 @@ public class ReservationTable extends AbstractTableModel
 		//Initialize calendar
 		GregorianCalendar calendar 	= new GregorianCalendar();
 		calendar.setTime(startDate);
+		int actualMonth 			= calendar.get(Calendar.MONTH) + 1;
 		
 	 	//Initialize dates
 		date[0] = "Vehicle";
 		//adds all the vehicles to the first column
 		for(int j = 1; j < periodInDays + 1; j++) {
-			date[j] = calendar.get(Calendar.DAY_OF_MONTH) + "" + "/" + calendar.get(Calendar.MONTH);
+			date[j] = calendar.get(Calendar.DAY_OF_MONTH) + "" + "/" + actualMonth;
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 			}
+		
+		System.out.println(calendar.get(Calendar.MONTH));
 		
 		// creates the first column to contain all vehicles ID
 		for(int i = 0; i < numberOfVehicles; i++) {

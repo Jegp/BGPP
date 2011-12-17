@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import main.controller.ReservationController;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Timer;
 
@@ -18,6 +19,9 @@ public class ReservationContainer extends JPanel
 	private JButton searchButton;
 	private JButton createReservationButton;
 	private ReservationController controller;
+	private JTextField startPeriod;
+	private JTextField endPeriod;
+	private SimpleDateFormat dateFormat;
 	
 	/**
 	 * Creates a new container
@@ -40,27 +44,33 @@ public class ReservationContainer extends JPanel
 		add(southPanel,	BorderLayout.SOUTH);
 		add(westPanel,	BorderLayout.WEST);
 		add(eastPanel,	BorderLayout.EAST);
-
-		JTextField startOfPeriod		= new JTextField("Today", 10); //remake
-		JTextField endOfPeriod			= new JTextField("Tomorrow", 10); //remake
 		
-		createReservationButton			= new JButton("Create Reservation");
-		createReservationButton.setPreferredSize(new Dimension(200, 50));
-		searchButton					= new JButton("Search");
+		dateFormat		= new SimpleDateFormat("dd/MM/yyyy");
+		
+		startPeriod		= new JTextField("Today", 10); //remake
+		endPeriod		= new JTextField("Tomorrow", 10); //remake
+		
+		createReservationButton					= new JButton("Create Reservation");
+		createReservationButton.setPreferredSize( new Dimension(200, 50));
+		searchButton							= new JButton("Search");
 		
 		ReservationTable data 			= new ReservationTable(startDate, endDate);
 		JScrollPane scrollPane			= new JScrollPane(new JTable(data));
-		scrollPane.setPreferredSize(new Dimension(1200, 600));
+		scrollPane.setPreferredSize		( new Dimension(1200, 600));
 		
 		centerPanel.add(scrollPane);
-		northPanel.add(startOfPeriod);
-		northPanel.add(endOfPeriod);
+		northPanel.add(startPeriod);
+		northPanel.add(endPeriod);
 		southPanel.add(createReservationButton);
 		southPanel.add(searchButton);
 		
 		setVisible(true);		
 	}
 	
+	/**
+	 * returns the button south button which should open a new JFrame to create a reservation
+	 * @return
+	 */
 	public JButton getCreateReservationButton() {
 		return createReservationButton;
 	}
@@ -70,5 +80,13 @@ public class ReservationContainer extends JPanel
 	 */
 	public JButton getSearchButton() {
 		return searchButton;
+	}
+	
+	public String getStartPeriodTextField() {
+		return startPeriod.getText();
+	}
+	
+	public String getEndPeriodTextField() {
+		return endPeriod.getText();
 	}
 }
