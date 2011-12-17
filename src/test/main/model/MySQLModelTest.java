@@ -13,21 +13,21 @@ import main.model.MySQLModel;
 public class MySQLModelTest extends MySQLModel {
 	
 	// Define the table and the query variable to use.
-	String table = "table";
-	String query = "";
+	private String table = "table";
+	private String query = "";
 	
 	// Set up conditions and join statements
-	String condition	= "field = 'value'";
-	String selector		= "field1, field2";
-	String field		= "field";
-	String join 		= "otherTable ON field3 = 'value'";
+	private String condition	= "field = 'value'";
+	private String selector		= "field1, field2";
+	private String field		= "field";
+	private String join 		= "otherTable ON field3 = 'value'";
 	
 	// Set up hash map
-	HashMap<String, String> fields;
+	private HashMap<String, String> fields;
 	
 	// Set up Statement and ResultSet
-	ResultSet r;
-	Statement s;
+	private ResultSet r;
+	private Statement s;
 	
 	/**
 	 * Dummy constructor.
@@ -36,8 +36,12 @@ public class MySQLModelTest extends MySQLModel {
 		super();
 	}
 	
-	@Before
-	public void setUp() throws Exception {
+	
+	/**
+	 * Set up test fixtures.
+	 * @throws Exception
+	 */
+	@Before public void setUp() throws Exception {
 		fields = new HashMap<String, String>();
 		fields.put("field", "value");
 		fields.put("anotherField", "yetAnotherValue");
@@ -53,55 +57,64 @@ public class MySQLModelTest extends MySQLModel {
 		s.execute("INSERT INTO test VALUES (1, 'value', 'yetAnotherValue')");
 	}
 	
-	@After
-	public void tearDown() throws Exception {
+	/**
+	 * Tear down fixture, i. e. the test table.
+	 * @throws Exception
+	 */
+	@After public void tearDown() throws Exception {
 		// Remove table test and all it's entities
 		s.execute("DROP TABLE test");
 	}
 	
-	// Test query insertion
-	@Test
-	public void tesInsertionQuery() {
+	/**
+	 * Test query insertion.
+	 */
+	@Test public void tesInsertionQuery() {
 		query = buildInsertQuery(table, fields);
 		assertEquals("Unable to build insert query with the given fields",
 				"INSERT INTO table (field, anotherField) VALUES('value', 'yetAnotherValue')", query);
 	}
 
-	@Test
-	// Test query from selector and condition
-	public void testSelectQueryWithSelector() {
+	/**
+	 * Test query from selector and condition
+	 */
+	@Test public void testSelectQueryWithSelector() {
 		query = buildSelectQuery(table, condition, selector, "");
 		assertEquals("Unable to build select query from a condition with a given selector", 
 					 "SELECT field1, field2 FROM table WHERE field = 'value'", query);
 	}
 	
-	@Test
-	// Test query from selector, condition and join statement
-	public void testSelectQueryWithConditionAndJoin() {
+	/**
+	 * Test query from selector, condition and join statement
+	 */
+	@Test public void testSelectQueryWithConditionAndJoin() {
 		query = buildSelectQuery(table, condition, selector, join);
 		assertEquals("Unable to build select query from a condition, selector and join statement", 
 					 "SELECT field1, field2 FROM table JOIN otherTable ON field3 = 'value' WHERE field = 'value'", query);
 	}
 		
-	@Test
-	// Test query from hash map
-	public void testSelectQueryWithHashMap() {
+	/**
+	 * Test query from hash map.
+	 */
+	@Test public void testSelectQueryWithHashMap() {
 		query = buildSelectQuery(table, fields, "*", "");
 		assertEquals("Unable to build select query from a HashMap",
 					 "SELECT * FROM table WHERE field LIKE 'value' AND anotherField LIKE 'yetAnotherValue'", query);
 	}
 	
-	@Test
-	// Test query from a hash map with join and selectors
-	public void testSelectQueryWithHashMapAndJoin() {
+	/**
+	 * Test query from a hash map with join and selectors
+	 */
+	@Test public void testSelectQueryWithHashMapAndJoin() {
 		query = buildSelectQuery(table, fields, selector, join);
 		assertEquals("Unable to build select query from a HashMap and with JOIN statements", 
 					 "SELECT field1, field2 FROM table JOIN otherTable ON field3 = 'value' WHERE field LIKE 'value' AND anotherField LIKE 'yetAnotherValue'", query);
 	}
 	
-	@Test
-	// Test update query
-	public void testUpdateQuery() {
+	/**
+	 * Test update query.
+	 */
+	@Test public void testUpdateQuery() {
 		query = buildUpdateQuery(table, 42, fields);
 		assertEquals("Unable to build update query with the given fields",
 				"UPDATE table SET field = 'value', anotherField = 'yetAnotherValue' WHERE id = '42'", query);
@@ -111,9 +124,11 @@ public class MySQLModelTest extends MySQLModel {
 	// Test database queries
 	//////////////////////////////////////////////
 	
-	@Test
-	// Test insertion
-	public void testSave() throws Exception {
+	/**
+	 * Test insertion of an entry.
+	 * @throws Exception
+	 */
+	@Test public void testSave() throws Exception {
 		int insertedId = save("test", fields);
 		
 		// examine if the table contains the values
@@ -131,9 +146,11 @@ public class MySQLModelTest extends MySQLModel {
 		assertEquals("Unable to retrieve inserted id", 1, insertedId);
 	}
 	
-	@Test
-	// Test search
-	public void testSearch() throws Exception {
+	/**
+	 * Test a search for an entity.
+	 * @throws Exception
+	 */
+	@Test public void testSearch() throws Exception {
 		// Define search criteria
 		HashMap<String, String> search = new HashMap<String, String>();
 		search.put("anotherField", "yetAnotherValue");
@@ -144,9 +161,11 @@ public class MySQLModelTest extends MySQLModel {
 		assertTrue("Unable to search for elements", r.next());
 	}
 	
-	@Test
-	// Test update
-	public void testUpdate() throws Exception {
+	/**
+	 * Test an update of an element in the database.
+	 * @throws Exception
+	 */
+	@Test public void testUpdate() throws Exception {
 		// Define search criteria
 		HashMap<String, String> search = new HashMap<String, String>();
 		search.put("field", "updatedValue");
@@ -163,9 +182,11 @@ public class MySQLModelTest extends MySQLModel {
 		assertTrue("Unable to update values", r.next());
 	}
 	
-	@Test
-	// Test delete
-	public void testDelete() throws Exception {
+	/**
+	 * Test the deletion of an entry.
+	 * @throws Exception
+	 */
+	@Test public void testDelete() throws Exception {
 		boolean success = delete("test", 1);
 		
 		// Examine if element still exists
