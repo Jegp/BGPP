@@ -21,7 +21,7 @@ public class ReservationController {
 	
 	class ActionListenerToCreateReservationButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			CreateReservationView window = new CreateReservationView();
+			window = new CreateReservationView();
 			window.getSaveButton().addActionListener(new ActionListerToSaveButton());
 			window.getEditButton().addActionListener(new ActionListenerToEditButton());
 			window.getUpdateButton().addActionListener(new ActionListenerToUpdateButton());
@@ -35,7 +35,7 @@ public class ReservationController {
 	
 	class ActionListerToSaveButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("save!!!!");
+			window.submit();
 		}
 	}
 	
@@ -47,7 +47,8 @@ public class ReservationController {
 	
 	class ActionListenerToUpdateButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			window.setInput();
+			window.setPeriod();
+			window.setAllVehiclesinArray();
 		}
 	}
 }

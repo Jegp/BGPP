@@ -23,6 +23,8 @@ public class CreateReservationView extends JFrame{
 	private Period period;
 	private Vehicle vehicle;
 	
+	private JPanel centerPanel;
+	
 	public final JLabel emptyLabel2		 = new JLabel("Customer:");
 	public final JLabel emptyLabel1		 = new JLabel("Customer:");
 	public final JLabel customerLabel	 = new JLabel("Customer:");
@@ -41,13 +43,14 @@ public class CreateReservationView extends JFrame{
 	public final JButton editButton			= new JButton("Edit");
 	public final CancelButton cancelButton 	= new CancelButton(this);
 	
-	private String customerInput;
 	private String startDateInput;
 	private String endDateInput;
-	private String vehicleInput;
 	
-	private JComboBox<String> customerDropDown;
-	private JComboBox<String> vehicleDropDown;
+	private Customer[] customers;
+	private Vehicle[] vehicles;
+	
+	private JComboBox customerDropDown;
+	private JComboBox vehicleDropDown;
 	private String[] allCustomers;
 	private String[] availableVehicles;
 		
@@ -63,7 +66,6 @@ public class CreateReservationView extends JFrame{
 		getAllCustomersInArray();
 		
 		customerDropDown	= new JComboBox(allCustomers);
-		vehicleDropDown 	= new JComboBox();
 		
 		setLayout();
 	}
@@ -86,13 +88,104 @@ public class CreateReservationView extends JFrame{
 		setLayout();
 	}
 	
+	public void setAllVehiclesinArray() {
+		vehicles 			= Vehicle.getAll();
+		Reservation[] reservations	= Reservation.getFromPeriod(period);
+		availableVehicles			= new String[vehicles.length];
+		int reservedInThePeriod		= 0;
+		
+		//iterates through every slot in the drop down box
+		for(int k = 0; k < vehicles.length; k++) {
+		 //iterates through all vehicles
+		 for(int i = 0; i < vehicles.length; i++) {
+		  if(reservations != null) {
+			  //iterates through reservations to find the reservations vehicle ID's
+			  for(int j = 0; j < reservations.length; j++) {
+				 if(vehicles[i].id == reservations[j].vehicle.id) {
+					for(int n = 0; n < period.getLengthInDays(); n++) {
+						if(reservations[j].period.isIncluded(startDate)) {
+							reservedInThePeriod++;
+						}
+						if(n == period.getLengthInDays() - 1 && reservedInThePeriod == 0) {
+							availableVehicles[k] = vehicles[i].model;
+						}
+					calendar.add(Calendar.DAY_OF_MONTH, n);
+					}
+				 }
+				 else {
+					 availableVehicles[k] = vehicles[i].model;
+				 }
+			  availableVehicles[k] = vehicles[i].model;
+			  }}
+		  else if(reservations == null) {
+			  availableVehicles[k] = vehicles[i].model;
+		  }
+		 }
+	    }
+		
+		vehicleDropDown = new JComboBox(availableVehicles);
+		centerPanel.add(vehicleDropDown);
+		pack();
+		
+	}
+	
+	public void setPeriod() {
+		try {
+		startDateInput		= startDateTextField.getText();
+		endDateInput		= endDateTextField.getText();
+		
+		dateFormat			= new SimpleDateFormat("dd/MM/yyyy");
+		
+		startDate			= dateFormat.parse(startDateInput);	
+		endDate				= dateFormat.parse(endDateInput);
+		
+		period				= new Period(startDate, endDate);
+		
+		calendar			= new GregorianCalendar();
+		calendar.setTime(startDate);		
+		
+		} catch (ParseException e) {
+			System.out.println("Invalid calendar input");
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void getAllCustomersInArray() {
+		customers				= Customer.getAll();
+		allCustomers			= new String[customers.length];
+		
+		for(int i = 0; i < customers.length; i++) {
+			allCustomers[i] = customers[i].firstName + " " + customers[i].lastName;
+		}	
+	}
+	
+	public int submit() {
+		for(int i = 0; i < customers.length; i++) {
+			if(allCustomers[customerDropDown.getSelectedIndex()].equals(customers[i].firstName + "" + customers[i].lastName)) {
+				customer = customers[i];
+			}
+		}
+		
+		for(int i = 0; i < vehicles.length; i++) {
+			if(availableVehicles[vehicleDropDown.getSelectedIndex()].equals(vehicles[i].model)) {
+				vehicle = vehicles[i];
+			}
+		}
+		
+		Reservation reservation = new Reservation(customer, period, vehicle);
+		Reservation.save(reservation);
+		
+		return 0;
+	}
+	
 	public void setLayout() {
 		setTitle("Create Reservation");
 		setLayout(new BorderLayout());
 
 		JPanel northPanel		= new JPanel(new GridLayout(1,2,1,3));
 		JPanel withinNorthPanel = new JPanel(new GridLayout(1,2,1,3));	
-		JPanel centerPanel 		= new JPanel(new GridLayout(5,2,1,3));
+		centerPanel 			= new JPanel(new GridLayout(5,2,1,3));
 		JPanel southPanel		= new JPanel(new FlowLayout());
 		
 		//arrange the north panel with JLabels, JTextFields and JButtons
@@ -118,7 +211,6 @@ public class CreateReservationView extends JFrame{
 		centerPanel.add(updatePeriodButton);
 		
 		centerPanel.add(vehicleLabel);
-		centerPanel.add(vehicleDropDown);
 		
 		//arrange south panel with buttons
 		southPanel.add(saveButton);
@@ -132,59 +224,6 @@ public class CreateReservationView extends JFrame{
 		setResizable(false);
 		pack();
 		setVisible(true);
-	}
-	
-	public void setAllVehiclesinArray() {
-		Vehicle[] vehicles 			= Vehicle.getAll();
-		Reservation[] reservations	= Reservation.getFromPeriod(period);
-		availableVehicles			= new String[vehicles.length];
-		
-		//iterates through all vehicles
-		for(int i = 0; i < vehicles.length; i++) {
-		 //iterates through the specified reservations
-		 for(int j = 0; j < reservations.length; j++) {
-			 if(vehicles[i].id == reservations[j].id) {
-				 int k = 0;
-				 while(k < period.getLengthInDays() && !reservations[j].period.isIncluded(calendar.getTime())) {
-					   calendar.add(Calendar.DAY_OF_MONTH, k);
-					   k++;
-					if(k == period.getLengthInDays() && !reservations[j].period.isIncluded(calendar.getTime())) {
-					   availableVehicles[i]	= reservations[j].vehicle.model; 
-				  }
-				 }
-			 }
-			 else {
-				 availableVehicles[i] = reservations[j].vehicle.model;
-			 }
-		 }
-		}
-		
-	}
-	
-	public void getAllCustomersInArray() {
-		Customer[] customers	= Customer.getAll();
-		allCustomers			= new String[customers.length];
-		
-		for(int i = 0; i < customers.length; i++) {
-			allCustomers[i] = customers[i].firstName + " " + customers[i].lastName;
-		}	
-	}
-	
-	public void setPeriod() {
-		try {
-		startDate			= dateFormat.parse(startDateTextField.getText());	
-		endDate				= dateFormat.parse(endDateTextField.getText());
-		
-		period				= new Period(startDate, endDate);
-		
-		calendar			= new GregorianCalendar();
-		calendar.setTime(startDate);		
-		
-		} catch (ParseException e) {
-			System.out.println("Invalid calendar input");
-			e.printStackTrace();
-		}
-
 	}
 	
 	public JButton getCustomerCreateButton() {
