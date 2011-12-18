@@ -85,8 +85,6 @@ public class ReservationContainer extends JPanel
 		
 		else{ 
 		centerPanel.remove(scrollPane);
-		centerPanel.revalidate();
-		centerPanel.repaint();
 		data 							= new ReservationTable(startDate, endDate);
 		table							= new JTable(data);
 		scrollPane						= new JScrollPane(table);
@@ -94,6 +92,8 @@ public class ReservationContainer extends JPanel
 		
 		centerPanel.add(scrollPane);
 		}
+		centerPanel.revalidate();
+		centerPanel.repaint();
 	}
 	
 	public void updatePeriod() {
