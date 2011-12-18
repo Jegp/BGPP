@@ -100,7 +100,7 @@ public class CustomerController {
 			}
 			// On drag: Disable delete button if more than one row is selected
 			public void mouseReleased(MouseEvent e) {
-				int selectedRows = container.getCustomerTable().getSelectedRowCount();
+				int selectedRows = table.getSelectedRowCount();
 				// If the selected row isn't 1 then disable the delete button
 				if (selectedRows != 1) {
 					container.buttonDelete.setEnabled(false);
@@ -164,42 +164,37 @@ public class CustomerController {
 		return new ActionListener() {
 	
 			public void actionPerformed(ActionEvent e) {	
-				window.buttonSubmit.addActionListener(new ActionListener() {
-	
-					public void actionPerformed(ActionEvent e) {						
-						// And assign fields
-						HashMap<String, String> fields = new HashMap<String, String>();
-						String firstName = window.fieldFirstName.getText();
-						String lastName  = window.fieldLastName.getText();
-						String email     = window.fieldEmail.getText();
-						String phone     = window.fieldPhone.getText();
-						String address   = window.fieldAddress.getText();
-						
-						if (firstName.length() > 0)
-							fields.put("firstName", firstName);
-						
-						if (lastName.length() > 0)
-							fields.put("lastName", lastName);
-						
-						if (email.length() > 0)
-							fields.put("email", email);
-						
-						if (phone.length() > 0)
-							fields.put("phone", phone);
-							
-						if (address.length() > 0)
-							fields.put("address", address);
-						
-						// Retrieve the customers that match the search criteria
-						Customer[] customers = Customer.searchWhere(fields);
-						
-						// Show them
-						showCustomerTable(customers);
-						
-						// And finally close the open window
-						window.dispose();
-					}
-				});
+				// And assign fields
+				HashMap<String, String> fields = new HashMap<String, String>();
+				String firstName = window.fieldFirstName.getText();
+				String lastName  = window.fieldLastName.getText();
+				String email     = window.fieldEmail.getText();
+				String phone     = window.fieldPhone.getText();
+				String address   = window.fieldAddress.getText();
+				
+				if (firstName.length() > 0)
+					fields.put("firstName", firstName);
+				
+				if (lastName.length() > 0)
+					fields.put("lastName", lastName);
+				
+				if (email.length() > 0)
+					fields.put("email", email);
+				
+				if (phone.length() > 0)
+					fields.put("phone", phone);
+					
+				if (address.length() > 0)
+					fields.put("address", address);
+				
+				// Retrieve the customers that match the search criteria
+				Customer[] customers = Customer.searchWhere(fields);
+				
+				// Show them
+				showCustomerTable(customers);
+				
+				// And finally close the open window
+				window.dispose();
 			}
 		};
 	}

@@ -78,8 +78,10 @@ public class CustomerContainer extends JPanel {
 	 */
 	public CustomerTable showCustomers(Customer[] customers) {
 		// Remove the old pane if it exists
-		if (pane != null)
+		if (pane != null) {
+			pane.removeAll();
 			remove(pane);
+		}
 		
 		// Define the table model
 		customerTable = new CustomerTable(customers);
@@ -89,9 +91,7 @@ public class CustomerContainer extends JPanel {
 		
 		// Insert the new center element.
 		pane.setPreferredSize(new Dimension(1200, 600));
-		JPanel centerPanel = new JPanel();
-		centerPanel.add(pane);
-		add(centerPanel, BorderLayout.CENTER);
+		add(pane, BorderLayout.CENTER);
 		
 		// Validate
 		validate();
