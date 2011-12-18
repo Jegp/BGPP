@@ -30,14 +30,7 @@ public class MySQLModel extends Model {
 	 */
 	protected MySQLModel() {
 		try {
-			// Retrieve the database driver
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			
-			// Initialize connection with database, user name and password
-			connection = DriverManager.getConnection("jdbc:mysql://mysql.itu.dk/jegp_bgpp", "jegp_bgpp", "ldo8tf6o");
-			
-			// Log the success
-			Log.info("Successfully connected to MySQL database at itu.dk");
+			connect();
 		} catch (Exception e) {
 			// Print the error in case the connection failed
 			Log.error("Cannot connect to database: " + e);
@@ -155,6 +148,20 @@ public class MySQLModel extends Model {
 			Log.error("Connection to database could not be closed properly: " + e);
 		}
 	}
+	
+	private void connect() throws Exception {
+		// Retrieve the database driver
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+		
+		// Initialize connection with database, user name and password
+		connection = DriverManager.getConnection("jdbc:mysql://mysql.itu.dk/jegp_bgpp?autoReconnect=true", "jegp_bgpp", "ldo8tf6o");
+		
+		// Turn of auto-commit
+		connection.setAutoCommit(false);
+		
+		// Log the success
+		Log.info("Successfully connected to MySQL database at itu.dk");
+	}
 
 	public boolean delete(String table, int id) {
 		String sql = "DELETE from " + table + " WHERE id = '" + id + "'";
@@ -177,13 +184,7 @@ public class MySQLModel extends Model {
 	 * @param sql  The query to perform.
 	 * @return  Returns the result. Can be null.
 	 */
-	protected ResultSet executeAndReturnResult(String sql) {
-		// Examine connection
-		if (connection == null) {
-			Log.error("Connection to database cannot be established.");
-			return null;
-		}
-		
+	protected ResultSet executeAndReturnResult(String sql) {		
 		// Execute query
 		try {
 			Statement statement = getStatement();
@@ -231,13 +232,27 @@ public class MySQLModel extends Model {
 	/**
 	 * Retrieves a new statement to execute queries on. 
 	 */
-	protected Statement getStatement() {
+	protected Statement getStatement(){
 		try {
-			return connection.createStatement();
+			Statement statement = connection.createStatement();
+			
+			// Test connection
+			try {
+				statement.execute("Select 1");
+			} catch (SQLException e) {
+				// If it fails, connect again
+				connect();
+				statement = connection.createStatement();
+			}
+
+			return statement;
 		} catch (SQLException e) {
 			Log.error("Unable to connect to the database.");
-			return null;
+		} catch (Exception e) {
+			Log.error("Cannot connect to database: " + e);
 		}
+
+		return null;
 	}
 	
 	public boolean isConnected() {
