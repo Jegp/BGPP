@@ -57,7 +57,7 @@ public class ReservationTable extends AbstractTableModel
 	}
 
 	public int getRowCount() {
-		return reservations.length;
+		return data.length;
 	}
 
 	public Object getValueAt(int arg0, int arg1) {
