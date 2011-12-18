@@ -39,12 +39,15 @@ public class CreateReservationView extends JFrame{
 	public final JButton customerSearchButton 	= new JButton("Search");
 	public final JButton updatePeriodButton		= new JButton("Update");
 	
-	public final JButton saveButton			= new JButton("Save"); 
+	private JButton saveButton;
+	private JButton saveChangesButton;
 	public final CancelButton cancelButton 	= new CancelButton(this);
 	
 	private String startDateInput;
 	private String endDateInput;
 	
+	private int oldReservationID;
+
 	private Customer[] customers;
 	private Vehicle[] vehicles;
 	
@@ -63,6 +66,7 @@ public class CreateReservationView extends JFrame{
 		setCustomerComboBox();
 		
 		customerDropDown	= new JComboBox(customerComboBox);
+		saveButton			= new JButton("Save");
 		
 		setLayout();
 	}
@@ -75,6 +79,9 @@ public class CreateReservationView extends JFrame{
 		setCustomerComboBox();
 		
 		customerDropDown	= new JComboBox(customerComboBox);
+		saveChangesButton	= new JButton("Save changes");
+		saveButton			= saveChangesButton;
+		updatePeriodButton.setEnabled(false);
 		
 		//date -> string
 		dateFormat							= new SimpleDateFormat("dd/MM/yyyy");
@@ -108,6 +115,12 @@ public class CreateReservationView extends JFrame{
 		}
 	}
 	
+	public void setPeriodWithExistingReservation(Period period) {
+		startDate			= period.start;
+		endDate				= period.end;
+		calendar			= new GregorianCalendar();
+	}
+	
 	public void setCustomerComboBox() {
 		customers				= Customer.getAll();
 		customerComboBox		= new String[customers.length];
@@ -121,37 +134,27 @@ public class CreateReservationView extends JFrame{
 		vehicles 	 				= Vehicle.getAll();
 		Reservation[] reservations	= Reservation.getFromPeriod(period);
 		availableVehicles			= new String[vehicles.length];
-		int index = 0;
-		//iterates through every slot in the drop down box, and is the length of all vehicles (might not fill the whole thing) 
-		for(int i = 0; i < vehicles.length; i++) {
-		 if(reservations != null) {
-		  for(int j = 0; j <reservations.length; j++) {
-		    if(vehicles[i].id == reservations[j].vehicle.id) {
-			 for(int k = 1; k < period.getLengthInDays() + 1; k++) {
-			 int daysBookedInDays = 0;
-				  if(reservations[j].period.isIncluded(calendar.getTime())) {
-					 daysBookedInDays++;
-				  }
-			 calendar.add(Calendar.DAY_OF_MONTH, k);
-				  if(k == period.getLengthInDays() + 1 && daysBookedInDays == 0) {
-					 availableVehicles[index] = vehicles[i].model;
-					 index++;
-				  }
-			 }
-		    }
-		    else {
-		    availableVehicles[index] = vehicles[i].model;
-		    index++;
-		    }
-		  }
-		 }
-		 else {
-			 availableVehicles[index] = vehicles[i].model;
-			 index++;
-		 }
-		}
+		calendar.setTime(startDate);
 		
+		if(vehicles == null) {
+		vehicleDropDown = new JComboBox();
+		}
+		else {
+		int n = 0;
+		 for (Vehicle vehicle : vehicles) {
+			 boolean isReserved = false;
+			 for (int i = 0; i<reservations.length; i++ ) {
+				 if (vehicle.id == reservations[i].vehicle.id) {
+					 isReserved = true;
+				 }
+			 }
+			 if (!isReserved) {
+				 availableVehicles[n] = "Class: " + vehicle.vehicleClass.description + " " + "Model: " + vehicle.model;
+				 n++;
+			 }
+		 }
 		vehicleDropDown = new JComboBox(availableVehicles);
+		}
 		centerPanel.add(vehicleDropDown);
 		pack();
 		
@@ -166,18 +169,43 @@ public class CreateReservationView extends JFrame{
 			}
 		}
 		
+		setPeriod();
+		
 		customer 				= Customer.save(customer);
 		period 					= Period.save(period);
 
 		Reservation reservation = new Reservation(customer, period, vehicle);
 
-		reservation 			= Reservation.save(reservation);
+		Reservation.save(reservation);
 		
 		dispose();
 
-		reservation = Reservation.save(reservation);
-		System.out.println(reservation);
+	}
+	
+	public void setOldReservationID(int oldReservationID) {
+		this.oldReservationID = oldReservationID;
+	}
+	
+	public void submitReservationChanges() {
+		
+		customer = customers[customerDropDown.getSelectedIndex()];
+		
+		for(int i = 0; i < vehicles.length; i++) {
+			if(availableVehicles[vehicleDropDown.getSelectedIndex()].equals(vehicles[i].model)) {
+				vehicle = vehicles[i];
+			}
+		}
+		
+		setPeriod();
+		
+		customer 				= Customer.save(customer);
+		period 					= Period.save(period);
 
+		Reservation reservation = new Reservation(customer, period, vehicle);
+
+		Reservation.update(reservation, oldReservationID);
+		
+		dispose();
 	}
 	
 	public void setLayout() {
@@ -240,5 +268,9 @@ public class CreateReservationView extends JFrame{
 	
 	public JButton getUpdateButton() {
 		return updatePeriodButton;
+	}
+	
+	public JButton getSaveChangesButton() {
+		return saveChangesButton;
 	}
 }

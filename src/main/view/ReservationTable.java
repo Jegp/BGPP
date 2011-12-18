@@ -43,7 +43,7 @@ public class ReservationTable extends AbstractTableModel
 		
 		for(int i = 0; i < data.length; i++) {
 			data[i][0] = reservations[i].vehicle.id;
-			data[i][1] = reservations[i].vehicle.manufacturer;
+			data[i][1] = reservations[i].vehicle.model;
 			data[i][2] = toString.format(reservations[i].period.start);
 			data[i][3] = toString.format(reservations[i].period.end);
 			data[i][4] = reservations[i].customer.firstName + " " + reservations[i].customer.lastName;

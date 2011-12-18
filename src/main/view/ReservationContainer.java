@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import main.controller.ReservationController;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Timer;
@@ -18,6 +19,8 @@ public class ReservationContainer extends JPanel
 	private Date endDate;
 	private JButton deleteButton;
 	private JButton createReservationButton;
+	private JButton updatePeriodButton;
+
 	private ReservationController controller;
 	private JTextField startPeriod;
 	private JTextField endPeriod;
@@ -25,6 +28,7 @@ public class ReservationContainer extends JPanel
 	private ReservationTable data;
 	private JScrollPane scrollPane;
 	private JTable table;
+	private JPanel centerPanel;
 	
 	/**
 	 * Creates a new container
@@ -36,7 +40,7 @@ public class ReservationContainer extends JPanel
 		
 		setLayout(new BorderLayout());
 		
-		JPanel centerPanel				= new JPanel();
+		centerPanel						= new JPanel();
 		JPanel northPanel 				= new JPanel();
 		JPanel southPanel 				= new JPanel(new GridLayout());
 		JPanel westPanel 				= new JPanel();
@@ -50,21 +54,19 @@ public class ReservationContainer extends JPanel
 		
 		dateFormat		= new SimpleDateFormat("dd/MM/yyyy");
 		
-		startPeriod		= new JTextField("Today", 10); //remake
-		endPeriod		= new JTextField("Tomorrow", 10); //remake
+		startPeriod		= new JTextField(dateFormat.format(startDate)); //remake
+		endPeriod		= new JTextField(dateFormat.format(endDate)); //remake
 		
 		createReservationButton					= new JButton("Create Reservation");
 		createReservationButton.setPreferredSize( new Dimension(200, 50));
 		deleteButton							= new JButton("Delete");
+		updatePeriodButton						= new JButton("Update");
 		
 		addTable();
-		table							= new JTable(data);
-		scrollPane						= new JScrollPane(table);
-		scrollPane.setPreferredSize		( new Dimension(1200, 600));
 		
-		centerPanel.add(scrollPane);
 		northPanel.add(startPeriod);
 		northPanel.add(endPeriod);
+		northPanel.add(updatePeriodButton);
 		southPanel.add(createReservationButton);
 		southPanel.add(deleteButton);
 		
@@ -72,7 +74,37 @@ public class ReservationContainer extends JPanel
 	}
 
 	public void addTable() {
-		data = new ReservationTable(startDate, endDate);
+		if(scrollPane == null) {
+		data 							= new ReservationTable(startDate, endDate);
+		table							= new JTable(data);
+		scrollPane						= new JScrollPane(table);
+		scrollPane.setPreferredSize		( new Dimension(1200, 600));
+		
+		centerPanel.add(scrollPane);
+		}
+		
+		else{ 
+		centerPanel.remove(scrollPane);
+		centerPanel.revalidate();
+		centerPanel.repaint();
+		data 							= new ReservationTable(startDate, endDate);
+		table							= new JTable(data);
+		scrollPane						= new JScrollPane(table);
+		scrollPane.setPreferredSize		( new Dimension(1200, 600));
+		
+		centerPanel.add(scrollPane);
+		}
+	}
+	
+	public void updatePeriod() {
+		try {
+			startDate 	= dateFormat.parse(startPeriod.getText());
+			endDate		= dateFormat.parse(endPeriod.getText());
+		
+		} catch (ParseException e) {
+			System.out.println("invalid date");
+			e.printStackTrace();
+		}
 	}
 	
 	public ReservationTable getData() {
@@ -101,6 +133,10 @@ public class ReservationContainer extends JPanel
 	 */
 	public JTable getTable() {
 		return table;
+	}
+	
+	public JButton getUpdatePeriodButton() {
+		return updatePeriodButton;
 	}
 	
 	public String getStartPeriodTextField() {

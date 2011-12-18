@@ -16,13 +16,15 @@ import main.view.ReservationContainer;
 public class ReservationController {	
 	private CreateReservationView createReservationWindow;
 	private ReservationContainer container;
+	private CreateReservationView reservation;
 	private CreateCustomerForReservationWindow createCustomerWindow;
 	
 	public ReservationController(ReservationContainer container) {
 		
 		this.container = container;
 		container.getCreateReservationButton().addActionListener(new ActionListenerToCreateReservationButton());
-		container.getDeleteButton().addActionListener(new ActionListenerToSearchButton());
+		container.getDeleteButton().addActionListener(new ActionListenerDeleteButton());
+		container.getUpdatePeriodButton().addActionListener(new ActionListenerToUpdatePeriodButton());
 		container.getTable().addMouseListener(new ActionListenerToTable());
 	}
 	
@@ -35,25 +37,24 @@ public class ReservationController {
 		}
 	}
 	
-	class ActionListenerToSearchButton implements ActionListener {
+	class ActionListenerDeleteButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			int selectedRow = container.getTable().getSelectedRow();
 			
 			int id = container.getData().reservations[selectedRow].id;
 			
 			Reservation.delete("reservation", id);
+			
+			container.updatePeriod();
+			container.addTable();
 		}
 	}
 	
 	class ActionListerToSaveButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			createReservationWindow.submit();
-		}
-	}
-	
-	class ActionListenerToEditButton implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			System.out.println("i hit the edit button!!!!");
+			container.updatePeriod();
+			container.addTable();
 		}
 	}
 	
@@ -75,6 +76,8 @@ public class ReservationController {
 	class ActionListenerToSubmitNewCustomerButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 		createCustomerWindow.submit();
+		container.updatePeriod();
+		container.addTable();
 		}
 	}
 	
@@ -83,13 +86,33 @@ public class ReservationController {
 			if(e.getClickCount() == 2) {
 				int selectedRow = container.getTable().getSelectedRow();
 				
-				Customer customer 	= container.getData().reservations[selectedRow].customer;
-				Period period		= container.getData().reservations[selectedRow].period;
-				Vehicle vehicle		= container.getData().reservations[selectedRow].vehicle;
+				Customer customer 			= container.getData().reservations[selectedRow].customer;
+				Period period				= container.getData().reservations[selectedRow].period;
+				Vehicle vehicle				= container.getData().reservations[selectedRow].vehicle;
+				int oldReservationID		= container.getData().reservations[selectedRow].id;
 				
-				new CreateReservationView(customer, period, vehicle);
+				reservation = new CreateReservationView(customer, period, vehicle);
+				reservation.getSaveChangesButton().addActionListener(new ActionListenerToSaveChangesButton());
+				reservation.setPeriodWithExistingReservation(period);
+				reservation.setVehicleComboBox();
+				reservation.setOldReservationID(oldReservationID);
 			}
 		}
 		
+	}
+	
+	class ActionListenerToUpdatePeriodButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			container.updatePeriod();
+			container.addTable();
+		}
+	}
+	
+	class ActionListenerToSaveChangesButton implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+			reservation.submitReservationChanges();
+			container.updatePeriod();
+			container.addTable();
+		}
 	}
 }

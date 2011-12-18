@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2011-12-07T11:59:48</date>
+  <millis>1323255588296</millis>
+  <sequence>0</sequence>
+  <logger>main.util</logger>
+  <level>INFO</level>
+  <class>main.util.Log</class>
+  <method>info</method>
+  <thread>1</thread>
+  <message>Successfully connected to MySQL database at itu.dk</message>
+</record>
+</log>
