@@ -32,17 +32,19 @@ public class ReservationTable extends AbstractTableModel
 		period 			= new Period(startDate, endDate);
 		
 		reservations	= Reservation.getFromPeriod(period);
-				
-		data			= new Object[reservations.length][columnNames.length];
 		
-		toString		= new SimpleDateFormat("dd/MM/YYYY");
-		
-		for(int i = 0; i < reservations.length; i++) {
-			data[i][0] = reservations[i].vehicle.id;
-			data[i][1] = reservations[i].vehicle.manufacturer;
-			data[i][2] = toString.format(reservations[i].period.start);
-			data[i][3] = toString.format(reservations[i].period.end);
-			data[i][4] = reservations[i].customer.firstName + " " + reservations[i].customer.lastName;
+		if (reservations != null) {				
+			data			= new Object[reservations.length][columnNames.length];
+			
+			toString		= new SimpleDateFormat("dd/MM/YYYY");
+			
+			for(int i = 0; i < reservations.length; i++) {
+				data[i][0] = reservations[i].vehicle.id;
+				data[i][1] = reservations[i].vehicle.manufacturer;
+				data[i][2] = toString.format(reservations[i].period.start);
+				data[i][3] = toString.format(reservations[i].period.end);
+				data[i][4] = reservations[i].customer.firstName + " " + reservations[i].customer.lastName;
+			}
 		}
 	}
 	
