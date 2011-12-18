@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import main.controller.ReservationController;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Timer;
 
@@ -15,9 +16,15 @@ public class ReservationContainer extends JPanel
 {
 	private Date startDate;
 	private Date endDate;
-	private JButton searchButton;
+	private JButton deleteButton;
 	private JButton createReservationButton;
 	private ReservationController controller;
+	private JTextField startPeriod;
+	private JTextField endPeriod;
+	private SimpleDateFormat dateFormat;
+	private ReservationTable data;
+	private JScrollPane scrollPane;
+	private JTable table;
 	
 	/**
 	 * Creates a new container
@@ -40,33 +47,71 @@ public class ReservationContainer extends JPanel
 		add(southPanel,	BorderLayout.SOUTH);
 		add(westPanel,	BorderLayout.WEST);
 		add(eastPanel,	BorderLayout.EAST);
-
-		JTextField startOfPeriod		= new JTextField("Today", 10); //remake
-		JTextField endOfPeriod			= new JTextField("Tomorrow", 10); //remake
 		
-		createReservationButton			= new JButton("Create Reservation");
-		searchButton					= new JButton("Search");
+		dateFormat		= new SimpleDateFormat("dd/MM/yyyy");
 		
-		ReservationTable data 			= new ReservationTable(startDate, endDate);
-		JScrollPane scrollPane			= new JScrollPane(new JTable(data));
+		startPeriod		= new JTextField("Today", 10); //remake
+		endPeriod		= new JTextField("Tomorrow", 10); //remake
+		
+		createReservationButton					= new JButton("Create Reservation");
+		createReservationButton.setPreferredSize( new Dimension(200, 50));
+		deleteButton							= new JButton("Delete");
+		
+		addTable();
+		table							= new JTable(data);
+		scrollPane						= new JScrollPane(table);
+		scrollPane.setPreferredSize		( new Dimension(1200, 600));
 		
 		centerPanel.add(scrollPane);
-		northPanel.add(startOfPeriod);
-		northPanel.add(endOfPeriod);
+		northPanel.add(startPeriod);
+		northPanel.add(endPeriod);
 		southPanel.add(createReservationButton);
-		southPanel.add(searchButton);
+		southPanel.add(deleteButton);
 		
 		setVisible(true);		
 	}
 	
+	public JButton getDeleteButton() {
+		return deleteButton;
+	}
+
+	public void addTable() {
+		data = new ReservationTable(startDate, endDate);
+	}
+	
+	public ReservationTable getData() {
+		return data;
+	}
+
+	/**
+	 * returns the button south button which should open a new JFrame to create a reservation
+	 * @return
+	 */
 	public JButton getCreateReservationButton() {
 		return createReservationButton;
 	}
 	
 	/**
-	 * returns button
+	 * returns a button from the reservation view
+	 * @return JButton
 	 */
-	public JButton getSearchButton() {
-		return searchButton;
+	public JButton getDeleteButton() {
+		return deleteButton;
+	}
+	
+	/**
+	 * returns the table which shows the reservations with the given period
+	 * @return JTable
+	 */
+	public JTable getTable() {
+		return table;
+	}
+	
+	public String getStartPeriodTextField() {
+		return startPeriod.getText();
+	}
+	
+	public String getEndPeriodTextField() {
+		return endPeriod.getText();
 	}
 }

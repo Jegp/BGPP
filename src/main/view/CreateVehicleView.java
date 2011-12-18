@@ -20,14 +20,14 @@ public class CreateVehicleView extends JFrame {
 	
 	
 	public CreateVehicleView() {
-		//Manange frame
+		//Manage frame
 		super("Add Vehicle");
-		setSize(9000, 9000);
+		setLocation(new Point(200, 200));
 		setLayout(new GridLayout(5, 2));
 		setResizable(false);
 		fillVehicleClasses();
 		
-		//Initialise instance variables
+		//Initialize instance variables
 		description		= new JTextField();
 		manufacter 		= new JTextField();
 		model 			= new JTextField();

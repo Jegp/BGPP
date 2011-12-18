@@ -1,6 +1,7 @@
 package main.view;
 
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ public class EditVehicleView extends JFrame {
 		
 		super("Edit " + vehicle.manufacturer + " " + vehicle.model);
 		setSize(9000, 9000);
+		setLocation(new Point(200, 200));
 		setLayout(new GridLayout(5, 2));
 		setResizable(false);
 		fillVehicleClasses();

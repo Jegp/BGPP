@@ -1,18 +1,13 @@
 package main.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
+import java.awt.event.*;
+import java.util.Date;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
-
+import main.model.Reservation;
 import main.model.Vehicle;
 import main.model.VehicleClass;
-import main.view.CreateVehicleView;
-import main.view.EditVehicleView;
-import main.view.VehicleContainer;
-import main.view.VehicleTable;
+import main.view.*;
 
 public class VehicleController {
 	
@@ -34,11 +29,6 @@ public class VehicleController {
 		
 		this.vehicleContainer.addCreateVehicleBtnListener(new AddVehicleBtnListener());
 		this.vehicleContainer.addDeleteVehicleBtnListener(new DeleteVehicleBtnListener());
-		
-		
-		
-		
-		
 	}
 	
 	class AddVehicleBtnListener implements ActionListener {
@@ -97,15 +87,17 @@ public class VehicleController {
 							VehicleClass vehicleClass = VehicleClass.getWhereId(selectedVehicleClassID);
 							Vehicle v = new Vehicle(description, manufactorer, model, vehicleClass);
 							Vehicle.update(v, selectedVehicle.id);
+							
+							if (Vehicle.getAll() != null) {
 							vehicleTable.updateTable(Vehicle.getAll());
+							} else {
+								vehicleTable.updateTable(new Vehicle[0]);
+							}
 							editVehicleView.kill();
 							vehicles = Vehicle.getAll();
-					
-					
-					
+						}
 				}
-				}
-			});
+				});
 			}
 			
 		}
@@ -130,14 +122,12 @@ public class VehicleController {
 
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			if (vehicleTable.getSelectedRow() >= 0) {
+				vehicleContainer.enableDeleteButton();
+			}
 			
 		}
 		
-	}
-	
-	public void updateTable() {
-		vehicleTable.updateTable(Vehicle.getAll());
 	}
 	
 	class DeleteVehicleBtnListener implements ActionListener {
@@ -146,10 +136,31 @@ public class VehicleController {
 		public void actionPerformed(ActionEvent arg0) {
 			
 			if (vehicleTable.getSelectedRow() >= 0) {
-				Vehicle v = vehicles[vehicleTable.getSelectedRow()];
-				Vehicle.delete(v.getTable(), v.id);
-				updateTable();
-				vehicles = Vehicle.getAll();
+				HashMap<String, String> fields = new HashMap<String, String>();				
+				fields.put("vehicle", "" + vehicles[vehicleTable.getSelectedRow()].id);
+				Reservation[] relevantReservations = Reservation.searchWhere(fields);
+				boolean hasFutureReservations = false;
+				if (relevantReservations != null)
+				for (Reservation r : relevantReservations) {
+					if (r.period.end.after(new Date()))
+						hasFutureReservations = true;
+				}
+				
+				
+				
+				if (!hasFutureReservations) {
+					Vehicle v = vehicles[vehicleTable.getSelectedRow()];
+					Vehicle.delete(v.getTable(), v.id);
+					if (Vehicle.getAll() != null) {
+						vehicleTable.updateTable(Vehicle.getAll());
+						vehicles = Vehicle.getAll();
+					} else {				
+						vehicleTable.updateTable(new Vehicle[0]);
+					}				 	
+				} else {
+						JOptionPane.showMessageDialog(vehicleContainer, "That vehicle has a future reservation",
+						"Future Reservation", JOptionPane.ERROR_MESSAGE);						
+				}
 			}
 			
 		}

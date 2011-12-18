@@ -1,11 +1,13 @@
 package main.view;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
@@ -17,14 +19,19 @@ public class VehicleTable extends JTable {
 	private VehicleTableModel vehicleTableModel;
 	
 	public VehicleTable(Vehicle[] vehicles) {
+		
+		if (vehicles != null) {
 		this.vehicles = vehicles;
+		} else vehicles = new Vehicle[0];
 		vehicleTableModel = new VehicleTableModel(vehicles);
 		setModel(vehicleTableModel);
 		setRowHeight(20);
 		setToolTipText("Click on row to edit.");
+		
 	}
 	
 	public void updateTable(Vehicle[] vehicles) {
+		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		vehicleTableModel = new VehicleTableModel(vehicles);
 		setModel(vehicleTableModel);
 	}

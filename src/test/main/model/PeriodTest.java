@@ -13,19 +13,21 @@ import org.junit.Test;
 public class PeriodTest {
 
 	// Setup periods
-	Period p1;
-	Period p2;
-	Period p3;
-	Period p4;
+	private Period p1;
+	private Period p2;
+	private Period p3;
+	private Period p4;
 
 	// Setup relevant time stuff
-	long minute = 1000 * 60;
-	long hour   = minute * 60;
-	long day    = hour * 24;
-	long now   = System.currentTimeMillis();
+	private long minute = 1000 * 60;
+	private long hour   = minute * 60;
+	private long day    = hour * 24;
+	private long now   = System.currentTimeMillis();
 	
-	@Before
-	public void setUp() throws Exception {		
+	/**
+	 * Set up fixtures.
+	 */
+	@Before public void setUp() {		
 		Date d1 = new Date(now);
 		Date d2 = new Date(System.currentTimeMillis() + day); // plus one day
 		Date d3 = new Date(now - day);
@@ -39,8 +41,10 @@ public class PeriodTest {
 		p4 = new Period(d4, d6);
 	}
 	
-	@Test
-	public void getFields() {
+	/**
+	 * Test the fields of the period.
+	 */
+	@Test public void testFields() {
 		Map<String, String> fields = p1.getFields();
 		
 		assertTrue("Fields was not stored correctly",
@@ -48,8 +52,10 @@ public class PeriodTest {
 				fields.get("end").equals(now + day + ""));
 	}
 
-	@Test
-	public void testGetLengthInDays() {
+	/**
+	 * Test the length of the days.
+	 */
+	@Test public void testGetLengthInDays() {
 		int l1 = p1.getLengthInDays();
 		int l2 = p2.getLengthInDays();
 		int l3 = p4.getLengthInDays();
@@ -59,8 +65,10 @@ public class PeriodTest {
 		assertEquals("Could not calculate length properly.", 1000, l3);
 	}
 
-	@Test
-	public void testIsIncluded() {
+	/**
+	 * Test the calculation of whether a given date is included in the period.
+	 */
+	@Test public void testIsIncluded() {
 		Date d1 = new Date(now);
 		Date d2 = new Date(now + day << 2);
 		Date d3 = new Date(now + 1);
