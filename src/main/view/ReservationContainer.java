@@ -12,9 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Timer;
 
-public class ReservationContainer extends JPanel
-	
-{
+public class ReservationContainer extends JPanel {
 	private Date startDate;
 	private Date endDate;
 	private JButton deleteButton;
@@ -33,8 +31,7 @@ public class ReservationContainer extends JPanel
 	/**
 	 * Creates a new container
 	 */
-	public ReservationContainer()
-	{	
+	public ReservationContainer() {	
 		startDate 						= new Date(System.currentTimeMillis());		//day - hours - seconds ect. 
 		endDate 						= new Date(startDate.getTime() + 10L * 1 * 24 * 60 * 60 * 1000);
 		
@@ -54,8 +51,8 @@ public class ReservationContainer extends JPanel
 		
 		dateFormat		= new SimpleDateFormat("dd/MM/yyyy");
 		
-		startPeriod		= new JTextField(dateFormat.format(startDate)); //remake
-		endPeriod		= new JTextField(dateFormat.format(endDate)); //remake
+		startPeriod		= new JTextField(dateFormat.format(startDate)); 
+		endPeriod		= new JTextField(dateFormat.format(endDate)); 
 		
 		createReservationButton					= new JButton("Create Reservation");
 		createReservationButton.setPreferredSize( new Dimension(200, 50));
@@ -73,27 +70,27 @@ public class ReservationContainer extends JPanel
 		setVisible(true);		
 	}
 
-	public void addTable() {
+	public JTable addTable() {
 		if(scrollPane == null) {
-		data 							= new ReservationTable(startDate, endDate);
-		table							= new JTable(data);
-		scrollPane						= new JScrollPane(table);
-		scrollPane.setPreferredSize		( new Dimension(1200, 600));
-		
-		centerPanel.add(scrollPane);
+			data 							= new ReservationTable(startDate, endDate);
+			table							= new JTable(data);
+			scrollPane						= new JScrollPane(table);
+			scrollPane.setPreferredSize		( new Dimension(1200, 600));
+			
+			centerPanel.add(scrollPane);
+		} else { 
+			centerPanel.remove(scrollPane);
+			data 							= new ReservationTable(startDate, endDate);
+			table							= new JTable(data);
+			scrollPane						= new JScrollPane(table);
+			scrollPane.setPreferredSize		( new Dimension(1200, 600));
+			
+			centerPanel.add(scrollPane);
 		}
-		
-		else{ 
-		centerPanel.remove(scrollPane);
-		data 							= new ReservationTable(startDate, endDate);
-		table							= new JTable(data);
-		scrollPane						= new JScrollPane(table);
-		scrollPane.setPreferredSize		( new Dimension(1200, 600));
-		
-		centerPanel.add(scrollPane);
-		}
+			
 		centerPanel.revalidate();
 		centerPanel.repaint();
+		return table;
 	}
 	
 	public void updatePeriod() {

@@ -14,29 +14,74 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-
+/**
+ * This class extends a JFrame and has a GUI function to create reservations of vehicles.
+ */
 public class CreateReservationView extends JFrame{
-	
+	/**
+	 * a variable which stores the customer who will be stored in the database. 
+	 */
 	private Customer customer;
+	
+	/**
+	 * a variable that stores the GUI input as well as in conjunction with endDate creates a period in the database. 
+	 */
 	private Date startDate;
+	
+	/**
+	 * a variable that stores the GUI input as well as in conjunction with startDate creates a period in the database.
+	 */
 	private Date endDate;
+	
+	/**
+	 * a variable that stores the period. The period is stored in the database and contributes to create a reservation.
+	 */
 	private Period period;
+	
+	/**
+	 * a variable that stores the chosen vehicle.
+	 */
 	private Vehicle vehicle;
 	
+	/**
+	 * the only panel which is defined to a variable.
+	 */
 	private JPanel centerPanel;
 	
-	public final JLabel emptyLabel2		 = new JLabel("Customer:");
-	public final JLabel emptyLabel1		 = new JLabel("Customer:");
-	public final JLabel customerLabel	 = new JLabel("Customer:");
+	/**
+	 * empty label for GUI purposes.
+	 */
+	private final JLabel emptyLabel2		 = new JLabel("Customer:");
+	
+	/**
+	 * empty label for GUI purposes.
+	 */
+	private final JLabel emptyLabel1		 = new JLabel("Customer:");
+	
+	/**
+	 * Label for GUI: The customer.
+	 */
+	private final JLabel customerLabel	 = new JLabel("Customer:");
+	
+	/**
+	 * Label for GUI: Starting date.
+	 */
 	public final JLabel startDateLabel 	 = new JLabel("Start:");
+	
+	/**
+	 * Label for GUI: Ending date.
+	 */
 	public final JLabel endDateLabel 	 = new JLabel("End:");
+	
+	/**
+	 * 
+	 */
 	public final JLabel vehicleLabel 	 = new JLabel("Vehicle:");
 	
 	private JTextField startDateTextField;
 	private JTextField endDateTextField;
 	
 	public final JButton customerCreateButton 	= new JButton("Create");
-	public final JButton customerSearchButton 	= new JButton("Search");
 	public final JButton updatePeriodButton		= new JButton("Update");
 	
 	private JButton saveButton;
@@ -61,8 +106,8 @@ public class CreateReservationView extends JFrame{
 	private GregorianCalendar calendar;
 	
 	public CreateReservationView() {		
-		startDateTextField 		= new JTextField(10);
-		endDateTextField		= new JTextField(10);
+		startDateTextField 	= new JTextField(10);
+		endDateTextField	= new JTextField(10);
 		
 		setCustomerComboBox();
 		
@@ -79,10 +124,11 @@ public class CreateReservationView extends JFrame{
 		
 		setCustomerComboBox();
 		
-		customerDropDown	= new JComboBox(customerComboBox);
-		saveChangesButton	= new JButton("Save changes");
-		saveButton			= saveChangesButton;
+		customerDropDown					= new JComboBox(customerComboBox);
+		saveChangesButton					= new JButton("Save changes");
+		saveButton							= saveChangesButton;
 		updatePeriodButton.setEnabled(false);
+		customerCreateButton.setEnabled(false);
 		
 		//date -> string
 		dateFormat							= new SimpleDateFormat("dd/MM/yyyy");
@@ -220,7 +266,6 @@ public class CreateReservationView extends JFrame{
 		northPanel.add(emptyLabel1);
 		northPanel.add(withinNorthPanel);
 		withinNorthPanel.add(customerCreateButton);
-		withinNorthPanel.add(customerSearchButton);
 		
 		//arrange center panel with JLabels and JTextFIelds
 		centerPanel.add(customerLabel);
@@ -252,10 +297,6 @@ public class CreateReservationView extends JFrame{
 	
 	public JButton getCustomerCreateButton() {
 		return customerCreateButton;
-	}
-
-	public JButton getCustomerSearchButton() {
-		return customerSearchButton;
 	}
 	
 	public JButton getSaveButton() {
