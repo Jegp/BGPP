@@ -54,8 +54,8 @@ public class ReservationContainer extends JPanel
 		
 		dateFormat		= new SimpleDateFormat("dd/MM/yyyy");
 		
-		startPeriod		= new JTextField(dateFormat.format(startDate)); //remake
-		endPeriod		= new JTextField(dateFormat.format(endDate)); //remake
+		startPeriod		= new JTextField(dateFormat.format(startDate)); 
+		endPeriod		= new JTextField(dateFormat.format(endDate)); 
 		
 		createReservationButton					= new JButton("Create Reservation");
 		createReservationButton.setPreferredSize( new Dimension(200, 50));
@@ -73,7 +73,7 @@ public class ReservationContainer extends JPanel
 		setVisible(true);		
 	}
 
-	public void addTable() {
+	public JTable addTable() {
 		if(scrollPane == null) {
 		data 							= new ReservationTable(startDate, endDate);
 		table							= new JTable(data);
@@ -94,6 +94,7 @@ public class ReservationContainer extends JPanel
 		
 		centerPanel.add(scrollPane);
 		}
+		return table;
 	}
 	
 	public void updatePeriod() {

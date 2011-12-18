@@ -28,6 +28,11 @@ public class ReservationController {
 		container.getTable().addMouseListener(new ActionListenerToTable());
 	}
 	
+	public void refreshTable() {
+		container.updatePeriod();
+		container.addTable().addMouseListener(new ActionListenerToTable());	
+	}
+	
 	class ActionListenerToCreateReservationButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			createReservationWindow = new CreateReservationView();
@@ -44,17 +49,15 @@ public class ReservationController {
 			int id = container.getData().reservations[selectedRow].id;
 			
 			Reservation.delete("reservation", id);
-			
-			container.updatePeriod();
-			container.addTable();
+
+			refreshTable();
 		}
 	}
 	
 	class ActionListerToSaveButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			createReservationWindow.submit();
-			container.updatePeriod();
-			container.addTable();
+			refreshTable();
 		}
 	}
 	
@@ -76,8 +79,7 @@ public class ReservationController {
 	class ActionListenerToSubmitNewCustomerButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 		createCustomerWindow.submit();
-		container.updatePeriod();
-		container.addTable();
+		refreshTable();
 		}
 	}
 	
@@ -103,16 +105,14 @@ public class ReservationController {
 	
 	class ActionListenerToUpdatePeriodButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			container.updatePeriod();
-			container.addTable();
+			refreshTable();
 		}
 	}
 	
 	class ActionListenerToSaveChangesButton implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			reservation.submitReservationChanges();
-			container.updatePeriod();
-			container.addTable();
+			refreshTable();
 		}
 	}
 }
