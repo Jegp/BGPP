@@ -5,6 +5,10 @@ import java.awt.*;
 
 import javax.swing.JButton;
 
+import main.model.Customer;
+import main.model.Period;
+import main.model.Reservation;
+import main.model.Vehicle;
 import main.view.CreateCustomerForReservationWindow;
 import main.view.CreateReservationView;
 import main.view.ReservationContainer;
@@ -18,7 +22,7 @@ public class ReservationController {
 		
 		this.container = container;
 		container.getCreateReservationButton().addActionListener(new ActionListenerToCreateReservationButton());
-		container.getSearchButton().addActionListener(new ActionListenerToSearchButton());
+		container.getDeleteButton().addActionListener(new ActionListenerToSearchButton());
 		container.getTable().addMouseListener(new ActionListenerToTable());
 	}
 	
@@ -33,6 +37,11 @@ public class ReservationController {
 	
 	class ActionListenerToSearchButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			int selectedRow = container.getTable().getSelectedRow();
+			
+			int id = container.getData().reservations[selectedRow].id;
+			
+			Reservation.delete("reservation", id);
 		}
 	}
 	
@@ -73,6 +82,12 @@ public class ReservationController {
 		public void mouseClicked(MouseEvent e) {
 			if(e.getClickCount() == 2) {
 				int selectedRow = container.getTable().getSelectedRow();
+				
+				Customer customer 	= container.getData().reservations[selectedRow].customer;
+				Period period		= container.getData().reservations[selectedRow].period;
+				Vehicle vehicle		= container.getData().reservations[selectedRow].vehicle;
+				
+				new CreateReservationView(customer, period, vehicle);
 			}
 		}
 		

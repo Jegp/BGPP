@@ -16,7 +16,7 @@ public class ReservationContainer extends JPanel
 {
 	private Date startDate;
 	private Date endDate;
-	private JButton searchButton;
+	private JButton deleteButton;
 	private JButton createReservationButton;
 	private ReservationController controller;
 	private JTextField startPeriod;
@@ -55,7 +55,7 @@ public class ReservationContainer extends JPanel
 		
 		createReservationButton					= new JButton("Create Reservation");
 		createReservationButton.setPreferredSize( new Dimension(200, 50));
-		searchButton							= new JButton("Search");
+		deleteButton							= new JButton("Delete");
 		
 		addTable();
 		table							= new JTable(data);
@@ -66,15 +66,23 @@ public class ReservationContainer extends JPanel
 		northPanel.add(startPeriod);
 		northPanel.add(endPeriod);
 		southPanel.add(createReservationButton);
-		southPanel.add(searchButton);
+		southPanel.add(deleteButton);
 		
 		setVisible(true);		
 	}
 	
+	public JButton getDeleteButton() {
+		return deleteButton;
+	}
+
 	public void addTable() {
 		data = new ReservationTable(startDate, endDate);
 	}
 	
+	public ReservationTable getData() {
+		return data;
+	}
+
 	/**
 	 * returns the button south button which should open a new JFrame to create a reservation
 	 * @return
@@ -87,8 +95,8 @@ public class ReservationContainer extends JPanel
 	 * returns a button from the reservation view
 	 * @return JButton
 	 */
-	public JButton getSearchButton() {
-		return searchButton;
+	public JButton getDeleteButton() {
+		return deleteButton;
 	}
 	
 	/**

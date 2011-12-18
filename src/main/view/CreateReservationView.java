@@ -72,6 +72,10 @@ public class CreateReservationView extends JFrame{
 		this.period		= period;
 		this.vehicle	= vehicle;
 		
+		setCustomerComboBox();
+		
+		customerDropDown	= new JComboBox(customerComboBox);
+		
 		//date -> string
 		dateFormat							= new SimpleDateFormat("dd/MM/yyyy");
 		String periodStartToString 			= dateFormat.format(period.start);
@@ -122,13 +126,13 @@ public class CreateReservationView extends JFrame{
 		for(int i = 0; i < vehicles.length; i++) {
 		 if(reservations != null) {
 		  for(int j = 0; j <reservations.length; j++) {
-		    if(vehicles[i].model == reservations[j].vehicle.model) {
+		    if(vehicles[i].id == reservations[j].vehicle.id) {
 			 for(int k = 1; k < period.getLengthInDays() + 1; k++) {
-				 int daysBookedInDays = 0;
-				  if(reservations[i].period.isIncluded(calendar.getTime())) {
+			 int daysBookedInDays = 0;
+				  if(reservations[j].period.isIncluded(calendar.getTime())) {
 					 daysBookedInDays++;
 				  }
-				 calendar.add(Calendar.DAY_OF_MONTH, k);
+			 calendar.add(Calendar.DAY_OF_MONTH, k);
 				  if(k == period.getLengthInDays() + 1 && daysBookedInDays == 0) {
 					 availableVehicles[index] = vehicles[i].model;
 					 index++;

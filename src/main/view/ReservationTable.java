@@ -19,7 +19,7 @@ public class ReservationTable extends AbstractTableModel
 
 	private Object[][] 				data;
 	private Period					period;
-	private Reservation[] 			reservations;
+	public Reservation[] 			reservations;
 	private SimpleDateFormat 		toString;
 	
 	private final String[] columnNames = {"ID", "Vehicle", "Start", "End", "Customer"};
