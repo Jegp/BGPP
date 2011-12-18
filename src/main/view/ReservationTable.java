@@ -42,7 +42,7 @@ public class ReservationTable extends AbstractTableModel
 		toString		= new SimpleDateFormat("dd/MM/YYYY");
 		
 		for(int i = 0; i < data.length; i++) {
-			data[i][0] = reservations[i].vehicle.id;
+			data[i][0] = reservations[i].id;
 			data[i][1] = reservations[i].vehicle.model;
 			data[i][2] = toString.format(reservations[i].period.start);
 			data[i][3] = toString.format(reservations[i].period.end);

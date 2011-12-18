@@ -55,6 +55,7 @@ public class CreateReservationView extends JFrame{
 	private JComboBox vehicleDropDown;
 	private String[] customerComboBox;
 	private String[] availableVehicles;
+	private Vehicle[] availableVehiclesType;
 		
 	private SimpleDateFormat dateFormat;
 	private GregorianCalendar calendar;
@@ -134,6 +135,7 @@ public class CreateReservationView extends JFrame{
 		vehicles 	 				= Vehicle.getAll();
 		Reservation[] reservations	= Reservation.getFromPeriod(period);
 		availableVehicles			= new String[vehicles.length];
+		availableVehiclesType		= new Vehicle[vehicles.length];
 		calendar.setTime(startDate);
 		
 		if(vehicles == null) {
@@ -150,6 +152,7 @@ public class CreateReservationView extends JFrame{
 			 }
 			 if (!isReserved) {
 				 availableVehicles[n] = "Class: " + vehicle.vehicleClass.description + " " + "Model: " + vehicle.model;
+				 availableVehiclesType[n] = vehicle;
 				 n++;
 			 }
 		 }
@@ -161,13 +164,10 @@ public class CreateReservationView extends JFrame{
 	}
 	
 	public void submit() {		
-		customer = customers[customerDropDown.getSelectedIndex()];
+
 		
-		for(int i = 0; i < vehicles.length; i++) {
-			if(availableVehicles[vehicleDropDown.getSelectedIndex()].equals(vehicles[i].model)) {
-				vehicle = vehicles[i];
-			}
-		}
+		customer 	= customers[customerDropDown.getSelectedIndex()];
+		vehicle 	= availableVehiclesType[vehicleDropDown.getSelectedIndex()];
 		
 		setPeriod();
 		
@@ -190,11 +190,7 @@ public class CreateReservationView extends JFrame{
 		
 		customer = customers[customerDropDown.getSelectedIndex()];
 		
-		for(int i = 0; i < vehicles.length; i++) {
-			if(availableVehicles[vehicleDropDown.getSelectedIndex()].equals(vehicles[i].model)) {
-				vehicle = vehicles[i];
-			}
-		}
+		vehicle 	= availableVehiclesType[vehicleDropDown.getSelectedIndex()];
 		
 		setPeriod();
 		
