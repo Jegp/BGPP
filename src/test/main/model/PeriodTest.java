@@ -44,7 +44,7 @@ public class PeriodTest {
 	/**
 	 * Test the fields of the period.
 	 */
-	@Test public void testGetFields() {
+	@Test public void testFields() {
 		Map<String, String> fields = p1.getFields();
 		
 		assertTrue("Fields was not stored correctly",
