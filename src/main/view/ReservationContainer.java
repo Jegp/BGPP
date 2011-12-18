@@ -22,6 +22,9 @@ public class ReservationContainer extends JPanel
 	private JTextField startPeriod;
 	private JTextField endPeriod;
 	private SimpleDateFormat dateFormat;
+	private ReservationTable data;
+	private JScrollPane scrollPane;
+	private JTable table;
 	
 	/**
 	 * Creates a new container
@@ -54,8 +57,9 @@ public class ReservationContainer extends JPanel
 		createReservationButton.setPreferredSize( new Dimension(200, 50));
 		searchButton							= new JButton("Search");
 		
-		ReservationTable data 			= new ReservationTable(startDate, endDate);
-		JScrollPane scrollPane			= new JScrollPane(new JTable(data));
+		addTable();
+		table							= new JTable(data);
+		scrollPane						= new JScrollPane(table);
 		scrollPane.setPreferredSize		( new Dimension(1200, 600));
 		
 		centerPanel.add(scrollPane);
@@ -67,6 +71,10 @@ public class ReservationContainer extends JPanel
 		setVisible(true);		
 	}
 	
+	public void addTable() {
+		data = new ReservationTable(startDate, endDate);
+	}
+	
 	/**
 	 * returns the button south button which should open a new JFrame to create a reservation
 	 * @return
@@ -76,10 +84,19 @@ public class ReservationContainer extends JPanel
 	}
 	
 	/**
-	 * returns button
+	 * returns a button from the reservation view
+	 * @return JButton
 	 */
 	public JButton getSearchButton() {
 		return searchButton;
+	}
+	
+	/**
+	 * returns the table which shows the reservations with the given period
+	 * @return JTable
+	 */
+	public JTable getTable() {
+		return table;
 	}
 	
 	public String getStartPeriodTextField() {

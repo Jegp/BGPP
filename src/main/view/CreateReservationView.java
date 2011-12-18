@@ -40,7 +40,6 @@ public class CreateReservationView extends JFrame{
 	public final JButton updatePeriodButton		= new JButton("Update");
 	
 	public final JButton saveButton			= new JButton("Save"); 
-	public final JButton editButton			= new JButton("Edit");
 	public final CancelButton cancelButton 	= new CancelButton(this);
 	
 	private String startDateInput;
@@ -60,8 +59,6 @@ public class CreateReservationView extends JFrame{
 	public CreateReservationView() {		
 		startDateTextField 		= new JTextField(10);
 		endDateTextField		= new JTextField(10);
-
-		editButton.setVisible(false);
 		
 		setCustomerComboBox();
 		
@@ -82,8 +79,6 @@ public class CreateReservationView extends JFrame{
 		
 		startDateTextField 	= new JTextField(periodStartToString);
 		endDateTextField	= new JTextField(periodEndToString);
-		
-		editButton.setVisible(true);
 		
 		setLayout();
 	}
@@ -167,12 +162,12 @@ public class CreateReservationView extends JFrame{
 			}
 		}
 		
-		System.out.println(customer);
-		System.out.println(period);
-		System.out.println(vehicle);
-		
+		customer 				= Customer.save(customer);
+		period 					= Period.save(period);
 		Reservation reservation = new Reservation(customer, period, vehicle);
-		Reservation.save(reservation);
+		reservation 			= Reservation.save(reservation);
+		
+		dispose();
 	}
 	
 	public void setLayout() {
@@ -210,7 +205,6 @@ public class CreateReservationView extends JFrame{
 		
 		//arrange south panel with buttons
 		southPanel.add(saveButton);
-		southPanel.add(editButton);
 		southPanel.add(cancelButton);
 		
 		add(northPanel, BorderLayout.NORTH);
@@ -232,10 +226,6 @@ public class CreateReservationView extends JFrame{
 	
 	public JButton getSaveButton() {
 		return saveButton;
-	}
-	
-	public JButton getEditButton() {
-		return editButton;
 	}
 	
 	public JButton getUpdateButton() {

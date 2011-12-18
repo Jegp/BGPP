@@ -19,13 +19,13 @@ public class ReservationController {
 		this.container = container;
 		container.getCreateReservationButton().addActionListener(new ActionListenerToCreateReservationButton());
 		container.getSearchButton().addActionListener(new ActionListenerToSearchButton());
+		container.getTable().addMouseListener(new ActionListenerToTable());
 	}
 	
 	class ActionListenerToCreateReservationButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			createReservationWindow = new CreateReservationView();
 			createReservationWindow.getSaveButton().addActionListener(new ActionListerToSaveButton());
-			createReservationWindow.getEditButton().addActionListener(new ActionListenerToEditButton());
 			createReservationWindow.getUpdateButton().addActionListener(new ActionListenerToUpdateButton());
 			createReservationWindow.getCustomerCreateButton().addActionListener(new ActionListenerToCreateCustomerButton());
 		}
@@ -67,5 +67,14 @@ public class ReservationController {
 		public void actionPerformed(ActionEvent e) {
 		createCustomerWindow.submit();
 		}
+	}
+	
+	class ActionListenerToTable extends MouseAdapter {
+		public void mouseClicked(MouseEvent e) {
+			if(e.getClickCount() == 2) {
+				int selectedRow = container.getTable().getSelectedRow();
+			}
+		}
+		
 	}
 }
