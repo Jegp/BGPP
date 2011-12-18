@@ -57,7 +57,7 @@ public class CustomerController {
 		// If the customers array is empty, don't bother setting the listener, otherwise move on!
 		if (customers != null) {
 			// Set the listener for the table
-			table.addMouseListener(getTableListener(customers));
+			table.addMouseListener(getTableListener(customers, table));
 		}
 	}
 	
@@ -79,7 +79,7 @@ public class CustomerController {
 	/**
 	 * Creates a MouseAdapter that listens to the CustomerTable for events.
 	 */
-	private MouseAdapter getTableListener(final Customer[] customers) {
+	private MouseAdapter getTableListener(final Customer[] customers, final CustomerTable table) {
 		// Create a new mouse adapter
 		return new MouseAdapter() {
 			// On click: Edit customer in a new window (if the row exists)
@@ -87,13 +87,15 @@ public class CustomerController {
 				// If double-click then create an edit window
 				if (e.getClickCount() == 2) {
 					// Find the row in question
-					int selectedRow  = container.getCustomerTable().getSelectedRow();
+					int selectedRow  = table.getSelectedRow();
 				
-					// Initialize the window
-					final CustomerWindow window = new CustomerWindow(customers[selectedRow]);
-	
-					// And define the action listener for the save button
-					window.buttonSubmit.addActionListener(getWindowSaveListener(window));
+					if (selectedRow >= 0) {
+						// Initialize the window
+						final CustomerWindow window = new CustomerWindow(customers[selectedRow]);
+		
+						// And define the action listener for the save button
+						window.buttonSubmit.addActionListener(getWindowSaveListener(window));
+					}
 				}
 			}
 			// On drag: Disable delete button if more than one row is selected
