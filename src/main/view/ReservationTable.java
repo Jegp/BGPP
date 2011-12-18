@@ -19,8 +19,9 @@ public class ReservationTable extends AbstractTableModel
 
 	private Object[][] 				data;
 	private Period					period;
-	public Reservation[] 			reservations;
 	private SimpleDateFormat 		toString;
+	private int						numberOfReservations;
+	public Reservation[] 			reservations;
 	
 	private final String[] columnNames = {"ID", "Vehicle", "Start", "End", "Customer"};
 	
@@ -32,12 +33,21 @@ public class ReservationTable extends AbstractTableModel
 		period 			= new Period(startDate, endDate);
 		
 		reservations	= Reservation.getFromPeriod(period);
-				
-		data			= new Object[reservations.length][columnNames.length];
+		
+		
+		if(reservations == null) {
+			numberOfReservations	= 0;
+		}
+		
+		else {
+			numberOfReservations	= reservations.length;
+		}
+		
+		data			= new Object[numberOfReservations][columnNames.length];
 		
 		toString		= new SimpleDateFormat("dd/MM/YYYY");
 		
-		for(int i = 0; i < reservations.length; i++) {
+		for(int i = 0; i < numberOfReservations; i++) {
 			data[i][0] = reservations[i].vehicle.id;
 			data[i][1] = reservations[i].vehicle.manufacturer;
 			data[i][2] = toString.format(reservations[i].period.start);
@@ -55,7 +65,7 @@ public class ReservationTable extends AbstractTableModel
 	}
 
 	public int getRowCount() {
-		return reservations.length;
+		return data.length;
 	}
 
 	public Object getValueAt(int arg0, int arg1) {

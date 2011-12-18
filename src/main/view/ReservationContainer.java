@@ -70,10 +70,6 @@ public class ReservationContainer extends JPanel
 		
 		setVisible(true);		
 	}
-	
-	public JButton getDeleteButton() {
-		return deleteButton;
-	}
 
 	public void addTable() {
 		data = new ReservationTable(startDate, endDate);
