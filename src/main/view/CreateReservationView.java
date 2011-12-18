@@ -168,10 +168,16 @@ public class CreateReservationView extends JFrame{
 		
 		customer 				= Customer.save(customer);
 		period 					= Period.save(period);
+
 		Reservation reservation = new Reservation(customer, period, vehicle);
+
 		reservation 			= Reservation.save(reservation);
 		
 		dispose();
+
+		reservation = Reservation.save(reservation);
+		System.out.println(reservation);
+
 	}
 	
 	public void setLayout() {
