@@ -179,8 +179,8 @@ public class CreateReservationView extends JFrame{
 	 * A constructor that creates a view where you can create a reservation from scratch.
 	 */
 	public CreateReservationView() {		
-		startDateTextField 	= new JTextField(10);
-		endDateTextField	= new JTextField(10);
+		startDateTextField 	= new JTextField("Example: 14/06/1990");
+		endDateTextField	= new JTextField("Example: 20/06/1990");
 		
 		setCustomerComboBox();
 		
