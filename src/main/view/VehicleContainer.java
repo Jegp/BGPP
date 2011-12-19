@@ -71,10 +71,14 @@ public class VehicleContainer extends JPanel
 	}
 
 
+	public void disableDeleteButton() {
+		deleteBtn.setEnabled(false);
+	}
 
 	public void enableDeleteButton() {
 		deleteBtn.setEnabled(true);
 		
 	}
+	
 	
 }

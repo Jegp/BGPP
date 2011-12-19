@@ -26,8 +26,14 @@ public class Controller {
 		// Store the view.
 		this.view = view;
 		
+		// Get a reservation listener
+		ListenerToReservation reservationListener = new ListenerToReservation();
+		
+		// Trigger it to initialize the view in the reservation screen
+		reservationListener.actionPerformed(null);
+		
 		// Add a listener to the reservation button
-		view.addActionListenerToReservationButton(new ListenerToReservation());
+		view.addActionListenerToReservationButton(reservationListener);
 		
 		// Add a listener to the customer button
 		view.addActionListenerToCustomerButton(new ListenerToCustomer());
@@ -37,7 +43,7 @@ public class Controller {
 		
 		// Add a listener to close the connection to the database.
 		view.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent arg0) {
+			public void windowClosing(WindowEvent e) {
 				// Close the connection to the model
 				model.close();
 				
@@ -47,44 +53,53 @@ public class Controller {
 		});
 	}
 	
+	/**
+	 * A listener for the reservation container.
+	 */
 	class ListenerToReservation implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-        	ReservationContainer container = new ReservationContainer();
-        	
-        	new ReservationController(container);
-        	//Update view
-        	view.changeContainer(container);
-        	view.pack();
-        }
-    }
-        
-    class ListenerToCustomer implements ActionListener {
-    	public void actionPerformed(ActionEvent e) {
-	    	CustomerContainer container = new CustomerContainer();
-	    	
-	    	// Initialize controller for customer
-	    	new CustomerController(container);
-	    	// Update view
-	    	view.changeContainer(container);
-	    	view.pack();
-    	}
-    }
-    
-    class ListenerToVehicle implements ActionListener {
-    	public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {
+  		// Define container
+    	ReservationContainer container = new ReservationContainer();
     	
-    	VehicleContainer container = new VehicleContainer();
-    	VehicleController vc = new VehicleController(container);
+    	// Initialize controller for reservations
+    	new ReservationController(container);
     	
+    	//Update view
     	view.changeContainer(container);
-    	view.pack();
-    	}
     }
-    
-    class MouseAdapter {
-    	public void mouseClicked(MouseEvent e) {
-    	System.out.println("mouse has been pressed!!!");
-    	}
-    }
+  }
+        
+	/**
+	 * A listener for the customer container.
+	 */
+  class ListenerToCustomer implements ActionListener {
+  	public void actionPerformed(ActionEvent e) {
+  		// Define container
+    	CustomerContainer container = new CustomerContainer();
+    	
+    	// Initialize controller for customers
+    	new CustomerController(container);
+    	
+    	// Update view
+    	view.changeContainer(container);
+  	}
+  }
+  
+  /**
+	 * A listener for the vehicle container.
+	 */
+  class ListenerToVehicle implements ActionListener {
+  	public void actionPerformed(ActionEvent e) {
+  		// Define container
+	  	VehicleContainer container = new VehicleContainer();
+	  	
+	  	// Initialize controller for the vehicles
+	  	new VehicleController(container);
+	  	
+	  	// Update view
+	  	view.changeContainer(container);
+  	}
+  }
+  
 }
 

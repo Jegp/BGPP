@@ -1,16 +1,17 @@
 	package main.view;
 
 import javax.swing.*;
-import main.model.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
 /**
- * The View of the booking-system.
- *
+ * The View of the booking-system. The view is responsible for 
+ * defining and displaying the graphical base of the software.
  */
 public class View extends JFrame 
 {
+  private static final long serialVersionUID = -8589019224540130133L;
 	private JButton reservationButton;
 	private JButton customerButton;
 	private JButton vehicleButton;
@@ -18,13 +19,13 @@ public class View extends JFrame
 	private JPanel container;
 	private JPanel graphicContainer;
 	
-
-	
-	public View(Model model) {
+	/**
+	 * Instantiates the view.
+	 */
+	public View() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLayout(new BorderLayout());
 	    
-			
 	    // create north, south, west and east panels
 	    JPanel northPanel 	= new JPanel(new FlowLayout());
 	    JPanel westPanel 	= new JPanel(new GridLayout(0, 1));
@@ -33,14 +34,11 @@ public class View extends JFrame
 	    
 	    // create primitive start panel.
 	    JPanel startPanel 	= new JPanel(); // perhaps add picture?
-	    JLabel startText	= new JLabel("Pick a catagory to start business!");
-	    startPanel.add(startText);
 	    
 	    // set starting panel
 	    container = startPanel;
 	    
 	    // arrange the panels 
-	    
 	    add(container, BorderLayout.CENTER);
 	    add(northPanel, BorderLayout.NORTH);
 	    add(westPanel, BorderLayout.WEST);
@@ -48,7 +46,7 @@ public class View extends JFrame
 	    add(southPanel, BorderLayout.SOUTH);
 	        
 	    // create buttons
-	    reservationButton 	= new JButton("Reservation"); 
+	    reservationButton = new JButton("Reservation"); 
 	    customerButton 		= new JButton("Customer");
 	    vehicleButton 		= new JButton("Vehicle");
 	        
@@ -56,6 +54,12 @@ public class View extends JFrame
 	    northPanel.add(reservationButton);
 	    northPanel.add(customerButton);
 	    northPanel.add(vehicleButton);
+	    
+	    // Add a loading panel to display loading before the container is shown
+	    JPanel loadingPanel = new JPanel(new BorderLayout());
+	    JLabel loading = new JLabel("Loading...");
+	    loadingPanel.add(loading, BorderLayout.NORTH);
+	    add(loadingPanel);
 	        
 	    // Set title
 	    setTitle("Bookingsystem");
@@ -63,18 +67,21 @@ public class View extends JFrame
 	    // Display
 	    GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	    setMaximizedBounds(e.getMaximumWindowBounds());
-	    
 	    setPreferredSize(e.getMaximumWindowBounds().getSize());
-	    pack();
 	    
+	    // Initialize
+	    pack();
 	    setVisible(true);
 	}
 		
-	public void changeContainer(JPanel newContainer)
-	{
+	/**
+	 * Replace the active container with a new one.
+	 */
+	public void changeContainer(JPanel newContainer) {
 		remove(container);
 		container = newContainer;
 		add(container, BorderLayout.CENTER);
+		pack();
 	}
 	
 	public void addActionListenerToReservationButton(ActionListener listener)
