@@ -9,8 +9,6 @@ import main.model.*;
 
 /**
  * A window with required fields and buttons for saving a new vehicle
- * @author sunedebel
- *
  */
 public class CreateVehicleView extends JFrame {
 	

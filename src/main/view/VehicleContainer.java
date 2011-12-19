@@ -8,8 +8,6 @@ import main.model.Vehicle;
 
 /**
  * the main window of the vehicle section
- * @author sunedebel
- *
  */
 public class VehicleContainer extends JPanel	
 {

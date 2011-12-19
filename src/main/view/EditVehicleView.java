@@ -17,7 +17,6 @@ import main.model.VehicleClass;
 
 /**
  * A window for editing information about vehicles in the system
- * @author sunedebel
  *
  */
 public class EditVehicleView extends JFrame {

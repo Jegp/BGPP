@@ -10,9 +10,7 @@ import main.model.VehicleClass;
 import main.view.*;
 
 /**
- * Controller of event flow in the vehilce part of the system
- * @author sunedebel
- *
+ * Controller of event flow in the vehilce part of the system.
  */
 public class VehicleController {
 	

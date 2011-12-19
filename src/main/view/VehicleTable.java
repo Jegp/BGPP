@@ -6,8 +6,6 @@ import javax.swing.table.*;
 import main.model.Vehicle;
 /**
  * A table displaying vehicles in the database
- * @author sunedebel
- *
  */
 public class VehicleTable extends JTable {
 	
