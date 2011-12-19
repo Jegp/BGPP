@@ -122,8 +122,10 @@ public class VehicleController {
 
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
-			if (vehicleTable.getSelectedRow() >= 0) {
+			if (vehicleTable.getSelectedRowCount() == 1) {
 				vehicleContainer.enableDeleteButton();
+			} else {
+				vehicleContainer.disableDeleteButton();
 			}
 			
 		}

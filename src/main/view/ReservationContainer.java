@@ -12,12 +12,13 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Timer;
 
+
 /**
  * A class that extends JPanel. 
  * It's purpose is to display the data table as well as functions to view and edit reservations.
  */
 public class ReservationContainer extends JPanel {
-	
+
 	private Date startDate;
 	private Date endDate;
 	private JButton deleteButton;
@@ -36,8 +37,7 @@ public class ReservationContainer extends JPanel {
 	/**
 	 * Creates a view that displays the reservations from the systems current time and 10 days forward. 
 	 */
-	public ReservationContainer()
-	{	
+	public ReservationContainer() {	
 		startDate 						= new Date(System.currentTimeMillis());		//day - hours - seconds ect. 
 		endDate 						= new Date(startDate.getTime() + 10L * 1 * 24 * 60 * 60 * 1000);
 		
@@ -84,25 +84,24 @@ public class ReservationContainer extends JPanel {
 	 */
 	public JTable addTable() {
 		if(scrollPane == null) {
-		data 							= new ReservationTable(startDate, endDate);
-		table							= new JTable(data);
-		scrollPane						= new JScrollPane(table);
-		scrollPane.setPreferredSize		( new Dimension(1200, 600));
-		
-		centerPanel.add(scrollPane);
+			data 							= new ReservationTable(startDate, endDate);
+			table							= new JTable(data);
+			scrollPane						= new JScrollPane(table);
+			scrollPane.setPreferredSize		( new Dimension(1200, 600));
+			
+			centerPanel.add(scrollPane);
+		} else { 
+			centerPanel.remove(scrollPane);
+			data 							= new ReservationTable(startDate, endDate);
+			table							= new JTable(data);
+			scrollPane						= new JScrollPane(table);
+			scrollPane.setPreferredSize		( new Dimension(1200, 600));
+			
+			centerPanel.add(scrollPane);
 		}
-		
-		else{ 
-		centerPanel.remove(scrollPane);
+			
 		centerPanel.revalidate();
 		centerPanel.repaint();
-		data 							= new ReservationTable(startDate, endDate);
-		table							= new JTable(data);
-		scrollPane						= new JScrollPane(table);
-		scrollPane.setPreferredSize		( new Dimension(1200, 600));
-		
-		centerPanel.add(scrollPane);
-		}
 		return table;
 	}
 	

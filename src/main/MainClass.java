@@ -26,7 +26,7 @@ public class MainClass {
 		Model model = MySQLModel.getInstance();
 		
 		// Initialize view.
-		View view = new View(model);
+		View view = new View();
 		
 		// Examine connection and close if none could be found
 		if (!model.isConnected()) {
