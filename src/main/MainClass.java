@@ -18,8 +18,7 @@ public class MainClass {
 	 */
 	public static void main(String[] args) {
 		// Initialize the log with a file handler.
-		// TODO: Uncomment
-		//Log.initFileHandler("log.txt");
+		Log.initFileHandler("log.txt");
 		
 		// Model-View-Controller pattern
 		// Initialize model.
