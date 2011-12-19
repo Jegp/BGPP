@@ -15,6 +15,11 @@ import javax.swing.JTextField;
 import main.model.Vehicle;
 import main.model.VehicleClass;
 
+/**
+ * A window for editing information about vehicles in the system
+ * @author sunedebel
+ *
+ */
 public class EditVehicleView extends JFrame {
 	
 	private JButton saveButton;
@@ -25,6 +30,10 @@ public class EditVehicleView extends JFrame {
 	private CancelButton cancelButton;
 	private String[] vehicleClasses;
 	
+	/**
+	 * Constructor
+	 * @param the vehicle to edit
+	 */
 	public EditVehicleView(Vehicle vehicle) {
 		
 		super("Edit " + vehicle.manufacturer + " " + vehicle.model);
@@ -62,6 +71,10 @@ public class EditVehicleView extends JFrame {
 		
 	}
 	
+	
+	/**
+	 * fill the array thats used to display a drop down menu of vehicleclasses
+	 */
 	private void fillVehicleClasses() {
 		VehicleClass[] vehicleClassesInDb = VehicleClass.getAll();
 		ArrayList<String> descriptions = new ArrayList<String>();
@@ -73,7 +86,10 @@ public class EditVehicleView extends JFrame {
 		vehicleClasses = new String[descriptions.size()];
 		descriptions.toArray(vehicleClasses);
 	}
-	
+	/**
+	 * set the drop down to the vehicle class of the selected vehicle
+	 * @param selectedVehicleClass the name of the vehicleclass
+	 */
 	private void setDropDown(String selectedVehicleClass) {
 		for (int i = 0; i < vehicleClasses.length; i++) {
 			if (selectedVehicleClass.equals(vehicleClasses[i])) {
@@ -82,23 +98,43 @@ public class EditVehicleView extends JFrame {
 		}
 	}
 	
+	/**
+	 * add an actionlistener to the save button
+	 * @param e the actionlistener
+	 */
 	public void addSaveActionListener(ActionListener e) {
 		
 		saveButton.addActionListener(e);
 	}
 	
+	/**
+	 * Get the description entered in the designated text field in the window
+	 * @return the text entered by the user
+	 */
 	public String getNewDescription() {
 		return description.getText();
 	}
 	
+	/**
+	 * Get the model entered in the designated text field in the window
+	 * @return the text entered by the user
+	 */
 	public String getNewModel() {
 		return model.getText();
 	}
 	
+	/**
+	 * Get the manufacturer entered in the designated text field in the window
+	 * @return the text entered by the user
+	 */
 	public String getNewManufactorer() {
 		return manufacter.getText();
 	}
 	
+	/**
+	 * Get the id of the selected vehicleclass
+	 * @return the id of the selected vehicle class
+	 */
 	public int getNewVehicleClassID() {
 		HashMap<String, String> identifier = new HashMap<String,String>();
 		identifier.put("description", vehicleClasses[vehicleClass.getSelectedIndex()]);
@@ -112,6 +148,9 @@ public class EditVehicleView extends JFrame {
 		return 0;
 	}
 	
+	/**
+	 * reset text fields and close the window
+	 */
 	public void kill() {
 		description.setText("");
 		manufacter.setText("");
