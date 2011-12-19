@@ -4,10 +4,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import javax.swing.*;
 import main.model.*;
 
+/**
+ * A window with required fields and buttons for saving a new vehicle
+ * @author sunedebel
+ *
+ */
 public class CreateVehicleView extends JFrame {
 	
 	private JButton saveButton;
@@ -18,7 +22,9 @@ public class CreateVehicleView extends JFrame {
 	private CancelButton cancelButton;
 	private String[] vehicleClasses;
 	
-	
+	/**
+	 * Constructor
+	 */
 	public CreateVehicleView() {
 		//Manage frame
 		super("Add Vehicle");
@@ -56,6 +62,9 @@ public class CreateVehicleView extends JFrame {
 		
 	}
 	
+	/**
+	 * Fill the array used to display a drop down menu of vehicle classes
+	 */
 	private void fillVehicleClasses() {
 		VehicleClass[] vehicleClassesInDb = VehicleClass.getAll();
 		ArrayList<String> descriptions = new ArrayList<String>();
@@ -68,22 +77,42 @@ public class CreateVehicleView extends JFrame {
 		descriptions.toArray(vehicleClasses);
 	}
 	
+	/**
+	 * add an actionlistener to the save button
+	 * @param svl the actionlistener
+	 */
 	public void addSaveVehicleListener(ActionListener svl) {
 		saveButton.addActionListener(svl);
 	}
 	
+	/**
+	 * Get the description entered in the designated text field in the window
+	 * @return the text entered by the user
+	 */
 	public String getNewDescription() {
 		return description.getText();
 	}
 	
+	/**
+	 * Get the manufacturer entered in the designated text field in the window
+	 * @return the text entered by the user
+	 */
 	public String getNewManufactorer() {
 		return manufacter.getText();
 	}
 	
+	/**
+	 * Get the model entered in the designated text field in the window
+	 * @return the text entered by the user
+	 */
 	public String getNewModel() {
 		return model.getText();
 	}
 	
+	/**
+	 * Get the id of the vehicleclass selected in the vehicleclass drop down menu
+	 * @return the id of the selectedvehicleclass
+	 */
 	public int getNewVehicleClassID() {
 		HashMap<String, String> identifier = new HashMap<String,String>();
 		identifier.put("description", vehicleClasses[vehicleClass.getSelectedIndex()]);
@@ -97,6 +126,9 @@ public class CreateVehicleView extends JFrame {
 		return 0;
 	}
 	
+	/**
+	 * reset the text fields and close the window
+	 */
 	public void kill() {
 		description.setText("");
 		manufacter.setText("");

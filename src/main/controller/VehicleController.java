@@ -9,12 +9,21 @@ import main.model.Vehicle;
 import main.model.VehicleClass;
 import main.view.*;
 
+/**
+ * Controller of event flow in the vehilce part of the system
+ * @author sunedebel
+ *
+ */
 public class VehicleController {
 	
 	private VehicleContainer vehicleContainer;
 	private VehicleTable vehicleTable;
 	private Vehicle[] vehicles;
 	
+	/**
+	 * constructor
+	 * @param vehicleContainer the window to control
+	 */
 	public VehicleController(VehicleContainer vehicleContainer) {
 		
 		this.vehicleContainer = vehicleContainer;
@@ -30,7 +39,15 @@ public class VehicleController {
 		this.vehicleContainer.addDeleteVehicleBtnListener(new DeleteVehicleBtnListener());
 	}
 	
+	/**
+	 * A class to define action for the "add vehicle" button
+	 * @author sunedebel
+	 *
+	 */
 	class AddVehicleBtnListener implements ActionListener {
+		/**
+		 * opens a window for creating vehicles and add an actionlistener to the save button.
+		 */
     	public void actionPerformed(ActionEvent e) {
     		final CreateVehicleView createVehicleView = new CreateVehicleView();
     		
@@ -57,8 +74,15 @@ public class VehicleController {
     	}
 	}
 	
+	/**
+	 * an actionlistener for the vehicletable
+	 * @author sunedebel
+	 *
+	 */
 	class EditVehicleListener implements MouseListener {
-
+		/**
+		 * opens an edit window, fills out the information and add actionlistener to the save button.
+		 */
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			
@@ -100,25 +124,33 @@ public class VehicleController {
 			}
 			
 		}
-
+		/**
+		 * not used
+		 */
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
 			// TODO Auto-generated method stub
 			
 		}
-
+		/**
+		 * not used
+		 */
 		@Override
 		public void mouseExited(MouseEvent arg0) {
 			// TODO Auto-generated method stub
 			
 		}
-
+		/**
+		 * not used
+		 */
 		@Override
 		public void mousePressed(MouseEvent arg0) {
 			// TODO Auto-generated method stub
 			
 		}
-
+		/**
+		 * enables the delete button of the vehicleContaner when a vehicle in the table is selected
+		 */
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
 			if (vehicleTable.getSelectedRowCount() == 1) {
@@ -131,8 +163,16 @@ public class VehicleController {
 		
 	}
 	
+	/**
+	 * an actionlistener for the delete button
+	 * @author sunedebel
+	 *
+	 */
 	class DeleteVehicleBtnListener implements ActionListener {
-
+		/**
+		 * deletes a vehicle from the database and updates the table.
+		 * Only lets the user delete if the vehicle is not involved in any future reservations
+		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			
