@@ -48,7 +48,7 @@ public class ReservationTable extends AbstractTableModel
 			data		= new Object[reservations.length][columnNames.length];
 		}
 		
-		toString		= new SimpleDateFormat("dd/MM/YYYY");
+		toString		= new SimpleDateFormat("dd/MM/yyyy");
 		
 		for(int i = 0; i < data.length; i++) {
 			data[i][0] = reservations[i].id;

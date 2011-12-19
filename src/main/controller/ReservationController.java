@@ -27,6 +27,7 @@ public class ReservationController {
 	 */
 	public ReservationController(ReservationContainer container) {
 		
+		System.out.println("reservation controller initialised");
 		this.container = container;
 		container.getCreateReservationButton().addActionListener(new ActionListenerToCreateReservationButton());
 		container.getDeleteButton().addActionListener(new ActionListenerDeleteButton());
