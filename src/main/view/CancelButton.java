@@ -1,13 +1,20 @@
 package main.view;
 import javax.swing.*;
 import java.awt.event.*;
-import java.awt.*;
 
+/**
+ * A cancel button for use in the view. The cancel button automatically
+ * disposes the parent when pressed.
+ */
 public class CancelButton extends JButton {
 	
-	JFrame cParent;
 	/**
-	 * @param cParent The frame that acts as parent for this button
+	 * The parent frame.
+	 */
+	private JFrame cParent;
+	
+	/**
+	 * @param cParent The frame that acts as parent for this button.
 	 */
 	public CancelButton(JFrame cParent) {
 		super("Cancel");
@@ -20,6 +27,9 @@ public class CancelButton extends JButton {
 		});		
 	}
 	
+	/**
+	 * Dispose the parent.
+	 */
 	private void cancel(){
 		cParent.dispose();
 	}

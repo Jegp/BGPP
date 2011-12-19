@@ -10,6 +10,9 @@ import main.model.Period;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * A test for the period entity.
+ */
 public class PeriodTest {
 
 	// Setup periods

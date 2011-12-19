@@ -7,6 +7,9 @@ import java.util.Map;
 
 import main.util.Log;
 
+/**
+ * A customer represented by a first name, last name, email, phone and address.
+ */
 public class Customer extends ModelEntity<Customer> {
 
 	/**

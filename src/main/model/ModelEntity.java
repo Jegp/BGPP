@@ -7,7 +7,7 @@ import java.util.Map;
 import main.util.Log;
 
 /**
- * The interface for a data entities.
+ * An abstract class for a data entities.
  *
  * @param <T>  The type of the entity.
  */

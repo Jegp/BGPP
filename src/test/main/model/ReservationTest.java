@@ -10,6 +10,9 @@ import main.model.*;
 
 import org.junit.*;
 
+/**
+ * A test for reservations.
+ */
 public class ReservationTest extends Reservation {
 
 	private Customer customer;

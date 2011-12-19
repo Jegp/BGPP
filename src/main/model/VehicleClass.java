@@ -8,7 +8,7 @@ import java.util.Map;
 import main.util.Log;
 
 /**
- * An immutable representation of a certain type of vehicles e. g. VW or bicycle.
+ * A representation of a certain type of vehicles e. g. VW or bicycle.
  */
 public class VehicleClass extends ModelEntity<VehicleClass> {
 	

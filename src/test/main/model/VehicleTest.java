@@ -10,7 +10,7 @@ import org.junit.*;
 import main.model.*;
 
 /**
- * Test the Vehicle class.
+ * Tests for vehicle.
  */
 public class VehicleTest extends Vehicle {
 

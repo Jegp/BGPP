@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -112,6 +111,9 @@ public class CustomerController {
 		};
 	}
 	
+	/**
+	 * An actionlistener for the a window's save button.
+	 */
 	private ActionListener getWindowSaveListener(final CustomerWindow window) {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -160,6 +162,9 @@ public class CustomerController {
 		};
 	}
 
+	/**
+	 * An action listener for a window's search button.
+	 */
 	private ActionListener getWindowSearchListener(final CustomerWindow window) {
 		return new ActionListener() {
 	

@@ -1,7 +1,6 @@
 package main.view;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -10,8 +9,6 @@ import main.controller.ReservationController;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Timer;
-
 
 /**
  * A class that extends JPanel. 
@@ -25,7 +22,6 @@ public class ReservationContainer extends JPanel {
 	private JButton createReservationButton;
 	private JButton updatePeriodButton;
 
-	private ReservationController controller;
 	private JTextField startPeriod;
 	private JTextField endPeriod;
 	private SimpleDateFormat dateFormat;
@@ -100,7 +96,7 @@ public class ReservationContainer extends JPanel {
 			centerPanel.add(scrollPane);
 		}
 			
-		centerPanel.revalidate();
+		centerPanel.validate();
 		centerPanel.repaint();
 		return table;
 	}

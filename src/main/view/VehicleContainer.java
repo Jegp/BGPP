@@ -13,16 +13,12 @@ public class VehicleContainer extends JPanel
 	JButton deleteBtn;
 	JScrollPane pane;
 	
-	
-	
 	public VehicleContainer()
 	{
 		//Manage layouts
 		setLayout(new BorderLayout());
 		JPanel south = new JPanel(new GridLayout(1, 2));
-		JPanel west = new JPanel();
-		
-		
+		JPanel west = new JPanel();		
 		
 		//Manage content
 		addVehicleBtn = new JButton("Add Vehicle");
@@ -33,17 +29,11 @@ public class VehicleContainer extends JPanel
 		south.add(addVehicleBtn);
 		south.add(deleteBtn);
 		
-		Vehicle[] vehicles = Vehicle.getAll();
-		
-		
-		
 		add(south, BorderLayout.SOUTH);
 		add(west, BorderLayout.WEST);
 		
 		setVisible(true);		
 	}
-	
-	
 	
 	public void addVehicleBtnListener(ActionListener vbl) {
 		addVehicleBtn.addActionListener(vbl);
@@ -70,15 +60,12 @@ public class VehicleContainer extends JPanel
 		deleteBtn.addActionListener(e);
 	}
 
-
 	public void disableDeleteButton() {
 		deleteBtn.setEnabled(false);
 	}
 
 	public void enableDeleteButton() {
-		deleteBtn.setEnabled(true);
-		
+		deleteBtn.setEnabled(true);	
 	}
-	
-	
+		
 }

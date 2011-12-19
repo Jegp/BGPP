@@ -1,9 +1,6 @@
 package main.controller;
 
 import java.awt.event.*;
-import java.awt.*;
-
-import javax.swing.JButton;
 
 import main.model.Customer;
 import main.model.Period;
@@ -40,7 +37,7 @@ public class ReservationController {
 	 */
 	public void refreshTable() {
 		container.updatePeriod();
-		container.addTable().addMouseListener(new ActionListenerToTable());	
+		container.addTable().addMouseListener(new ActionListenerToTable());
 	}
 	
 	class ActionListenerToCreateReservationButton implements ActionListener {
@@ -56,11 +53,13 @@ public class ReservationController {
 		public void actionPerformed(ActionEvent e) {
 			int selectedRow = container.getTable().getSelectedRow();
 			
-			int id = container.getData().reservations[selectedRow].id;
-			
-			Reservation.delete("reservation", id);
-
-			refreshTable();
+			if (selectedRow > 0) {
+				int id = container.getData().reservations[selectedRow].id;
+				
+				Reservation.delete("reservation", id);
+	
+				refreshTable();
+			}
 		}
 	}
 	

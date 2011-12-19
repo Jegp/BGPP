@@ -8,7 +8,7 @@ import java.util.Map;
 import main.util.Log;
 
 /**
- * A vehicle in the booking-system.
+ * A vehicle represented by a description, manufacturer, model and vehicle class.
  */
 public class Vehicle extends ModelEntity<Vehicle> {
 	
