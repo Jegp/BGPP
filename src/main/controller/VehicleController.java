@@ -15,7 +15,6 @@ public class VehicleController {
 	private VehicleTable vehicleTable;
 	private Vehicle[] vehicles;
 	
-	
 	public VehicleController(VehicleContainer vehicleContainer) {
 		
 		this.vehicleContainer = vehicleContainer;

@@ -1,17 +1,16 @@
 package main.view;
 
-import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 import main.model.Period;
 import main.model.Reservation;
-import main.model.Vehicle;
 
-import java.awt.*;
-import java.security.AllPermission;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * A reservation table that displays a given set of reservations.
+ */
 public class ReservationTable extends AbstractTableModel
 {
 	private Date	 				startDate;
@@ -34,7 +33,6 @@ public class ReservationTable extends AbstractTableModel
 	 * @param endDate
 	 */
 	public ReservationTable(Date startDate, Date endDate) {
-		
 		this.startDate	= startDate;
 		this.endDate	= endDate;
 		

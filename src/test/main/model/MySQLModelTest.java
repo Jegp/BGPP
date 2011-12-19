@@ -19,7 +19,6 @@ public class MySQLModelTest extends MySQLModel {
 	// Set up conditions and join statements
 	private String condition	= "field = 'value'";
 	private String selector		= "field1, field2";
-	private String field		= "field";
 	private String join 		= "otherTable ON field3 = 'value'";
 	
 	// Set up hash map

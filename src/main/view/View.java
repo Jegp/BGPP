@@ -11,13 +11,15 @@ import java.awt.event.*;
  */
 public class View extends JFrame 
 {
-  private static final long serialVersionUID = -8589019224540130133L;
+	
+	private static final long serialVersionUID = -8589019224540130133L;
 	private JButton reservationButton;
 	private JButton customerButton;
 	private JButton vehicleButton;
 	
 	private JPanel container;
-	private JPanel graphicContainer;
+	
+	private JPanel loadingPanel;
 	
 	/**
 	 * Instantiates the view.
@@ -56,7 +58,7 @@ public class View extends JFrame
 	    northPanel.add(vehicleButton);
 	    
 	    // Add a loading panel to display loading before the container is shown
-	    JPanel loadingPanel = new JPanel(new BorderLayout());
+	    loadingPanel = new JPanel(new BorderLayout());
 	    JLabel loading = new JLabel("Loading...");
 	    loadingPanel.add(loading, BorderLayout.NORTH);
 	    add(loadingPanel);
@@ -78,33 +80,35 @@ public class View extends JFrame
 	 * Replace the active container with a new one.
 	 */
 	public void changeContainer(JPanel newContainer) {
+		// Remove the loading panel if it's defined
+		if (loadingPanel != null)
+			remove(loadingPanel);
+		
 		remove(container);
 		container = newContainer;
 		add(container, BorderLayout.CENTER);
 		pack();
 	}
 	
-	public void addActionListenerToReservationButton(ActionListener listener)
-	{
+	/**
+	 * Adds a listener to the reservation button in the main view.
+	 */
+	public void addActionListenerToReservationButton(ActionListener listener) {
 		reservationButton.addActionListener(listener);
 	}
 	
-	public void addActionListenerToCustomerButton(ActionListener listener)
-	{
+	/**
+	 * Adds a listener to the customer button in the main view.
+	 */
+	public void addActionListenerToCustomerButton(ActionListener listener) {
 		customerButton.addActionListener(listener);
 	}
 	
-	public void addActionListenerToVehicleButton(ActionListener listener)
-	{
+	/**
+	 * Adds a listener to the vehicle button in the main view.
+	 */
+	public void addActionListenerToVehicleButton(ActionListener listener) {
 		vehicleButton.addActionListener(listener);
 	}
-	
-	public void addMouseListenerToGraphics(MouseAdapter listener)
-	{
-		graphicContainer.addMouseListener(listener);
-	}
-	
-	public void maximize() {
-		
-	}
+
 }

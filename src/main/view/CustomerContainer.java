@@ -1,15 +1,10 @@
 package main.view;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.*;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 import main.model.Customer;
 
@@ -31,12 +26,7 @@ public class CustomerContainer extends JPanel {
 	
 	private CustomerTable customerTable;
 	
-	private JScrollPane pane;
-	
-	/**
-	 * The mouse listener used on customer tables.
-	 */
-	private MouseListener tableListener; 
+	private JScrollPane pane; 
 	
 	/**
 	 * Creates a new container and initializes it with a list of all available customers.

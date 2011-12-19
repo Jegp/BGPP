@@ -8,6 +8,9 @@ import java.util.Map;
 
 import main.util.Log;
 
+/**
+ * A reservation represented by a customer, vehicle and period.
+ */
 public class Reservation extends ModelEntity<Reservation> {
 	
 	/**

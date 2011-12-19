@@ -13,7 +13,7 @@ import java.awt.event.*;
 public class Controller {
 	
 	/**
-	 * The view 
+	 * The view.
 	 */
 	private View view;
 	

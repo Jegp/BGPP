@@ -10,10 +10,9 @@ import main.model.Vehicle;
 import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
+
 /**
  * This class extends a JFrame and has a GUI function to create reservations of vehicles.
  */
