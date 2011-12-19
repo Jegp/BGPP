@@ -13,12 +13,18 @@ import main.view.CreateCustomerForReservationWindow;
 import main.view.CreateReservationView;
 import main.view.ReservationContainer;
 
+/**
+ * a class that adds all the action listeners used in the reservation view. 
+ */
 public class ReservationController {	
 	private CreateReservationView createReservationWindow;
 	private ReservationContainer container;
 	private CreateReservationView reservation;
 	private CreateCustomerForReservationWindow createCustomerWindow;
 	
+	/*
+	 * initializes all the opening listeners
+	 */
 	public ReservationController(ReservationContainer container) {
 		
 		this.container = container;
@@ -28,6 +34,9 @@ public class ReservationController {
 		container.getTable().addMouseListener(new ActionListenerToTable());
 	}
 	
+	/**
+	 * this method removes the table, updates the period and creates a new table to respond to the user input. 
+	 */
 	public void refreshTable() {
 		container.updatePeriod();
 		container.addTable().addMouseListener(new ActionListenerToTable());	

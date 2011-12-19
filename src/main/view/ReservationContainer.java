@@ -12,9 +12,12 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Timer;
 
-public class ReservationContainer extends JPanel
+/**
+ * A class that extends JPanel. 
+ * It's purpose is to display the data table as well as functions to view and edit reservations.
+ */
+public class ReservationContainer extends JPanel {
 	
-{
 	private Date startDate;
 	private Date endDate;
 	private JButton deleteButton;
@@ -31,7 +34,7 @@ public class ReservationContainer extends JPanel
 	private JPanel centerPanel;
 	
 	/**
-	 * Creates a new container
+	 * Creates a view that displays the reservations from the systems current time and 10 days forward. 
 	 */
 	public ReservationContainer()
 	{	
@@ -73,6 +76,12 @@ public class ReservationContainer extends JPanel
 		setVisible(true);		
 	}
 
+	/**
+	 * initializes and adds a table to the view. If one already exists, this method will update all variables,
+	 * create a new table and add it to the view. The reason this method returns a JTable is so that the controller
+	 * can add a listener.
+	 * @return JTable
+	 */
 	public JTable addTable() {
 		if(scrollPane == null) {
 		data 							= new ReservationTable(startDate, endDate);
@@ -97,6 +106,9 @@ public class ReservationContainer extends JPanel
 		return table;
 	}
 	
+	/**
+	 * Updates the period from the user input. This helps to update the table.
+	 */
 	public void updatePeriod() {
 		try {
 			startDate 	= dateFormat.parse(startPeriod.getText());
@@ -108,6 +120,10 @@ public class ReservationContainer extends JPanel
 		}
 	}
 	
+	/**
+	 * returns the initial table 
+	 * @return ReservationTable
+	 */
 	public ReservationTable getData() {
 		return data;
 	}
@@ -136,14 +152,26 @@ public class ReservationContainer extends JPanel
 		return table;
 	}
 	
+	/**
+	 * the method returns the button which updates the period by reading the users input.
+	 * @return JButton
+	 */
 	public JButton getUpdatePeriodButton() {
 		return updatePeriodButton;
 	}
 	
+	/**
+	 * returns the users input for the starting day
+	 * @return String
+	 */
 	public String getStartPeriodTextField() {
 		return startPeriod.getText();
 	}
 	
+	/**
+	 * returns the users input for the ending day
+	 * @return String
+	 */
 	public String getEndPeriodTextField() {
 		return endPeriod.getText();
 	}

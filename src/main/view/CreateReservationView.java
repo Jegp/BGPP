@@ -74,37 +74,110 @@ public class CreateReservationView extends JFrame{
 	public final JLabel endDateLabel 	 = new JLabel("End:");
 	
 	/**
-	 * 
+	 * Label for GUI: Chosen vehicle
 	 */
 	public final JLabel vehicleLabel 	 = new JLabel("Vehicle:");
 	
+	/**
+	 * Text field which allows the user to enter the desired dates.
+	 */
 	private JTextField startDateTextField;
+	
+	/**
+	 * Text field which allows the user to enter the desired dates.
+	 */
 	private JTextField endDateTextField;
 	
+	/**
+	 * A JButton which displays "Create". The button is final and cannot be manipulated 
+	 */
 	public final JButton customerCreateButton 	= new JButton("Create");
+	
+	/**
+	 * A JButton which displays "Update". The button is final and cannot be manipulated
+	 */
 	public final JButton updatePeriodButton		= new JButton("Update");
 	
+	/**
+	 * A variable that can store a JButton. This button can be manipulated.
+	 */
 	private JButton saveButton;
+	
+	/**
+	 * A variable that can store a JButton. This button can be manipulated.
+	 */
 	private JButton saveChangesButton;
+	
+	/**
+	 * A generic cancel button which can be implemented in any JComponent. It has an automated listener and will close
+	 * the container which it is created in by activating.
+	 */
 	public final CancelButton cancelButton 	= new CancelButton(this);
 	
+	/**
+	 * A String variable that can store what the user has written in the text fields.
+	 */
 	private String startDateInput;
+	
+	/**
+	 * A String variable that can store what the user has written in the text fields.
+	 */
 	private String endDateInput;
 	
+	/**
+	 * A variable that stores the ID of the reservation that is to be updated.
+	 */
 	private int oldReservationID;
-
+	
+	/**
+	 * a variable that can store an array of customers.
+	 */
 	private Customer[] customers;
+	
+	/**
+	 * a variable that can store an array of vehicles.
+	 */
 	private Vehicle[] vehicles;
 	
+	/**
+	 * a variable that stores a JComboBox. 
+	 */
 	private JComboBox customerDropDown;
+	
+	/**
+	 * a variable that stores a JComboBox. 
+	 */
 	private JComboBox vehicleDropDown;
+	
+	/**
+	 * a variable that stores an array of Strings. It has the purpose of "painting" a JCombobox.
+	 */
 	private String[] customerComboBox;
+	
+	/**
+	 * a variable that stores an array of Strings. It has the purpose of "painting" a JCombobox.
+	 */
 	private String[] availableVehicles;
+	
+	/**
+	 * a variable that stores an array of vehicles. It has the purpose of keeping track of the vehicles used in
+	 * the variable "availableVehicles".
+	 */
 	private Vehicle[] availableVehiclesType;
-		
+
+	/**
+	 * simply defines a simpleDateFormat, so that the whole class can use it.
+	 */
 	private SimpleDateFormat dateFormat;
+	
+	/**
+	 * a variable that can hold a Gregorian Calendar.
+	 */
 	private GregorianCalendar calendar;
 	
+	/**
+	 * A constructor that creates a view where you can create a reservation from scratch.
+	 */
 	public CreateReservationView() {		
 		startDateTextField 	= new JTextField(10);
 		endDateTextField	= new JTextField(10);
@@ -117,6 +190,12 @@ public class CreateReservationView extends JFrame{
 		setLayout();
 	}
 	
+	/**
+	 * Second constructor that creates a view with data from a reservation
+	 * @param customer
+	 * @param period
+	 * @param vehicle
+	 */
 	public CreateReservationView(Customer customer, Period period, Vehicle vehicle) {
 		this.customer	= customer;
 		this.period		= period;
@@ -141,6 +220,9 @@ public class CreateReservationView extends JFrame{
 		setLayout();
 	}
 	
+	/**
+	 * sets the period to reflect the input of the customer.
+	 */
 	public void setPeriod() {
 		try {
 		startDateInput		= startDateTextField.getText();
@@ -162,12 +244,19 @@ public class CreateReservationView extends JFrame{
 		}
 	}
 	
+	/**
+	 * the method name says it all. This is called when the 2nd constructor is called.
+	 * @param period
+	 */
 	public void setPeriodWithExistingReservation(Period period) {
 		startDate			= period.start;
 		endDate				= period.end;
 		calendar			= new GregorianCalendar();
 	}
 	
+	/**
+	 * sets and creates the JComboBox filled with all customer names from the database.
+	 */
 	public void setCustomerComboBox() {
 		customers				= Customer.getAll();
 		customerComboBox		= new String[customers.length];
@@ -177,6 +266,9 @@ public class CreateReservationView extends JFrame{
 		}	
 	}
 	
+	/**
+	 * sets and creates the JComboBox filled with the available vehicles in the given period.
+	 */
 	public void setVehicleComboBox() {
 		vehicles 	 				= Vehicle.getAll();
 		Reservation[] reservations	= Reservation.getFromPeriod(period);
@@ -209,6 +301,9 @@ public class CreateReservationView extends JFrame{
 		
 	}
 	
+	/**
+	 * submits a reservation by reading the users input.
+	 */
 	public void submit() {		
 
 		
@@ -228,10 +323,17 @@ public class CreateReservationView extends JFrame{
 
 	}
 	
+	/**
+	 * sets the reservation ID. This method is called when a reservation is to be changed.
+	 * @param oldReservationID
+	 */
 	public void setOldReservationID(int oldReservationID) {
 		this.oldReservationID = oldReservationID;
 	}
 	
+	/**
+	 * submits an edit in a existing reservation.
+	 */
 	public void submitReservationChanges() {
 		
 		customer = customers[customerDropDown.getSelectedIndex()];
@@ -250,6 +352,9 @@ public class CreateReservationView extends JFrame{
 		dispose();
 	}
 	
+	/**
+	 * sets out the GUI preferences.
+	 */
 	public void setLayout() {
 		setTitle("Create Reservation");
 		setLayout(new BorderLayout());
@@ -295,18 +400,34 @@ public class CreateReservationView extends JFrame{
 		setVisible(true);
 	}
 	
+	/**
+	 * returns the button which creates a customer
+	 * @return JButton
+	 */
 	public JButton getCustomerCreateButton() {
 		return customerCreateButton;
 	}
 	
+	/**
+	 * returns the button which saves a customer.
+	 * @return JButton
+	 */
 	public JButton getSaveButton() {
 		return saveButton;
 	}
 	
+	/**
+	 * returns the button which updates the available vehicles
+	 * @return JButton
+	 */
 	public JButton getUpdateButton() {
 		return updatePeriodButton;
 	}
 	
+	/**
+	 * return a JButton that submits changes to an existing reservation. (constructor #2).
+	 * @return JButton
+	 */
 	public JButton getSaveChangesButton() {
 		return saveChangesButton;
 	}

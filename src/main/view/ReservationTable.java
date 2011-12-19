@@ -20,10 +20,19 @@ public class ReservationTable extends AbstractTableModel
 	private Object[][] 				data;
 	private Period					period;
 	private SimpleDateFormat 		toString;
-	public Reservation[] 			reservations;
 	
 	private final String[] columnNames = {"ID", "Vehicle", "Start", "End", "Customer"};
 	
+	/**
+	 *  a variable that can hold an array of reservations
+	 */
+	public Reservation[] 			reservations;
+	
+	/**
+	 * a constructor that generates table by receiving a start day, and ending day of the reservation.
+	 * @param startDate
+	 * @param endDate
+	 */
 	public ReservationTable(Date startDate, Date endDate) {
 		
 		this.startDate	= startDate;

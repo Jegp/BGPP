@@ -7,6 +7,9 @@ import javax.swing.*;
 import main.model.Customer;
 import main.util.Log;
 
+/**
+ * A class that extends the class JFrame. This class represents a view that can create customers. 
+ */
 public class CreateCustomerForReservationWindow extends JFrame {
 	
 	private final JLabel textFirstName = new JLabel("First name:");
@@ -119,6 +122,9 @@ public class CreateCustomerForReservationWindow extends JFrame {
 		generateLayout();
 	}
 	
+	/**
+	 * submits the user input and creates a customer in the databse
+	 */
 	public void submit() {
 		firstNameInput 	= fieldFirstName.getText();
 		lastNameInput	= fieldLastName.getText();
@@ -217,6 +223,10 @@ public class CreateCustomerForReservationWindow extends JFrame {
 		pack();
 	}
 	
+	/**
+	 * returns a button that is used to submit the reservation
+	 * @return JButton
+	 */
 	public JButton getSubmitButton() {
 		return buttonSubmit;
 	}
